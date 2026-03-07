@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="admin/layout :: layout(~{::section})">
+
+<section>
+
+    <div class="section-title">
+        <h2>Dashboard <small>Tổng quan thống kê trung tâm tiếng Anh</small></h2>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-3 col-sm-6">
+            <div class="panel"
+                style="border-radius: 8px; border-top: 5px solid #29ca8e; box-shadow: 0 4px 10px rgba(0,0,0,0.05); background: #fff;">
+                <div class="panel-body text-center">
+                    <h5 style="color: #757575; font-size: 16px;">Tổng lớp học</h5>
+                    <h1 style="color: #29ca8e; font-weight: bold; margin-top: 10px; font-size: 3em;"
+                        th:text="${tongLop}">0</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+            <div class="panel"
+                style="border-radius: 8px; border-top: 5px solid #3f51b5; box-shadow: 0 4px 10px rgba(0,0,0,0.05); background: #fff;">
+                <div class="panel-body text-center">
+                    <h5 style="color: #757575; font-size: 16px;">Tổng học viên</h5>
+                    <h1 style="color: #3f51b5; font-weight: bold; margin-top: 10px; font-size: 3em;"
+                        th:text="${tongHocVien}">0</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+            <div class="panel"
+                style="border-radius: 8px; border-top: 5px solid #f6c23e; box-shadow: 0 4px 10px rgba(0,0,0,0.05); background: #fff;">
+                <div class="panel-body text-center">
+                    <h5 style="color: #757575; font-size: 16px;">Tổng đăng ký</h5>
+                    <h1 style="color: #f6c23e; font-weight: bold; margin-top: 10px; font-size: 3em;"
+                        th:text="${tongDangKy}">0</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+            <div class="panel"
+                style="border-radius: 8px; border-top: 5px solid #e74a3b; box-shadow: 0 4px 10px rgba(0,0,0,0.05); background: #fff;">
+                <div class="panel-body text-center">
+                    <h5 style="color: #757575; font-size: 16px;">Tổng giáo viên</h5>
+                    <h1 style="color: #e74a3b; font-weight: bold; margin-top: 10px; font-size: 3em;"
+                        th:text="${tongGiaoVien}">0</h1>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row" style="margin-top: 30px;">
+
+        <!-- Biểu đồ cột -->
+        <div class="col-md-8">
+            <div class="panel"
+                style="border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: none; background: #fff;">
+                <div class="panel-heading"
+                    style="background-color: transparent; border-bottom: 2px solid #f9f9f9; padding: 20px;">
+                    <h4 style="margin: 0; color: #353535; font-weight: bold;">Đăng ký theo tháng</h4>
+                </div>
+                <div class="panel-body" style="padding: 20px;">
+                    <canvas id="barChart" height="150"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Biểu đồ tròn -->
+        <div class="col-md-4">
+            <div class="panel"
+                style="border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: none; background: #fff;">
+                <div class="panel-heading"
+                    style="background-color: transparent; border-bottom: 2px solid #f9f9f9; padding: 20px;">
+                    <h4 style="margin: 0; color: #353535; font-weight: bold;">Tỷ lệ trạng thái đăng ký</h4>
+                </div>
+                <div class="panel-body" style="padding: 20px;">
+                    <canvas id="pieChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 🔥 SCRIPT PHẢI ĐẶT TRONG SECTION -->
+    <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const thang = [[${ thangList }]];
+            const soLuong = [[${ soLuongList }]];
+
+            new Chart(document.getElementById('barChart'), {
+                type: 'bar',
+                data: {
+                    labels: thang.map(t => "Tháng " + t),
+                    datasets: [{
+                        label: 'Số đăng ký',
+                        data: soLuong,
+                        backgroundColor: '#3f51b5',
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+
+            const trangThai = [[${ trangThaiList }]];
+            const soLuongTrangThai = [[${ soLuongTrangThai }]];
+
+            new Chart(document.getElementById('pieChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: trangThai,
+                    datasets: [{
+                        data: soLuongTrangThai,
+                        backgroundColor: ['#29ca8e', '#f6c23e', '#e74a3b'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    cutout: '70%',
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+
+        });
+    </script>
+
+</section>
+
+</html>

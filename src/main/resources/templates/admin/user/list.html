@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="admin/layout :: layout(~{::section})">
+
+<section>
+    <style>
+        .panel-custom {
+            border-radius: 8px;
+            border-top: 5px solid #3f51b5;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            background: #fff;
+            padding: 30px;
+        }
+    </style>
+
+    <div class="panel-custom">
+        <h3 style="margin-bottom: 25px; color: #353535; font-weight: bold;">Quan ly tai khoan</h3>
+
+        <a href="/admin/users/add" class="btn btn-primary" style="margin-bottom: 15px;">
+            <i class="fa fa-plus"></i> Them tai khoan
+        </a>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Active</th>
+                        <th>Hanh dong</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="u : ${list}">
+                        <td th:text="${u.id}"></td>
+                        <td th:text="${u.username}"></td>
+                        <td th:text="${u.role}"></td>
+                        <td th:text="${u.active ? 'ON' : 'OFF'}"></td>
+                        <td>
+                            <a th:href="@{/admin/users/edit/{id}(id=${u.id})}" class="btn btn-warning btn-sm">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            <form th:action="@{/admin/users/toggle/{id}(id=${u.id})}" method="post" style="display:inline-block;">
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fa fa-lock"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</section>
+
+</html>

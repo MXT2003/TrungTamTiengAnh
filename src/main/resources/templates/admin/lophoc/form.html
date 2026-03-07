@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="admin/layout :: layout(~{::section})">
+
+<section>
+    <style>
+        .panel-custom {
+            border-radius: 8px;
+            border-top: 5px solid #3f51b5;
+            /* Primary color for "Classes" related items in this theme */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            background: #fff;
+            padding: 30px;
+        }
+
+        .form-control {
+            border-radius: 4px;
+            box-shadow: none;
+            height: 45px;
+        }
+
+        .form-control:focus {
+            border-color: #3f51b5;
+            box-shadow: none;
+        }
+
+        .btn-custom {
+            background-color: #3f51b5;
+            color: #fff;
+            border-radius: 50px;
+            padding: 10px 20px;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .btn-custom:hover {
+            background-color: #2e3a80;
+            color: #fff;
+        }
+
+        .action-links {
+            display: inline-block;
+            margin-left: 15px;
+        }
+
+        .action-links a {
+            color: #757575;
+            font-weight: bold;
+        }
+
+        .action-links a:hover {
+            color: #353535;
+        }
+    </style>
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel-custom">
+                <h3 style="margin-bottom: 25px; color: #353535; font-weight: bold;">Thêm / Sửa lớp học</h3>
+
+                <form th:action="@{/admin/lophoc/save}" th:object="${lophoc}" method="post">
+                    <div th:if="${#fields.hasGlobalErrors()}" style="color:#e74a3b; margin:10px 0;">
+                        <div th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
+                    </div>
+
+                    <input type="hidden" th:field="*{id}" />
+
+                    <div class="form-group">
+                        <label>Tên lớp</label>
+                        <input type="text" class="form-control" th:field="*{tenLop}" required />
+                        <div th:if="${#fields.hasErrors('tenLop')}" style="color:#e74a3b; font-size:12px; margin-top:6px;">
+                            <span th:errors="*{tenLop}"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Giáo viên</label>
+                        <input type="text" class="form-control" th:field="*{giaoVien}" required />
+                        <div th:if="${#fields.hasErrors('giaoVien')}" style="color:#e74a3b; font-size:12px; margin-top:6px;">
+                            <span th:errors="*{giaoVien}"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Thu</label>
+                        <select class="form-control" th:field="*{thu}">
+                            <option value="">--Chon--</option>
+                            <option value="MON">Mon</option>
+                            <option value="TUE">Tue</option>
+                            <option value="WED">Wed</option>
+                            <option value="THU">Thu</option>
+                            <option value="FRI">Fri</option>
+                            <option value="SAT">Sat</option>
+                            <option value="SUN">Sun</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gio bat dau</label>
+                        <input type="time" class="form-control" th:field="*{gioBatDau}" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gio ket thuc</label>
+                        <input type="time" class="form-control" th:field="*{gioKetThuc}" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Lịch học</label>
+                        <input type="text" class="form-control" th:field="*{lichHoc}" required />
+                        <div th:if="${#fields.hasErrors('lichHoc')}" style="color:#e74a3b; font-size:12px; margin-top:6px;">
+                            <span th:errors="*{lichHoc}"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Sĩ số</label>
+                        <input type="number" class="form-control" th:field="*{siSo}" required />
+                        <div th:if="${#fields.hasErrors('siSo')}" style="color:#e74a3b; font-size:12px; margin-top:6px;">
+                            <span th:errors="*{siSo}"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Học phí</label>
+                        <input type="number" class="form-control" th:field="*{hocPhi}" required />
+                        <div th:if="${#fields.hasErrors('hocPhi')}" style="color:#e74a3b; font-size:12px; margin-top:6px;">
+                            <span th:errors="*{hocPhi}"></span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label>Trang thai dang ky</label>
+                        <select class="form-control" th:field="*{moDangKy}">
+                            <option th:value="true">Mo dang ky</option>
+                            <option th:value="false">Dong dang ky</option>
+                        </select>
+                    </div>
+<div style="margin-top: 30px;">
+                        <button type="submit" class="btn btn-custom"><i class="fa fa-save"></i> Lưu</button>
+
+                        <div class="action-links">
+                            <a href="/admin/lophoc"><i class="fa fa-arrow-left"></i> Quay lại danh sách</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+</html>
+
+
+

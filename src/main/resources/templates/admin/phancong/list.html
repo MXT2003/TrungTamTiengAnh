@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="admin/layout :: layout(~{::section})">
+
+<section>
+    <style>
+        .panel-custom {
+            border-radius: 8px;
+            border-top: 5px solid #3f51b5;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            background: #fff;
+            padding: 30px;
+        }
+    </style>
+
+    <div class="panel-custom">
+        <h3 style="margin-bottom: 25px; color: #353535; font-weight: bold;">Phan cong giao vien</h3>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Lop</th>
+                        <th>Giao vien hien tai</th>
+                        <th>Chon giao vien</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="lh : ${classes}">
+                        <td th:text="${lh.tenLop}"></td>
+                        <td th:text="${lh.teacher != null ? lh.teacher.fullName : lh.giaoVien}"></td>
+                        <td>
+                            <form th:action="@{/admin/phancong/{id}(id=${lh.id})}" method="post">
+                                <div style="display:flex; gap:8px;">
+                                    <select class="form-control" name="teacherId">
+                                        <option value="">--None--</option>
+                                        <option th:each="t : ${teachers}" th:value="${t.id}" th:text="${t.fullName}"
+                                                th:selected="${lh.teacher != null && lh.teacher.id == t.id}"></option>
+                                    </select>
+                                    <button type="submit" class="btn btn-primary btn-sm">Luu</button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</section>
+
+</html>

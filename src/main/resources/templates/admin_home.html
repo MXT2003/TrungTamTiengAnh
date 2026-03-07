@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="admin/layout :: layout(~{::section})">
+
+<section>
+    <style>
+        .dashboard-panel {
+            background: linear-gradient(135deg, #3f51b5 0%, #2e3a80 100%);
+            border-radius: 12px;
+            padding: 40px;
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(63, 81, 181, 0.2);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-panel::after {
+            content: '\f0e4';
+            font-family: 'FontAwesome';
+            position: absolute;
+            right: -20px;
+            bottom: -30px;
+            font-size: 150px;
+            opacity: 0.1;
+            transform: rotate(-15deg);
+        }
+
+        .welcome-title {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .stat-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            margin-bottom: 20px;
+            border-left: 5px solid #29ca8e;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-icon {
+            font-size: 40px;
+            color: #3f51b5;
+            margin-right: 20px;
+            background: #f4f6f9;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .stat-info h4 {
+            margin: 0 0 5px 0;
+            color: #777;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .stat-info span {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="dashboard-panel">
+                <h1 class="welcome-title">Xin chào Quản Trị Viên!</h1>
+                <p style="font-size: 18px; opacity: 0.9;">Chào mừng bạn trở lại hệ thống quản lý Trung Tâm Tiếng Anh.
+                    Chúc bạn một ngày làm việc hiệu quả.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="stat-card" style="border-left-color: #3f51b5;">
+                <div class="stat-icon" style="color: #3f51b5;">
+                    <i class="fa fa-building"></i>
+                </div>
+                <div class="stat-info">
+                    <h4>Quản lý lớp học</h4>
+                    <span style="font-size: 16px;"><a href="/admin/lophoc"
+                            style="color: #2e3a80; text-decoration: underline;">Truy cập ngay</a></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card" style="border-left-color: #29ca8e;">
+                <div class="stat-icon" style="color: #29ca8e;">
+                    <i class="fa fa-users"></i>
+                </div>
+                <div class="stat-info">
+                    <h4>Quản lý giáo viên</h4>
+                    <span style="font-size: 16px;"><a href="/admin/teacher"
+                            style="color: #23ba81; text-decoration: underline;">Truy cập ngay</a></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card" style="border-left-color: #f6c23e;">
+                <div class="stat-icon" style="color: #f6c23e;">
+                    <i class="fa fa-check-square-o"></i>
+                </div>
+                <div class="stat-info">
+                    <h4>Duyệt đăng ký</h4>
+                    <span style="font-size: 16px;"><a href="/admin/dangky"
+                            style="color: #dda116; text-decoration: underline;">Truy cập ngay</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+</html>

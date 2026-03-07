@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="admin/layout :: layout(~{::section})">
+
+<section>
+    <style>
+        .panel-custom {
+            border-radius: 8px;
+            border-top: 5px solid #3f51b5;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            background: #fff;
+            padding: 30px;
+        }
+    </style>
+
+    <div class="panel-custom">
+        <h3 style="margin-bottom: 25px; color: #353535; font-weight: bold;">Giao vien</h3>
+
+        <div th:if="${error}" style="color:#e74a3b; margin-bottom:10px;">
+            <span th:text="${error}"></span>
+        </div>
+
+        <form th:action="@{/admin/teacher/save}" th:object="${teacherForm}" method="post">
+            <input type="hidden" th:field="*{id}" />
+
+            <div class="form-group">
+                <label>Ten giao vien</label>
+                <input type="text" class="form-control" th:field="*{fullName}" required />
+                <div th:if="${#fields.hasErrors('fullName')}" style="color:#e74a3b; font-size:12px;">
+                    <span th:errors="*{fullName}"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Phone</label>
+                <input type="text" class="form-control" th:field="*{phone}" />
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="text" class="form-control" th:field="*{email}" />
+            </div>
+
+            <div class="form-group">
+                <label>Chuyen mon</label>
+                <input type="text" class="form-control" th:field="*{specialization}" />
+            </div>
+
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" class="form-control" th:field="*{username}" required />
+                <div th:if="${#fields.hasErrors('username')}" style="color:#e74a3b; font-size:12px;">
+                    <span th:errors="*{username}"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Password (bo trong neu khong doi)</label>
+                <input type="password" class="form-control" th:field="*{password}" />
+            </div>
+
+            <div class="form-group">
+                <label>Active</label>
+                <select class="form-control" th:field="*{active}">
+                    <option th:value="true">ON</option>
+                    <option th:value="false">OFF</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Luu</button>
+            <a href="/admin/teacher" class="btn btn-default">Quay lai</a>
+        </form>
+    </div>
+
+</section>
+
+</html>

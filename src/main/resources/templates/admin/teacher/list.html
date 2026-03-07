@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="admin/layout :: layout(~{::section})">
+
+<section>
+    <style>
+        .panel-custom {
+            border-radius: 8px;
+            border-top: 5px solid #3f51b5;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            background: #fff;
+            padding: 30px;
+        }
+    </style>
+
+    <div class="panel-custom">
+        <h3 style="margin-bottom: 25px; color: #353535; font-weight: bold;">Danh sach giao vien</h3>
+
+        <a href="/admin/teacher/add" class="btn btn-primary" style="margin-bottom: 15px;">
+            <i class="fa fa-plus"></i> Them giao vien
+        </a>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ten</th>
+                        <th>Username</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Active</th>
+                        <th>Hanh dong</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="t : ${list}">
+                        <td th:text="${t.id}"></td>
+                        <td th:text="${t.fullName}"></td>
+                        <td th:text="${t.user != null ? t.user.username : ''}"></td>
+                        <td th:text="${t.phone}"></td>
+                        <td th:text="${t.email}"></td>
+                        <td th:text="${t.user != null && t.user.active ? 'ON' : 'OFF'}"></td>
+                        <td>
+                            <a th:href="@{/admin/teacher/edit/{id}(id=${t.id})}" class="btn btn-warning btn-sm">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            <form th:action="@{/admin/teacher/delete/{id}(id=${t.id})}" method="post" style="display:inline-block;">
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</section>
+
+</html>

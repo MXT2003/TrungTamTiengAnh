@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content)">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/templatemo-style.css}">
+
+    <style>
+        body {
+            background-color: #f4f6f9;
+        }
+
+        .main-content {
+            padding-top: 100px;
+            padding-bottom: 50px;
+        }
+
+        .custom-navbar {
+            background: #ffffff;
+            border-top: 5px solid #29ca8e;
+            box-shadow: 0 1px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 0;
+            padding: 12px 0;
+        }
+
+        .navbar-brand {
+            color: #454545 !important;
+            font-size: 24px !important;
+            font-weight: bold;
+        }
+
+        .nav li a {
+            color: #575757 !important;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .nav li a:hover,
+        .nav li.active a {
+            color: #29ca8e !important;
+            background-color: transparent !important;
+        }
+
+        .dropdown-menu li a {
+            font-weight: normal;
+            font-size: 14px;
+        }
+
+        .dropdown-menu li a:hover {
+            background-color: #f8f9fa;
+            color: #29ca8e !important;
+        }
+    </style>
+</head>
+
+<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+
+<!-- PRE LOADER -->
+<section class="preloader">
+    <div class="spinner">
+        <span class="spinner-rotate"></span>
+    </div>
+</section>
+
+<!-- NAVBAR -->
+<section class="navbar custom-navbar navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon icon-bar"></span>
+                <span class="icon icon-bar"></span>
+                <span class="icon icon-bar"></span>
+            </button>
+
+            <a href="/admin/home" class="navbar-brand">Admin Panel</a>
+        </div>
+
+        <!-- MENU -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+
+                <li><a href="/admin/home">Trang chủ</a></li>
+
+                <li><a href="/admin/lophoc">Lớp học</a></li>
+
+                <li><a href="/admin/dangky">Duyệt đăng ký</a></li>
+
+                <!-- Dropdown quản lý -->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Quản lý <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/admin/teacher">Danh sách giáo viên</a></li>
+                        <li><a href="/admin/users">Quan ly tai khoan</a></li>
+                        <li><a href="/admin/phancong">Phân công lịch dạy</a></li>
+                        <li><a href="/admin/hocphi">Tạo học phí</a></li>
+                        <li><a href="/admin/danhgia">Đánh giá học sinh</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="/logout" style="color: #e74a3b !important;">
+                        <i class="fa fa-sign-out"></i> Logout
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- CONTENT -->
+<div class="container main-content">
+    <div th:replace="${content}"></div>
+</div>
+
+<!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script th:src="@{/js/jquery.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/custom.js}"></script>
+
+</body>
+</html>

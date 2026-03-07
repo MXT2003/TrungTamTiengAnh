@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="admin/layout :: layout(~{::section})">
+
+<section>
+    <style>
+        .panel-custom {
+            border-radius: 8px;
+            border-top: 5px solid #29ca8e;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            background: #fff;
+            padding: 30px;
+        }
+
+        .table>thead>tr>th {
+            border-bottom: 2px solid #29ca8e;
+            color: #353535;
+        }
+
+        .btn-custom-success {
+            background-color: #29ca8e;
+            color: #fff;
+            border-radius: 50px;
+            padding: 5px 15px;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .btn-custom-success:hover {
+            background-color: #23ba81;
+            color: #fff;
+        }
+
+        .status-badge {
+            background-color: #f6c23e;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status-badge.approved { background-color: #1cc88a; }
+        .status-badge.rejected { background-color: #e74a3b; }
+        .status-badge.canceled { background-color: #6c757d; }
+    </style>
+
+    <div class="panel-custom">
+        <h3 style="margin-bottom: 25px; color: #353535; font-weight: bold;">Danh sach dang ky</h3>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-striped mt-3">
+                <thead>
+                    <tr>
+                        <th>Hoc vien</th>
+                        <th>Lop</th>
+                        <th>Trang thai</th>
+                        <th>Ghi chu</th>
+                        <th>Hanh dong</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="dk : ${list}">
+                        <td th:text="${dk.student.username}" style="font-weight: bold; color: #353535;"></td>
+                        <td th:text="${dk.lopHoc.tenLop}"></td>
+                        <td>
+                            <span class="status-badge"
+                                  th:classappend="${dk.trangThai == 'DA_DUYET' ? 'approved' : (dk.trangThai == 'TU_CHOI' ? 'rejected' : (dk.trangThai == 'HUY' ? 'canceled' : ''))}"
+                                  th:text="${dk.trangThai}"></span>
+                        </td>
+                        <td th:text="${dk.ghiChu}"></td>
+                        <td>
+                            <a th:if="${dk.trangThai == 'CHO_DUYET'}"
+                               th:href="@{/admin/dangky/duyet/{id}(id=${dk.id})}"
+                               class="btn btn-custom-success btn-sm">
+                                <i class="fa fa-check"></i> Duyet
+                            </a>
+
+                            <form th:if="${dk.trangThai == 'CHO_DUYET'}"
+                                  th:action="@{/admin/dangky/tuchoi/{id}(id=${dk.id})}"
+                                  method="post" style="margin-top:8px;">
+                                <input type="text" name="ghiChu" class="form-control" placeholder="Ly do" style="margin-bottom:6px;" />
+                                <button type="submit" class="btn btn-danger btn-sm">Tu choi</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="action-links">
+            <a href="/admin/home"><i class="fa fa-arrow-left"></i> Quay lai Dashboard</a>
+        </div>
+    </div>
+
+</section>
+
+</html>
