@@ -13,9 +13,9 @@ spring.datasource.password=
 ```
 
 ## Tai khoan mac dinh
-Neu DB trong, file `src/main/resources/data.sql` se tao:
-- Username: `admin`
-- Password: `admin123`
+- Admin: `admin` / `123`
+- Hoc sinh: `truong` / `123456`
+- Giao vien: `VanA` / `1`
 
 ## Chay du an
 ```
@@ -27,4 +27,3 @@ Truy cap: http://localhost:8080
 - Admin: quan ly lop hoc, khoa hoc, giao vien, hoc vien, duyet dang ky, hoc phi
 - Teacher: xem lop, danh sach hoc vien, diem danh, nhap diem
 - Student: dang ky lop, xem lop cua toi, xem hoc phi
-
