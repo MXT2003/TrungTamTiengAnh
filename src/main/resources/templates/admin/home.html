@@ -1,142 +1,132 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="admin/layout :: layout(~{::section})">
-
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout :: layout(~{::section}, 'Tổng quan hệ thống')}">
 <section>
+    <div class="flex flex-col gap-10">
+        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 to-black p-10 border border-primary/20 min-h-[220px] flex items-center glass-card">
+            <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuChhcFIuLIaUmVS3DtgjHG9G_cDneRa1_xWdwEZkjwOrk4k2trK-GMgFGL9BBidGLuBm3wTp_gB1y015ScADFDP0FjS1NKbv5PwKbPHPPbnGtQRjj7xlEs_QKEO2L0IHUFPo0yy7Ugg42DADYvnJJivpiyZNvmbBmhZfZCixQUTEyeQsPG-vYVxc4ADwahs9HwUx8QDivZn6NM_ngHuxJvoOw4zlWnKpy_hnLGRcO_ZAUAyAfEY5mCKywgfzIwOMPTvWarlVpwXAeCA');"></div>
+            <div class="relative z-10 max-w-xl">
+                <h1 class="text-4xl font-bold text-white mb-3 leading-tight tracking-tight font-display">Chào mừng trở lại, Quản trị viên</h1>
+                <p class="text-slate-400 text-lg font-medium leading-relaxed">Dưới đây là tóm tắt hoạt động của trung tâm trong ngày hôm nay.</p>
+            </div>
+        </div>
 
-    <div class="section-title">
-        <h2>Dashboard <small>Tổng quan thống kê trung tâm tiếng Anh</small></h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="p-6 rounded-xl border border-primary/10 hover:border-primary/30 transition-all flex flex-col gap-4 glass-card">
+                <div class="flex justify-between items-start">
+                    <div class="p-3 rounded-lg bg-primary/10 text-primary">
+                        <span class="material-symbols-outlined">school</span>
+                    </div>
+                    <span class="text-green-500 text-xs font-bold bg-green-500/10 px-2 py-1 rounded-full">+5.2%</span>
+                </div>
+                <div>
+                    <p class="text-slate-500 text-sm font-medium">Tổng học viên</p>
+                    <h3 class="text-3xl font-bold text-slate-100 mt-1 font-display" th:text="${tongHocVien}">1,250</h3>
+                </div>
+            </div>
+            <div class="p-6 rounded-xl border border-primary/10 hover:border-primary/30 transition-all flex flex-col gap-4 glass-card">
+                <div class="flex justify-between items-start">
+                    <div class="p-3 rounded-lg bg-primary/10 text-primary">
+                        <span class="material-symbols-outlined">diversity_3</span>
+                    </div>
+                    <span class="text-green-500 text-xs font-bold bg-green-500/10 px-2 py-1 rounded-full">+2.1%</span>
+                </div>
+                <div>
+                    <p class="text-slate-500 text-sm font-medium">Giáo viên</p>
+                    <h3 class="text-3xl font-bold text-slate-100 mt-1 font-display" th:text="${tongGiaoVien}">48</h3>
+                </div>
+            </div>
+            <div class="p-6 rounded-xl border border-primary/10 hover:border-primary/30 transition-all flex flex-col gap-4 glass-card">
+                <div class="flex justify-between items-start">
+                    <div class="p-3 rounded-lg bg-primary/10 text-primary">
+                        <span class="material-symbols-outlined">meeting_room</span>
+                    </div>
+                    <span class="text-red-400 text-xs font-bold bg-red-400/10 px-2 py-1 rounded-full">-1.5%</span>
+                </div>
+                <div>
+                    <p class="text-slate-500 text-sm font-medium">Số lượng lớp</p>
+                    <h3 class="text-3xl font-bold text-slate-100 mt-1 font-display" th:text="${tongLop}">85</h3>
+                </div>
+            </div>
+            <div class="p-6 rounded-xl border border-primary/10 hover:border-primary/30 transition-all flex flex-col gap-4 glass-card">
+                <div class="flex justify-between items-start">
+                    <div class="p-3 rounded-lg bg-primary/10 text-primary">
+                        <span class="material-symbols-outlined">history_edu</span>
+                    </div>
+                    <span class="text-green-500 text-xs font-bold bg-green-500/10 px-2 py-1 rounded-full">+10%</span>
+                </div>
+                <div>
+                    <p class="text-slate-500 text-sm font-medium">Đăng ký chờ</p>
+                    <h3 class="text-3xl font-bold text-slate-100 mt-1 font-display" th:text="${tongDangKy}">12</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 rounded-xl border border-primary/10 p-8 glass-card">
+                <div class="flex justify-between items-center mb-8">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-100 font-display">Phân tích doanh thu & Tăng trưởng</h2>
+                        <p class="text-slate-500 text-sm">Hiệu suất tài chính 6 tháng gần nhất</p>
+                    </div>
+                    <button class="text-sm font-bold text-primary flex items-center gap-1 hover:underline">
+                        Xem báo cáo đầy đủ
+                        <span class="material-symbols-outlined text-sm">trending_flat</span>
+                    </button>
+                </div>
+                <div class="w-full h-64 bg-slate-800/20 rounded-lg flex items-end justify-between p-4 gap-4 border border-slate-800/40">
+                    <div class="bg-primary/20 w-full rounded-t-lg h-[40%]"></div>
+                    <div class="bg-primary/30 w-full rounded-t-lg h-[60%]"></div>
+                    <div class="bg-primary/40 w-full rounded-t-lg h-[45%]"></div>
+                    <div class="bg-primary/50 w-full rounded-t-lg h-[80%]"></div>
+                    <div class="bg-primary/70 w-full rounded-t-lg h-[70%]"></div>
+                    <div class="bg-primary w-full rounded-t-lg h-[95%]"></div>
+                </div>
+                <div class="flex justify-between mt-4 px-2">
+                    <span class="text-xs text-slate-600 font-bold uppercase">Th 1</span>
+                    <span class="text-xs text-slate-600 font-bold uppercase">Th 2</span>
+                    <span class="text-xs text-slate-600 font-bold uppercase">Th 3</span>
+                    <span class="text-xs text-slate-600 font-bold uppercase">Th 4</span>
+                    <span class="text-xs text-slate-600 font-bold uppercase">Th 5</span>
+                    <span class="text-xs text-slate-600 font-bold uppercase">Th 6</span>
+                </div>
+            </div>
+            <div class="rounded-xl border border-primary/10 p-8">
+                <h2 class="text-2xl font-bold text-slate-100 mb-6 font-display">Hoạt động sắp tới</h2>
+                <div class="flex flex-col gap-6">
+                    <div class="flex gap-4">
+                        <div class="min-w-[48px] h-12 rounded-lg bg-primary/10 border border-primary/30 flex flex-col items-center justify-center backdrop-blur-sm">
+                            <span class="text-[10px] text-primary font-bold uppercase">Hôm nay</span>
+                            <span class="text-lg font-bold text-primary">15</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <p class="text-sm font-bold text-slate-200">Họp Hội đồng Chuyên môn</p>
+                            <p class="text-xs text-slate-500">Phòng họp A - 14:00 PM</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="min-w-[48px] h-12 rounded-lg bg-primary/10 border border-primary/30 flex flex-col items-center justify-center backdrop-blur-sm">
+                            <span class="text-[10px] text-slate-500 font-bold uppercase">Mai</span>
+                            <span class="text-lg font-bold text-slate-400">16</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <p class="text-sm font-bold text-slate-200">Khai giảng lớp IELTS 7.5+</p>
+                            <p class="text-xs text-slate-500">Phòng Elite 01 - 18:00 PM</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="min-w-[48px] h-12 rounded-lg bg-primary/10 border border-primary/30 flex flex-col items-center justify-center backdrop-blur-sm">
+                            <span class="text-[10px] text-slate-500 font-bold uppercase">T2</span>
+                            <span class="text-lg font-bold text-slate-400">18</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <p class="text-sm font-bold text-slate-200">Kiểm tra đầu vào (Khối K12)</p>
+                            <p class="text-xs text-slate-500">Hội trường lớn - 08:30 AM</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="w-full mt-8 py-3 rounded-lg border border-primary/20 text-primary text-sm font-bold hover:bg-primary/5 transition-all">Xem tất cả lịch trình</button>
+            </div>
+        </div>
     </div>
-
-    <div class="row">
-
-        <div class="col-md-3 col-sm-6">
-            <div class="panel"
-                style="border-radius: 8px; border-top: 5px solid #29ca8e; box-shadow: 0 4px 10px rgba(0,0,0,0.05); background: #fff;">
-                <div class="panel-body text-center">
-                    <h5 style="color: #757575; font-size: 16px;">Tổng lớp học</h5>
-                    <h1 style="color: #29ca8e; font-weight: bold; margin-top: 10px; font-size: 3em;"
-                        th:text="${tongLop}">0</h1>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3 col-sm-6">
-            <div class="panel"
-                style="border-radius: 8px; border-top: 5px solid #3f51b5; box-shadow: 0 4px 10px rgba(0,0,0,0.05); background: #fff;">
-                <div class="panel-body text-center">
-                    <h5 style="color: #757575; font-size: 16px;">Tổng học viên</h5>
-                    <h1 style="color: #3f51b5; font-weight: bold; margin-top: 10px; font-size: 3em;"
-                        th:text="${tongHocVien}">0</h1>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3 col-sm-6">
-            <div class="panel"
-                style="border-radius: 8px; border-top: 5px solid #f6c23e; box-shadow: 0 4px 10px rgba(0,0,0,0.05); background: #fff;">
-                <div class="panel-body text-center">
-                    <h5 style="color: #757575; font-size: 16px;">Tổng đăng ký</h5>
-                    <h1 style="color: #f6c23e; font-weight: bold; margin-top: 10px; font-size: 3em;"
-                        th:text="${tongDangKy}">0</h1>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3 col-sm-6">
-            <div class="panel"
-                style="border-radius: 8px; border-top: 5px solid #e74a3b; box-shadow: 0 4px 10px rgba(0,0,0,0.05); background: #fff;">
-                <div class="panel-body text-center">
-                    <h5 style="color: #757575; font-size: 16px;">Tổng giáo viên</h5>
-                    <h1 style="color: #e74a3b; font-weight: bold; margin-top: 10px; font-size: 3em;"
-                        th:text="${tongGiaoVien}">0</h1>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="row" style="margin-top: 30px;">
-
-        <!-- Biểu đồ cột -->
-        <div class="col-md-8">
-            <div class="panel"
-                style="border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: none; background: #fff;">
-                <div class="panel-heading"
-                    style="background-color: transparent; border-bottom: 2px solid #f9f9f9; padding: 20px;">
-                    <h4 style="margin: 0; color: #353535; font-weight: bold;">Đăng ký theo tháng</h4>
-                </div>
-                <div class="panel-body" style="padding: 20px;">
-                    <canvas id="barChart" height="150"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <!-- Biểu đồ tròn -->
-        <div class="col-md-4">
-            <div class="panel"
-                style="border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: none; background: #fff;">
-                <div class="panel-heading"
-                    style="background-color: transparent; border-bottom: 2px solid #f9f9f9; padding: 20px;">
-                    <h4 style="margin: 0; color: #353535; font-weight: bold;">Tỷ lệ trạng thái đăng ký</h4>
-                </div>
-                <div class="panel-body" style="padding: 20px;">
-                    <canvas id="pieChart" height="300"></canvas>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- 🔥 SCRIPT PHẢI ĐẶT TRONG SECTION -->
-    <script th:inline="javascript">
-        document.addEventListener("DOMContentLoaded", function () {
-
-            const thang = [[${ thangList }]];
-            const soLuong = [[${ soLuongList }]];
-
-            new Chart(document.getElementById('barChart'), {
-                type: 'bar',
-                data: {
-                    labels: thang.map(t => "Tháng " + t),
-                    datasets: [{
-                        label: 'Số đăng ký',
-                        data: soLuong,
-                        backgroundColor: '#3f51b5',
-                        borderRadius: 5
-                    }]
-                },
-                options: {
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { beginAtZero: true }
-                    }
-                }
-            });
-
-            const trangThai = [[${ trangThaiList }]];
-            const soLuongTrangThai = [[${ soLuongTrangThai }]];
-
-            new Chart(document.getElementById('pieChart'), {
-                type: 'doughnut',
-                data: {
-                    labels: trangThai,
-                    datasets: [{
-                        data: soLuongTrangThai,
-                        backgroundColor: ['#29ca8e', '#f6c23e', '#e74a3b'],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    cutout: '70%',
-                    plugins: {
-                        legend: { position: 'bottom' }
-                    }
-                }
-            });
-
-        });
-    </script>
-
 </section>
-
 </html>

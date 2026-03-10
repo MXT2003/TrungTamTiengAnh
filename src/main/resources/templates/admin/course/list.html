@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout :: layout(~{::section}, 'Quản lý khóa học')}">
+<section>
+    <div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-12 border-l-4 border-primary pl-6">
+        <div>
+            <nav class="flex gap-2 text-xs uppercase tracking-[0.2em] text-primary/60 mb-2">
+                <span>Hệ thống</span>
+                <span>/</span>
+                <span class="text-primary">Quản lý đào tạo</span>
+            </nav>
+            <h1 class="text-4xl md:text-5xl font-bold dark:text-white leading-tight">Quản Lý Khóa Học</h1>
+            <p class="text-primary/70 mt-2 italic">Kiến tạo tương lai thông qua ngôn ngữ bậc thầy.</p>
+        </div>
+        <a class="flex items-center gap-2 px-8 py-3 bg-primary text-background-dark font-bold rounded-lg hover:bg-champagne transition-all transform hover:-translate-y-1 premium-shadow uppercase text-sm tracking-wider" href="/admin/course/add">
+            <span class="material-symbols-outlined">add_circle</span>
+            Thiết kế khóa học mới
+        </a>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
+        <div class="lg:col-span-8 flex flex-wrap gap-3">
+            <button class="px-6 py-2 rounded-full border border-primary bg-primary text-background-dark text-sm font-bold transition-all">Tất cả</button>
+            <button class="px-6 py-2 rounded-full border border-primary/30 hover:border-primary text-primary/70 hover:text-primary text-sm font-medium transition-all">IELTS Academy</button>
+            <button class="px-6 py-2 rounded-full border border-primary/30 hover:border-primary text-primary/70 hover:text-primary text-sm font-medium transition-all">Business Elite</button>
+            <button class="px-6 py-2 rounded-full border border-primary/30 hover:border-primary text-primary/70 hover:text-primary text-sm font-medium transition-all">TOEIC Master</button>
+            <button class="px-6 py-2 rounded-full border border-primary/30 hover:border-primary text-primary/70 hover:text-primary text-sm font-medium transition-all">Giao tiếp Thượng lưu</button>
+        </div>
+        <div class="lg:col-span-4 flex justify-end">
+            <form class="flex items-center gap-4 text-primary/60" method="get" th:action="@{/admin/course}">
+                <span class="text-sm font-medium uppercase tracking-widest">Tìm:</span>
+                <input class="bg-white/5 border border-white/10 rounded-full py-2 px-4 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-slate-300 placeholder:text-slate-500" name="q" placeholder="Tên khóa học" th:value="${q}" type="text"/>
+                <button class="px-4 py-2 rounded-full border border-primary/30 text-primary hover:border-primary transition-all text-sm font-bold" type="submit">Lọc</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8" th:if="${page != null}">
+        <div class="gold-gradient-border rounded-xl overflow-hidden group hover:scale-[1.02] transition-transform duration-500 premium-shadow" th:each="c : ${page.content}">
+            <div class="h-64 relative overflow-hidden">
+                <div class="absolute inset-0 bg-background-dark/40 group-hover:bg-background-dark/20 transition-all z-10"></div>
+                <div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Thư viện cổ điển sang trọng" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCADxRQKVIkS5dIR7mEfsNsizoi_FYdtBNlcJwBN5I2S31eVPN_qUBuLm_lRVtBGnGa6FgSrnxfhOvYprWKBq2QIGbpOHxKaZsAZGVvBRE2EXVPiPXdlPYZj0hviB0P_eNWYwgXY1jsONxJbKqyEAS2pskiegk-0Sss6IYcO77uYtrd1xaHJAC5soKKX9hdsHAH1n2LVoFqd_YOrQEms-a9GLBihDZjfX2gUoB8ZWmTcTIdbRRXAt93f7G9ReA562tFAgbUt00tL_Aw')"></div>
+                <div class="absolute top-4 right-4 z-20 flex flex-col gap-2">
+                    <span class="bg-primary text-background-dark text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter" th:text="${c.active ? 'Active' : 'Inactive'}">Active</span>
+                </div>
+                <div class="absolute bottom-4 left-4 z-20">
+                    <span class="text-xs font-bold text-primary bg-background-dark/80 px-3 py-1 rounded backdrop-blur uppercase tracking-widest border border-primary/30" th:text="${c.level}">Học thuật</span>
+                </div>
+            </div>
+            <div class="p-8 bg-background-dark/50 glass-card">
+                <h3 class="text-2xl font-bold text-white mb-2 group-hover:text-primary transition-colors" th:text="${c.name}">IELTS Mastery Elite 8.5+</h3>
+                <p class="text-slate-400 text-sm font-sans line-clamp-2 mb-6">Lộ trình cá nhân hóa được thiết kế bởi các chuyên gia ngôn ngữ hàng đầu.</p>
+                <div class="flex items-center justify-between mb-8 pb-6 border-b border-primary/10">
+                    <div class="flex items-center gap-2 text-primary">
+                        <span class="material-symbols-outlined text-lg">schedule</span>
+                        <span class="text-sm font-medium uppercase tracking-tighter" th:text="${c.durationWeeks + ' tuần'}">6 Tháng chuyên sâu</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-primary text-sm fill-1">star</span>
+                        <span class="material-symbols-outlined text-primary text-sm fill-1">star</span>
+                        <span class="material-symbols-outlined text-primary text-sm fill-1">star</span>
+                        <span class="material-symbols-outlined text-primary text-sm fill-1">star</span>
+                        <span class="material-symbols-outlined text-primary text-sm fill-1">star</span>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-[10px] uppercase text-primary/50 tracking-widest">Học phí đầu tư</p>
+                        <p class="text-2xl font-bold text-primary" th:text="${c.fee}">45.000.000</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <a class="p-3 rounded-full border border-primary/50 text-primary hover:bg-primary hover:text-background-dark transition-all" th:href="@{/admin/course/edit/{id}(id=${c.id})}" title="Sửa">
+                            <span class="material-symbols-outlined">edit</span>
+                        </a>
+                        <a class="p-3 rounded-full border border-red-500/50 text-red-400 hover:bg-red-500 hover:text-white transition-all" th:href="@{/admin/course/delete/{id}(id=${c.id})}" onclick="return confirm('Bạn có chắc muốn xóa?')" title="Xóa">
+                            <span class="material-symbols-outlined">delete</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-20 py-10 border-t border-primary/10 flex flex-col md:flex-row items-center justify-between gap-6" th:if="${page != null}">
+        <p class="text-primary/40 text-sm" th:text="'Hiển thị ' + ${page.numberOfElements} + ' trên tổng số ' + ${page.totalElements} + ' khóa học'">Hiển thị 3 trên tổng số 12 khóa học</p>
+        <div class="flex items-center gap-4">
+            <a class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary/30" th:classappend="${page.first} ? ' cursor-not-allowed' : ''" th:href="@{/admin/course(page=${page.number-1}, size=${page.size}, q=${q})}">
+                <span class="material-symbols-outlined">chevron_left</span>
+            </a>
+            <a class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary font-bold" th:each="i : ${#numbers.sequence(0, page.totalPages-1)}" th:classappend="${i==page.number} ? ' bg-primary text-background-dark border-primary' : ''" th:href="@{/admin/course(page=${i}, size=${page.size}, q=${q})}" th:text="${i+1}">1</a>
+            <a class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary/30" th:classappend="${page.last} ? ' cursor-not-allowed' : ''" th:href="@{/admin/course(page=${page.number+1}, size=${page.size}, q=${q})}">
+                <span class="material-symbols-outlined">chevron_right</span>
+            </a>
+        </div>
+    </div>
+</section>
+</html>

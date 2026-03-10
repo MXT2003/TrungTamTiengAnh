@@ -1,89 +1,69 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="admin/layout :: layout(~{::section})">
-
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout :: layout(~{::section}, 'Cập nhật lớp học')}">
 <section>
-    <style>
-        .panel-custom {
-            border-radius: 8px;
-            border-top: 5px solid #3f51b5;
-            /* Primary color for "Classes" related items in this theme */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            background: #fff;
-            padding: 30px;
-        }
+    <div class="max-w-4xl mx-auto">
+        <div class="gold-gradient-border rounded-2xl p-8 glass-card">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h1 class="text-3xl font-bold text-white font-display">Thêm / Sửa lớp học</h1>
+                    <p class="text-slate-400 text-sm">Thiết lập lịch học và thông tin giáo viên</p>
+                </div>
+                <a class="text-primary hover:underline" href="/admin/lophoc">Quay lại danh sách</a>
+            </div>
 
-        .form-control {
-            border-radius: 4px;
-            box-shadow: none;
-            height: 45px;
-        }
+            <form th:action="@{/admin/lophoc/save}" th:object="${lophoc}" method="post" class="space-y-6">
+                <div th:if="${#fields.hasGlobalErrors()}" class="text-red-400 text-sm">
+                    <div th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
+                </div>
 
-        .form-control:focus {
-            border-color: #3f51b5;
-            box-shadow: none;
-        }
+                <input type="hidden" th:field="*{id}" />
 
-        .btn-custom {
-            background-color: #3f51b5;
-            color: #fff;
-            border-radius: 50px;
-            padding: 10px 20px;
-            border: none;
-            transition: all 0.3s;
-        }
-
-        .btn-custom:hover {
-            background-color: #2e3a80;
-            color: #fff;
-        }
-
-        .action-links {
-            display: inline-block;
-            margin-left: 15px;
-        }
-
-        .action-links a {
-            color: #757575;
-            font-weight: bold;
-        }
-
-        .action-links a:hover {
-            color: #353535;
-        }
-    </style>
-
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel-custom">
-                <h3 style="margin-bottom: 25px; color: #353535; font-weight: bold;">Thêm / Sửa lớp học</h3>
-
-                <form th:action="@{/admin/lophoc/save}" th:object="${lophoc}" method="post">
-                    <div th:if="${#fields.hasGlobalErrors()}" style="color:#e74a3b; margin:10px 0;">
-                        <div th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-300">Tên lớp</label>
+                    <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="text" th:field="*{tenLop}" required />
+                    <div th:if="${#fields.hasErrors('tenLop')}" class="text-red-400 text-xs mt-2">
+                        <span th:errors="*{tenLop}"></span>
                     </div>
+                </div>
 
-                    <input type="hidden" th:field="*{id}" />
-
-                    <div class="form-group">
-                        <label>Tên lớp</label>
-                        <input type="text" class="form-control" th:field="*{tenLop}" required />
-                        <div th:if="${#fields.hasErrors('tenLop')}" style="color:#e74a3b; font-size:12px; margin-top:6px;">
-                            <span th:errors="*{tenLop}"></span>
-                        </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Khóa học</label>
+                        <select class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" name="courseId">
+                            <option value="">-- Chọn khóa học --</option>
+                            <option th:each="c : ${courses}" th:value="${c.id}" th:text="${c.name}" th:selected="${lophoc.course != null && lophoc.course.id == c.id}"></option>
+                        </select>
                     </div>
-
-                    <div class="form-group">
-                        <label>Giáo viên</label>
-                        <input type="text" class="form-control" th:field="*{giaoVien}" required />
-                        <div th:if="${#fields.hasErrors('giaoVien')}" style="color:#e74a3b; font-size:12px; margin-top:6px;">
-                            <span th:errors="*{giaoVien}"></span>
-                        </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Giáo viên</label>
+                        <select class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" name="teacherId">
+                            <option value="">-- Chọn giáo viên --</option>
+                            <option th:each="t : ${teachers}" th:value="${t.id}" th:text="${t.fullName}" th:selected="${lophoc.teacher != null && lophoc.teacher.id == t.id}"></option>
+                        </select>
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label>Thu</label>
-                        <select class="form-control" th:field="*{thu}">
-                            <option value="">--Chon--</option>
+                <div>
+                    <label class="block text-sm font-medium text-slate-300">Giáo viên (tên hiển thị)</label>
+                    <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="text" th:field="*{giaoVien}" required />
+                    <div th:if="${#fields.hasErrors('giaoVien')}" class="text-red-400 text-xs mt-2">
+                        <span th:errors="*{giaoVien}"></span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Ngày bắt đầu</label>
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="date" th:field="*{ngayBatDau}" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Ngày kết thúc</label>
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="date" th:field="*{ngayKetThuc}" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Thứ</label>
+                        <select class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" th:field="*{thu}">
+                            <option value="">-- Chọn --</option>
                             <option value="MON">Mon</option>
                             <option value="TUE">Tue</option>
                             <option value="WED">Wed</option>
@@ -93,64 +73,56 @@
                             <option value="SUN">Sun</option>
                         </select>
                     </div>
-
-                    <div class="form-group">
-                        <label>Gio bat dau</label>
-                        <input type="time" class="form-control" th:field="*{gioBatDau}" />
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Giờ bắt đầu</label>
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="time" th:field="*{gioBatDau}" />
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label>Gio ket thuc</label>
-                        <input type="time" class="form-control" th:field="*{gioKetThuc}" />
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Giờ kết thúc</label>
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="time" th:field="*{gioKetThuc}" />
                     </div>
-
-                    <div class="form-group">
-                        <label>Lịch học</label>
-                        <input type="text" class="form-control" th:field="*{lichHoc}" required />
-                        <div th:if="${#fields.hasErrors('lichHoc')}" style="color:#e74a3b; font-size:12px; margin-top:6px;">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Lịch học</label>
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="text" th:field="*{lichHoc}" required />
+                        <div th:if="${#fields.hasErrors('lichHoc')}" class="text-red-400 text-xs mt-2">
                             <span th:errors="*{lichHoc}"></span>
                         </div>
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label>Sĩ số</label>
-                        <input type="number" class="form-control" th:field="*{siSo}" required />
-                        <div th:if="${#fields.hasErrors('siSo')}" style="color:#e74a3b; font-size:12px; margin-top:6px;">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Sĩ số</label>
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="number" th:field="*{siSo}" required />
+                        <div th:if="${#fields.hasErrors('siSo')}" class="text-red-400 text-xs mt-2">
                             <span th:errors="*{siSo}"></span>
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <label>Học phí</label>
-                        <input type="number" class="form-control" th:field="*{hocPhi}" required />
-                        <div th:if="${#fields.hasErrors('hocPhi')}" style="color:#e74a3b; font-size:12px; margin-top:6px;">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Học phí</label>
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="number" th:field="*{hocPhi}" required />
+                        <div th:if="${#fields.hasErrors('hocPhi')}" class="text-red-400 text-xs mt-2">
                             <span th:errors="*{hocPhi}"></span>
                         </div>
                     </div>
-
-                    
-                    <div class="form-group">
-                        <label>Trang thai dang ky</label>
-                        <select class="form-control" th:field="*{moDangKy}">
-                            <option th:value="true">Mo dang ky</option>
-                            <option th:value="false">Dong dang ky</option>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Trạng thái đăng ký</label>
+                        <select class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" th:field="*{moDangKy}">
+                            <option th:value="true">Mở đăng ký</option>
+                            <option th:value="false">Đóng đăng ký</option>
                         </select>
                     </div>
-<div style="margin-top: 30px;">
-                        <button type="submit" class="btn btn-custom"><i class="fa fa-save"></i> Lưu</button>
+                </div>
 
-                        <div class="action-links">
-                            <a href="/admin/lophoc"><i class="fa fa-arrow-left"></i> Quay lại danh sách</a>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                <div class="flex items-center gap-4 pt-2">
+                    <button type="submit" class="px-6 py-3 rounded-lg bg-primary text-background-dark font-bold hover:bg-champagne transition-all">Lưu</button>
+                    <a href="/admin/lophoc" class="px-6 py-3 rounded-lg border border-primary/30 text-primary hover:border-primary transition-all">Hủy</a>
+                </div>
+            </form>
         </div>
     </div>
-
 </section>
-
 </html>
-
-
-

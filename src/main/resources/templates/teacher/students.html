@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{teacher/layout :: layout(~{::section}, 'Danh sách học viên')}">
+<section>
+    <h3 class="text-xl font-bold mb-4" th:text="'Học viên lớp: ' + ${lopHoc.tenLop}"></h3>
+
+    <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+        <table class="min-w-full divide-y divide-white/10">
+            <thead class="bg-white/5 text-slate-300">
+                <tr>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Username</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Trạng thái</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Ngày đăng ký</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+                <tr class="hover:bg-white/5" th:each="dk : ${list}">
+                    <td class="px-4 py-3" th:text="${dk.student.username}"></td>
+                    <td class="px-4 py-3" th:text="${dk.trangThai}"></td>
+                    <td class="px-4 py-3" th:text="${dk.ngayDangKy}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-6">
+        <a th:href="@{/teacher/classes}" class="text-primary hover:underline">Quay lại</a>
+    </div>
+</section>
+</html>

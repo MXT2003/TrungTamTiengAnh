@@ -1,97 +1,72 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="admin/layout :: layout(~{::section})">
-
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout :: layout(~{::section}, 'Duyệt đăng ký')}">
 <section>
-    <style>
-        .panel-custom {
-            border-radius: 8px;
-            border-top: 5px solid #29ca8e;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            background: #fff;
-            padding: 30px;
-        }
-
-        .table>thead>tr>th {
-            border-bottom: 2px solid #29ca8e;
-            color: #353535;
-        }
-
-        .btn-custom-success {
-            background-color: #29ca8e;
-            color: #fff;
-            border-radius: 50px;
-            padding: 5px 15px;
-            border: none;
-            transition: all 0.3s;
-        }
-
-        .btn-custom-success:hover {
-            background-color: #23ba81;
-            color: #fff;
-        }
-
-        .status-badge {
-            background-color: #f6c23e;
-            color: #fff;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .status-badge.approved { background-color: #1cc88a; }
-        .status-badge.rejected { background-color: #e74a3b; }
-        .status-badge.canceled { background-color: #6c757d; }
-    </style>
-
-    <div class="panel-custom">
-        <h3 style="margin-bottom: 25px; color: #353535; font-weight: bold;">Danh sach dang ky</h3>
-
-        <div class="table-responsive">
-            <table class="table table-hover table-striped mt-3">
-                <thead>
-                    <tr>
-                        <th>Hoc vien</th>
-                        <th>Lop</th>
-                        <th>Trang thai</th>
-                        <th>Ghi chu</th>
-                        <th>Hanh dong</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="dk : ${list}">
-                        <td th:text="${dk.student.username}" style="font-weight: bold; color: #353535;"></td>
-                        <td th:text="${dk.lopHoc.tenLop}"></td>
-                        <td>
-                            <span class="status-badge"
-                                  th:classappend="${dk.trangThai == 'DA_DUYET' ? 'approved' : (dk.trangThai == 'TU_CHOI' ? 'rejected' : (dk.trangThai == 'HUY' ? 'canceled' : ''))}"
-                                  th:text="${dk.trangThai}"></span>
-                        </td>
-                        <td th:text="${dk.ghiChu}"></td>
-                        <td>
-                            <a th:if="${dk.trangThai == 'CHO_DUYET'}"
-                               th:href="@{/admin/dangky/duyet/{id}(id=${dk.id})}"
-                               class="btn btn-custom-success btn-sm">
-                                <i class="fa fa-check"></i> Duyet
-                            </a>
-
-                            <form th:if="${dk.trangThai == 'CHO_DUYET'}"
-                                  th:action="@{/admin/dangky/tuchoi/{id}(id=${dk.id})}"
-                                  method="post" style="margin-top:8px;">
-                                <input type="text" name="ghiChu" class="form-control" placeholder="Ly do" style="margin-bottom:6px;" />
-                                <button type="submit" class="btn btn-danger btn-sm">Tu choi</button>
-                            </form>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="action-links">
-            <a href="/admin/home"><i class="fa fa-arrow-left"></i> Quay lai Dashboard</a>
+    <div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-10 border-l-4 border-primary pl-6">
+        <div>
+            <h1 class="text-3xl md:text-4xl font-bold text-white font-display">Danh sách đăng ký</h1>
+            <p class="text-primary/70 mt-2 italic">Duyệt yêu cầu tham gia lớp học</p>
         </div>
     </div>
 
-</section>
+    <form class="mb-6 flex flex-col md:flex-row gap-4" method="get">
+        <select name="status" class="rounded-lg bg-white/5 border border-white/10 text-slate-100">
+            <option value="">Tất cả trạng thái</option>
+            <option value="CHO_DUYET" th:selected="${status == 'CHO_DUYET'}">CHO_DUYET</option>
+            <option value="DA_DUYET" th:selected="${status == 'DA_DUYET'}">DA_DUYET</option>
+            <option value="TU_CHOI" th:selected="${status == 'TU_CHOI'}">TU_CHOI</option>
+            <option value="HUY" th:selected="${status == 'HUY'}">HUY</option>
+        </select>
+        <button type="submit" class="px-6 py-3 rounded-lg border border-primary/30 text-primary hover:border-primary transition-all">Lọc</button>
+    </form>
 
+    <div class="overflow-hidden rounded-2xl border border-primary/10 glass-card">
+        <table class="min-w-full divide-y divide-white/10">
+            <thead class="bg-white/5 text-slate-300">
+                <tr>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Học viên</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Lớp</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Trạng thái</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Ghi chú</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Hành động</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+                <tr class="hover:bg-white/5" th:each="dk : ${page.content}">
+                    <td class="px-4 py-3 font-semibold text-slate-100" th:text="${dk.student.username}"></td>
+                    <td class="px-4 py-3" th:text="${dk.lopHoc.tenLop}"></td>
+                    <td class="px-4 py-3">
+                        <span class="px-2 py-1 text-xs rounded-full"
+                              th:classappend="${dk.trangThai == 'DA_DUYET' ? ' bg-green-500/20 text-green-300' : (dk.trangThai == 'TU_CHOI' ? ' bg-red-500/20 text-red-300' : (dk.trangThai == 'HUY' ? ' bg-slate-500/20 text-slate-300' : ' bg-amber-500/20 text-amber-300'))}"
+                              th:text="${dk.trangThai}"></span>
+                    </td>
+                    <td class="px-4 py-3" th:text="${dk.ghiChu}"></td>
+                    <td class="px-4 py-3">
+                        <div class="flex flex-col gap-2" th:if="${dk.trangThai == 'CHO_DUYET'}">
+                            <a th:href="@{/admin/dangky/duyet/{id}(id=${dk.id})}" class="px-3 py-2 rounded-lg bg-green-500/20 text-green-300 border border-green-500/40 hover:bg-green-500 hover:text-white transition-all text-center">
+                                Duyệt
+                            </a>
+                            <form th:action="@{/admin/dangky/tuchoi/{id}(id=${dk.id})}" method="post" class="flex flex-col gap-2">
+                                <input type="text" name="ghiChu" class="rounded-lg bg-white/5 border border-white/10 text-slate-100" placeholder="Lý do" />
+                                <button type="submit" class="px-3 py-2 rounded-lg border border-red-500/40 text-red-400 hover:bg-red-500 hover:text-white transition-all">Từ chối</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-8 flex justify-between items-center" th:if="${page != null}">
+        <div class="text-primary/50 text-sm" th:text="'Trang ' + ${page.number+1} + ' / ' + ${page.totalPages}">Trang 1 / 1</div>
+        <div class="flex items-center gap-2">
+            <a class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary/30" th:classappend="${page.first} ? ' cursor-not-allowed' : ''" th:href="@{/admin/dangky(page=${page.number-1}, size=${page.size}, status=${status})}">
+                <span class="material-symbols-outlined">chevron_left</span>
+            </a>
+            <a class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary font-bold" th:each="i : ${#numbers.sequence(0, page.totalPages-1)}" th:classappend="${i==page.number} ? ' bg-primary text-background-dark border-primary' : ''" th:href="@{/admin/dangky(page=${i}, size=${page.size}, status=${status})}" th:text="${i+1}">1</a>
+            <a class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary/30" th:classappend="${page.last} ? ' cursor-not-allowed' : ''" th:href="@{/admin/dangky(page=${page.number+1}, size=${page.size}, status=${status})}">
+                <span class="material-symbols-outlined">chevron_right</span>
+            </a>
+        </div>
+    </div>
+</section>
 </html>

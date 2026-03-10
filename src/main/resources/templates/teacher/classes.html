@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{teacher/layout :: layout(~{::section}, 'Lớp giảng dạy')}">
+<section>
+    <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+        <table class="min-w-full divide-y divide-white/10">
+            <thead class="bg-white/5 text-slate-300">
+                <tr>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Tên lớp</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Lịch học</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Học phí</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Hành động</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+                <tr class="hover:bg-white/5" th:each="c : ${classes}">
+                    <td class="px-4 py-3" th:text="${c.tenLop}"></td>
+                    <td class="px-4 py-3" th:text="${c.lichHoc}"></td>
+                    <td class="px-4 py-3" th:text="${c.hocPhi}"></td>
+                    <td class="px-4 py-3">
+                        <div class="flex flex-wrap gap-2">
+                            <a th:href="@{/teacher/class/{id}/students(id=${c.id})}" class="px-3 py-2 rounded-lg border border-primary/30 text-primary hover:border-primary transition-all">Học viên</a>
+                            <a th:href="@{/teacher/class/{id}/attendance(id=${c.id})}" class="px-3 py-2 rounded-lg border border-primary/30 text-primary hover:border-primary transition-all">Điểm danh</a>
+                            <a th:href="@{/teacher/class/{id}/scores(id=${c.id})}" class="px-3 py-2 rounded-lg border border-primary/30 text-primary hover:border-primary transition-all">Nhập điểm</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-6">
+        <a href="/teacher/home" class="text-primary hover:underline">Quay lại</a>
+    </div>
+</section>
+</html>

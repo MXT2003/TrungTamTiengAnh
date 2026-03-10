@@ -1,51 +1,38 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="admin/layout :: layout(~{::section})">
-
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout :: layout(~{::section}, 'Phân công giảng dạy')}">
 <section>
-    <style>
-        .panel-custom {
-            border-radius: 8px;
-            border-top: 5px solid #3f51b5;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            background: #fff;
-            padding: 30px;
-        }
-    </style>
-
-    <div class="panel-custom">
-        <h3 style="margin-bottom: 25px; color: #353535; font-weight: bold;">Phan cong giao vien</h3>
-
-        <div class="table-responsive">
-            <table class="table table-hover table-striped">
-                <thead>
-                    <tr>
-                        <th>Lop</th>
-                        <th>Giao vien hien tai</th>
-                        <th>Chon giao vien</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="lh : ${classes}">
-                        <td th:text="${lh.tenLop}"></td>
-                        <td th:text="${lh.teacher != null ? lh.teacher.fullName : lh.giaoVien}"></td>
-                        <td>
-                            <form th:action="@{/admin/phancong/{id}(id=${lh.id})}" method="post">
-                                <div style="display:flex; gap:8px;">
-                                    <select class="form-control" name="teacherId">
-                                        <option value="">--None--</option>
-                                        <option th:each="t : ${teachers}" th:value="${t.id}" th:text="${t.fullName}"
-                                                th:selected="${lh.teacher != null && lh.teacher.id == t.id}"></option>
-                                    </select>
-                                    <button type="submit" class="btn btn-primary btn-sm">Luu</button>
-                                </div>
-                            </form>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    <div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-10 border-l-4 border-primary pl-6">
+        <div>
+            <h1 class="text-3xl md:text-4xl font-bold text-white font-display">Phân công giáo viên</h1>
+            <p class="text-primary/70 mt-2 italic">Gán giáo viên phụ trách từng lớp</p>
         </div>
     </div>
 
+    <div class="overflow-hidden rounded-2xl border border-primary/10 glass-card">
+        <table class="min-w-full divide-y divide-white/10">
+            <thead class="bg-white/5 text-slate-300">
+                <tr>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Lớp</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Giáo viên hiện tại</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Chọn giáo viên</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+                <tr class="hover:bg-white/5" th:each="lh : ${classes}">
+                    <td class="px-4 py-3" th:text="${lh.tenLop}"></td>
+                    <td class="px-4 py-3" th:text="${lh.teacher != null ? lh.teacher.fullName : lh.giaoVien}"></td>
+                    <td class="px-4 py-3">
+                        <form th:action="@{/admin/phancong/{id}(id=${lh.id})}" method="post" class="flex flex-col md:flex-row gap-3">
+                            <select class="rounded-lg bg-white/5 border border-white/10 text-slate-100" name="teacherId">
+                                <option value="">--None--</option>
+                                <option th:each="t : ${teachers}" th:value="${t.id}" th:text="${t.fullName}" th:selected="${lh.teacher != null && lh.teacher.id == t.id}"></option>
+                            </select>
+                            <button type="submit" class="px-4 py-2 rounded-lg bg-primary text-background-dark font-bold hover:bg-champagne transition-all">Lưu</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </section>
-
 </html>

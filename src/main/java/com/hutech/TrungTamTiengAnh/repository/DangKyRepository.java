@@ -2,6 +2,8 @@ package com.hutech.TrungTamTiengAnh.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import com.hutech.TrungTamTiengAnh.entity.DangKy;
 
 import java.util.List;
@@ -15,6 +17,10 @@ public interface DangKyRepository extends JpaRepository<DangKy, Long> {
     long countByLopHocId(Long lopHocId);
 
     long countByLopHocIdAndTrangThaiIn(Long lopHocId, List<String> trangThai);
+
+    List<DangKy> findByLopHocIdAndTrangThaiIn(Long lopHocId, List<String> trangThai);
+
+    Page<DangKy> findByTrangThai(String trangThai, Pageable pageable);
 
     long count();
 

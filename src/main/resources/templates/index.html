@@ -1,298 +1,382 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+﻿<!DOCTYPE html>
+<html class="dark" lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Trung Tâm Tiếng Anh - Trang chủ</title>
-
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
-    <link rel="stylesheet" th:href="@{/css/templatemo-style.css}">
-
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#e0b329",
+                        "background-light": "#f8f7f6",
+                        "background-dark": "#1a1710",
+                        "accent-gold": "#c5a028",
+                        "surface-dark": "#2a261a",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"],
+                        "sans": ["Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
         body {
-            background-color: #f4f6f9;
+            font-family: 'Noto Sans', sans-serif;
         }
-
-        .custom-navbar {
-            background: #ffffff;
-            border-top: 5px solid #29ca8e;
-            box-shadow: 0 1px 30px rgba(0, 0, 0, 0.1);
-            margin-bottom: 0;
-            padding: 12px 0;
+        h1, h2, h3, .font-display {
+            font-family: 'Noto Serif', serif;
         }
-
-        .navbar-brand {
-            color: #454545 !important;
-            font-size: 24px !important;
-            font-weight: bold;
+        .gold-gradient {
+            background: linear-gradient(135deg, #e0b329 0%, #b38b1d 100%);
         }
-
-        .hero-section {
-            background: linear-gradient(rgba(41, 202, 142, 0.8), rgba(63, 81, 181, 0.8)), url('https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=2070&auto=format&fit=crop') no-repeat center center;
-            background-size: cover;
-            color: white;
-            padding: 180px 0 120px;
-            text-align: center;
-        }
-
-        .hero-section h1 {
-            font-size: 60px;
-            font-weight: 800;
-            margin-bottom: 25px;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .hero-section p {
-            font-size: 22px;
-            margin-bottom: 45px;
-            font-weight: 300;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-        }
-
-        .btn-custom {
-            background-color: #ffffff;
-            color: #29ca8e;
-            border-radius: 50px;
-            padding: 15px 40px;
-            font-size: 18px;
-            font-weight: bold;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-            margin: 0 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-custom:hover {
-            background-color: #29ca8e;
-            color: #ffffff;
-            box-shadow: 0 8px 25px rgba(41, 202, 142, 0.4);
-            transform: translateY(-2px);
-        }
-
-        .btn-custom-outline {
-            background-color: transparent;
-            color: #ffffff;
-            border: 2px solid #ffffff;
-            border-radius: 50px;
-            padding: 13px 40px;
-            font-size: 18px;
-            font-weight: bold;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-            margin: 0 10px;
-        }
-
-        .btn-custom-outline:hover {
-            background-color: #ffffff;
-            color: #29ca8e;
-        }
-
-        .feature-box {
-            background: #ffffff;
-            border-radius: 15px;
-            padding: 50px 30px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: all 0.4s ease;
-            margin-bottom: 30px;
-            border-top: 5px solid transparent;
-        }
-
-        .feature-box:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-            border-top: 5px solid #29ca8e;
-        }
-
-        .feature-icon {
-            font-size: 60px;
-            color: #3f51b5;
-            margin-bottom: 25px;
-            transition: all 0.3s ease;
-        }
-
-        .feature-box:hover .feature-icon {
-            color: #29ca8e;
-            transform: scale(1.1);
-        }
-
-        .footer {
-            background: #1a1a1a;
-            color: #aaaaaa;
-            padding: 80px 0 30px;
-            margin-top: 80px;
-        }
-
-        .footer h3 {
-            color: #ffffff;
-            margin-bottom: 25px;
-            position: relative;
-            padding-bottom: 15px;
-        }
-
-        .footer h3::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 40px;
-            height: 3px;
-            background-color: #29ca8e;
-        }
-
-        .nav li a {
-            color: #575757 !important;
-            font-weight: bold;
-            font-size: 15px;
-            padding: 15px 20px;
-            transition: all 0.3s;
-        }
-
-        .nav li a:hover {
-            color: #29ca8e !important;
-            background: transparent !important;
+        .soft-glow {
+            box-shadow: 0 0 20px rgba(224, 179, 41, 0.15);
         }
     </style>
 </head>
+<body class="text-slate-900 dark:text-slate-100 min-h-screen bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-slate-900 via-purple-900 to-slate-900">
+<canvas class="fixed inset-0 z-10 pointer-events-none" id="particle-canvas"></canvas>
+<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+<div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-900/30 blur-[150px] rounded-full"></div>
+<div class="absolute top-1/4 right-1/4 w-[30%] h-[30%] bg-primary/10 blur-[100px] rounded-full"></div>
+</div>
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-white/10 px-6 py-4 lg:px-20 bg-black/40 backdrop-blur-xl sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-8">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-xl font-display font-bold leading-tight tracking-tight uppercase">Cổng Học Viên</h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-slate-300 hover:text-primary transition-colors text-sm font-medium" href="/">Trang chủ</a>
+<a class="text-slate-300 hover:text-primary transition-colors text-sm font-medium" href="#courses">Khóa học</a>
+<a class="text-slate-300 hover:text-primary transition-colors text-sm font-medium" href="/login">Đăng nhập</a>
+<a class="text-slate-300 hover:text-primary transition-colors text-sm font-medium" href="/register">Đăng ký</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<div class="hidden sm:flex items-center bg-surface-dark border border-primary/20 rounded-lg px-3 py-1.5 w-64">
+<span class="material-symbols-outlined text-primary/60 text-xl">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder:text-slate-500" placeholder="Tìm kiếm khóa học..." type="text"/>
+</div>
+<div class="flex gap-3">
+<a class="flex items-center justify-center rounded-lg size-10 bg-surface-dark border border-primary/20 text-primary hover:bg-primary/10 transition-all" href="/login" title="Đăng nhập">
+<span class="material-symbols-outlined">account_circle</span>
+</a>
+<a class="flex items-center justify-center rounded-lg size-10 bg-surface-dark border border-primary/20 text-primary hover:bg-primary/10 transition-all" href="/register" title="Đăng ký">
+<span class="material-symbols-outlined">app_registration</span>
+</a>
+</div>
+</div>
+</header>
+<main class="flex-1">
+<div class="relative w-full aspect-[21/9] min-h-[500px] flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-r from-background-dark via-background-dark/60 to-transparent z-10 bg-gradient-to-r from-black via-black/40 to-transparent z-10"></div>
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Luxury library interior with golden lighting" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBN_pDQTeU-j-msEkCxrjYJNCoSM_19KCeMLTsQeWpjqbJ1vzGTn0tnD6chlMibLQNE70_AdIXw8c8iU_fmSwWx0W0VCeTNLwUj3sqEhGdGGCf_5JBMom9lrThEOaVCJ-75qilKqzgonGKFnTiL9skvLVBReO9ATmJCwc0fk_Dbe6wuIbg4BKk7ECCINQ87MIu2B2ENw1Uz9V6vNF1J4wakpPMh6oYD6BDsqV3u8b-ZMqNHTRA4Zwn7mPZBarmm_OjSegdJMa6-SkeY");'></div>
+<div class="relative z-20 container mx-auto px-6 lg:px-20 text-left max-w-4xl mr-auto">
+<div class="space-y-6">
+<span class="text-primary font-display tracking-[0.2em] uppercase text-sm font-bold border-l-2 border-primary pl-4">Chào mừng đến với Royal Academy</span>
+<h1 class="text-white text-5xl lg:text-7xl font-display font-bold leading-[1.1] drop-shadow-lg">
+                                Mở cánh cửa <br/><span class="text-primary italic">tri thức hoàng gia</span>
+</h1>
+<p class="text-slate-300 text-lg max-w-xl font-display italic">
+                                Trải nghiệm môi trường giáo dục đẳng cấp quốc tế với đội ngũ chuyên gia hàng đầu và lộ trình cá nhân hóa.
+                            </p>
+<div class="flex flex-wrap gap-4 pt-4">
+<a class="gold-gradient text-background-dark px-8 py-4 rounded-lg font-bold uppercase tracking-wider text-sm hover:scale-105 transition-transform soft-glow" href="/register">
+                                    Ghi danh ngay
+                                </a>
+<a class="border border-primary/50 text-primary px-8 py-4 rounded-lg font-bold uppercase tracking-wider text-sm hover:bg-primary/10 transition-all" href="#courses">
+                                    Khám phá lộ trình
+                                </a>
+</div>
+</div>
+</div>
+</div>
+<div class="container mx-auto px-6 lg:px-20 -mt-16 relative z-30">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-xl flex items-center gap-6 shadow-2xl hover:border-primary/40 transition-all duration-500">
+<div class="size-14 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl">school</span>
+</div>
+<div>
+<p class="text-slate-400 text-xs uppercase tracking-widest font-bold">Học viên thành đạt</p>
+<p class="text-white text-3xl font-display font-bold">5,000+</p>
+</div>
+</div>
+<div class="bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-xl flex items-center gap-6 shadow-2xl hover:border-primary/40 transition-all duration-500">
+<div class="size-14 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl">language</span>
+</div>
+<div>
+<p class="text-slate-400 text-xs uppercase tracking-widest font-bold">Giáo viên bản ngữ</p>
+<p class="text-white text-3xl font-display font-bold">100%</p>
+</div>
+</div>
+<div class="bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-xl flex items-center gap-6 shadow-2xl hover:border-primary/40 transition-all duration-500">
+<div class="size-14 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl">star</span>
+</div>
+<div>
+<p class="text-slate-400 text-xs uppercase tracking-widest font-bold">Tỷ lệ hài lòng</p>
+<p class="text-white text-3xl font-display font-bold">99%</p>
+</div>
+</div>
+</div>
+</div>
+<div class="container mx-auto px-6 lg:px-20 py-20">
+<div class="flex justify-between items-end mb-12 border-b border-primary/10 pb-6">
+<div>
+<h2 class="text-primary text-sm font-bold uppercase tracking-[0.3em] mb-2">My Learning Journey</h2>
+<h3 class="text-white text-3xl font-display font-bold">Tiến độ học tập của bạn</h3>
+</div>
+<a class="text-primary hover:underline flex items-center gap-2 font-medium" href="#">
+                            Tất cả lịch sử <span class="material-symbols-outlined">arrow_right_alt</span>
+</a>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-6 flex gap-6 items-center hover:bg-white/10 transition-all">
+<div class="size-24 rounded-lg overflow-hidden shrink-0">
+<div class="w-full h-full bg-cover bg-center" data-alt="English classroom discussion" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDT_psJGdnplCP_5zAVW-HKrPS33S9xKVz1i_V4P-94Yczdcci4_OBCsYBhKYmxV1IHiaMbI3VxdHO6HNsuhDy1tyG2rUCvAVBGVUEviIYoTaFH8EOXa9khvkzRm4z9y-eM5yqmp4eRKgBhg68HTqA9S1DMaPW4kMriLN8zd6mqKhVL_lyR39hToJBzFoQq3-Kd140aM1DTu1xjzLvHzEBBTh-1Gu4QaQDw-BLvdOmmdLYmKPFby5jB4S8kaJWPikzLAFmyKs9Ivmwa");'></div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-2">
+<h4 class="text-white font-display font-bold text-lg">IELTS Intensive Band 7.5+</h4>
+<span class="bg-primary/20 text-primary text-[10px] px-2 py-1 rounded uppercase font-bold">Đang học</span>
+</div>
+<div class="w-full bg-background-dark h-2 rounded-full mb-3">
+<div class="bg-primary h-full rounded-full" style="width: 65%"></div>
+</div>
+<div class="flex justify-between text-xs text-slate-400">
+<span>Bài 12/20: Advanced Writing</span>
+<span>65% Hoàn thành</span>
+</div>
+</div>
+</div>
+<div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-6 flex gap-6 items-center hover:bg-white/10 transition-all">
+<div class="size-24 rounded-lg overflow-hidden shrink-0">
+<div class="w-full h-full bg-cover bg-center" data-alt="Business meeting scenario" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBCpTJ5Ais_l3_s-4yS6lkHHF_JK73Gn5c0BWYOHApYxWcXDcWmK4U1i1HPmgRQ0dIc4fTxe4ZWJCj3dApTmX3YarQl6n3TWyENS-zICAm7cj6sXzxiOOAedJKnQWdZmIaA7YBl78yfgWcrxTXrskDP8qDynTpJox7qVmyzHav8OYq9x0r4KbIicPah4H5LDNx5n2Lvggz5AMCo3PY2qcuPPQQI8dxDb0qG411vFuU2G0nOPh08di8bC8rhB2_p4xZs7ftg1jDcryKk");'></div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-2">
+<h4 class="text-white font-display font-bold text-lg">Business English Elite</h4>
+<span class="bg-green-500/20 text-green-500 text-[10px] px-2 py-1 rounded uppercase font-bold">Hoàn thành</span>
+</div>
+<div class="w-full bg-background-dark h-2 rounded-full mb-3">
+<div class="bg-green-500 h-full rounded-full" style="width: 100%"></div>
+</div>
+<div class="flex justify-between text-xs text-slate-400">
+<span>Chứng chỉ cấp ngày 15/10/2023</span>
+<span>100% Hoàn thành</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="py-20" id="courses">
+<div class="container mx-auto px-6 lg:px-20">
+<div class="text-center mb-16">
+<h2 class="text-primary text-sm font-bold uppercase tracking-[0.3em] mb-4">Exclusive Curriculums</h2>
+<h3 class="text-white text-4xl font-display font-bold">Khóa học đặc quyền</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="group bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden hover:border-primary/50 transition-all shadow-lg hover:-translate-y-2">
+<div class="aspect-[4/3] overflow-hidden relative">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dark to-transparent z-10"></div>
+<div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="IELTS study materials and pen" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAVUsQ_W7p8Zl47JLq_iQzk6WqSwKrwrejeatdemVU0EabcQ2YwyXykKabDQ2HFXaOxEfgBoRsMSFUKsOIexhVVD1fXPpDHaBm5DpX1nHDuSxmdS50S1fpu09Z-ZBw-2aiUftloujZf0PtFrCVMKllyQ4oDX1XQoN-oaaQlro5u8MvK9rlllIiDs--bef8w0-NIC1Yngr32xd3g8RLeSpm7WQ0b3GLoxvg6BigD_4LBqRf7jKPBo-VMC8NNAEVehHMwFuKQHqKmYDcO");'></div>
+</div>
+<div class="p-8 relative z-20">
+<h4 class="text-white text-xl font-display font-bold mb-2">IELTS Premium</h4>
+<p class="text-slate-400 text-sm mb-6 leading-relaxed">Lộ trình cá nhân hóa 1:1 cùng cựu giám khảo IELTS, cam kết đầu ra bằng văn bản.</p>
+<button class="w-full border border-primary/30 text-primary py-3 rounded-lg font-bold text-sm group-hover:bg-primary group-hover:text-background-dark transition-all">
+                                        Xem chi tiết
+                                    </button>
+</div>
+</div>
+<div class="group bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden hover:border-primary/50 transition-all shadow-lg hover:-translate-y-2">
+<div class="aspect-[4/3] overflow-hidden relative">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dark to-transparent z-10"></div>
+<div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="Professional business person" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCAnFd6D3spW-60URzibunmjfOZtmNmYUF-lQFMYWhE9KvD_6GyYEBeAFdayyCRKKnRfmr94SUqq0FAsDQuqcy2ndmTxDGKxstwPFskt64LM6GjYTrCVXBjTIHPFcxTTKTcPywAhWfR8JnbAL3Ewg2SUm-u3mfZ4DcJANaosvvfyGCSUmCLtPvyEggj3zZrtfjUzlfWNHtUrV911wtuh7LxN6NkwzP3mBCgdiZ8O8DEma7pSo1lnkgsWkiqqYv2NXQ5j2psaEJdxHTu");'></div>
+</div>
+<div class="p-8 relative z-20">
+<h4 class="text-white text-xl font-display font-bold mb-2">Business English Elite</h4>
+<p class="text-slate-400 text-sm mb-6 leading-relaxed">Giao tiếp thương mại cấp cao dành cho lãnh đạo và quản lý doanh nghiệp quốc tế.</p>
+<button class="w-full border border-primary/30 text-primary py-3 rounded-lg font-bold text-sm group-hover:bg-primary group-hover:text-background-dark transition-all">
+                                        Xem chi tiết
+                                    </button>
+</div>
+</div>
+<div class="group bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden hover:border-primary/50 transition-all shadow-lg hover:-translate-y-2">
+<div class="aspect-[4/3] overflow-hidden relative">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dark to-transparent z-10"></div>
+<div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="Hand writing in an elegant journal" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAf3-KHEkVXK_RpIUXCMbC5az14KTE_SHj5kGe4xw2YO8mWiGGcS-ascMdpaBUUCadJwGacZ4qjQZgYHBivc6LGcVrzGayGBOoPogaDSmn4FhHnGyX-sa5BnPNcdEl_CHSW65WpTgk0cqyPV4UeUZqAj7nfZrz-EX_A5muFAmc-pMAIoVnWOixkTxlBjjuKPSrdzYEqKcxL8_18vaeqZd0ULa8Kb3GH_FW1A1M0H_BZhQpe4p6KCBBPaGE6RhxFDbMDKbVjBSmSZBYd");'></div>
+</div>
+<div class="p-8 relative z-20">
+<h4 class="text-white text-xl font-display font-bold mb-2">Academic Writing</h4>
+<p class="text-slate-400 text-sm mb-6 leading-relaxed">Kỹ thuật viết luận chuyên sâu phục vụ nghiên cứu và du học tại các đại học danh tiếng.</p>
+<button class="w-full border border-primary/30 text-primary py-3 rounded-lg font-bold text-sm group-hover:bg-primary group-hover:text-background-dark transition-all">
+                                        Xem chi tiết
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="container mx-auto px-6 lg:px-20 py-20">
+<div class="bg-gradient-to-br from-primary/10 via-white/5 to-white/5 backdrop-blur-2xl border border-white/10 rounded-2xl p-12 flex flex-col md:flex-row items-center justify-between gap-10">
+<div class="max-w-2xl">
+<h3 class="text-3xl font-display font-bold text-white mb-4">Bạn cần tư vấn lộ trình học tập?</h3>
+<p class="text-slate-300 text-lg">Đội ngũ chuyên gia của chúng tôi luôn sẵn sàng hỗ trợ bạn thiết kế một hành trình chinh phục Anh ngữ dành riêng cho bạn.</p>
+</div>
+<a class="gold-gradient text-background-dark px-10 py-5 rounded-xl font-bold uppercase tracking-widest whitespace-nowrap hover:scale-105 transition-transform shadow-xl" href="/register">
+                            Đặt lịch tư vấn 1:1
+                        </a>
+</div>
+</div>
+</main>
+<footer class="bg-black/60 backdrop-blur-md border-t border-white/5 py-12 relative z-10">
+<div class="container mx-auto px-6 lg:px-20 grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-3 text-primary mb-6">
+<div class="size-6">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-lg font-display font-bold uppercase tracking-tight">Royal Academy</h2>
+</div>
+<p class="text-slate-500 text-sm leading-relaxed">Định hình tương lai qua ngôn ngữ. Chúng tôi cung cấp chuẩn mực giáo dục cao cấp nhất cho thế hệ tinh hoa.</p>
+</div>
+<div>
+<h5 class="text-white font-bold mb-6">Về chúng tôi</h5>
+<ul class="space-y-4 text-slate-500 text-sm">
+<li><a class="hover:text-primary transition-colors" href="#">Câu chuyện thương hiệu</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Đội ngũ giảng viên</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Cơ sở vật chất</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Tuyển dụng</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-white font-bold mb-6">Hỗ trợ học viên</h5>
+<ul class="space-y-4 text-slate-500 text-sm">
+<li><a class="hover:text-primary transition-colors" href="#">Trung tâm trợ giúp</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Chính sách học phí</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Nội quy lớp học</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Liên hệ</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-white font-bold mb-6">Liên hệ</h5>
+<ul class="space-y-4 text-slate-500 text-sm">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-sm">location_on</span>
+<span>123 Đại lộ Hoàng Gia, Quận 1, TP. Hồ Chí Minh</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-sm">call</span>
+<span>1900 8888</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-sm">mail</span>
+<span>contact@royalacademy.edu.vn</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="container mx-auto px-6 lg:px-20 mt-12 pt-8 border-t border-primary/5 text-center text-slate-600 text-xs">
+<p>© 2024 Royal Academy English Center. All rights reserved.</p>
+</div>
+</footer>
+</div>
+</div>
+<script>
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let mouse = { x: null, y: null };
 
-<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
 
-    <!-- NAVBAR -->
-    <section class="navbar custom-navbar navbar-fixed-top" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon icon-bar"></span>
-                    <span class="icon icon-bar"></span>
-                    <span class="icon icon-bar"></span>
-                </button>
-                <a href="/" class="navbar-brand">
-                    <i class="fa fa-graduation-cap" style="color: #29ca8e; margin-right: 10px;"></i>
-                    Eng<span style="color: #29ca8e;">Center</span>
-                </a>
-            </div>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/login"><i class="fa fa-sign-in"></i> Đăng nhập</a></li>
-                    <li><a href="/register" style="color: #29ca8e !important;"><i class="fa fa-user-plus"></i> Đăng
-                            ký</a></li>
-                </ul>
-            </div>
-        </div>
-    </section>
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
 
-    <!-- HERO SECTION -->
-    <section class="hero-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <h1>Mở Khóa Tương Lai Cùng EngCenter</h1>
-                    <p>Môi trường học tập tiêu chuẩn quốc tế, giảng viên tận tâm giúp bạn chinh phục đỉnh cao ngôn ngữ
-                        dễ dàng và hiệu quả hơn bao giờ hết.</p>
-                    <div style="margin-top: 40px;">
-                        <a href="/register" class="btn-custom"><i class="fa fa-rocket" style="margin-right: 8px;"></i>
-                            Bắt Đầu Ngay</a>
-                        <a href="#features" class="btn-custom-outline">Tìm Hiểu Thêm</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+    for(let i = 0; i < 2; i++) {
+        particles.push(new Particle());
+    }
+});
 
-    <!-- FEATURES -->
-    <section id="features" class="container" style="margin-top: -60px; position:relative; z-index: 10;">
-        <div class="row">
-            <div class="col-md-4 col-sm-6">
-                <div class="feature-box">
-                    <i class="fa fa-users feature-icon"></i>
-                    <h3 style="font-weight: bold; color: #333;">Đội Ngũ Tinh Hoa</h3>
-                    <p style="color: #666; font-size: 16px; line-height: 1.6;">100% giáo viên bản ngữ và Việt Nam đạt
-                        chuẩn TESOL/CELTA với hơn 5 năm kinh nghiệm thực chiến.</p>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <div class="feature-box">
-                    <i class="fa fa-lightbulb-o feature-icon"></i>
-                    <h3 style="font-weight: bold; color: #333;">Phương Pháp Hiện Đại</h3>
-                    <p style="color: #666; font-size: 16px; line-height: 1.6;">Ứng dụng công nghệ AI vào môi trường học
-                        kết hợp với lộ trình cá nhân hoá tối ưu cho từng học viên.</p>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6 offset-sm-3 offset-md-0">
-                <div class="feature-box">
-                    <i class="fa fa-shield feature-icon"></i>
-                    <h3 style="font-weight: bold; color: #333;">Cam Kết Đầu Ra</h3>
-                    <p style="color: #666; font-size: 16px; line-height: 1.6;">Hợp đồng đào tạo rõ ràng, cam kết đạt kết
-                        quả đầu ra bằng văn bản. Học lại miễn phí nếu chưa đạt.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+class Particle {
+    constructor() {
+        this.x = mouse.x;
+        this.y = mouse.y;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 1.5;
+        this.speedY = (Math.random() - 0.5) * 1.5;
+        this.color = Math.random() > 0.5 ? '#e0b329' : '#ffffff';
+        this.opacity = 1;
+        this.fadeRate = Math.random() * 0.02 + 0.01;
+    }
 
-    <!-- FOOTER -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-5 col-sm-6">
-                    <h3>Về EngCenter</h3>
-                    <p style="line-height: 1.8; margin-bottom: 20px;">Trung tâm tiếng anh hàng đầu với sứ mệnh trang bị
-                        cho thế hệ trẻ Việt Nam hành trang ngôn ngữ vững chắc để tự tin hội nhập toàn cầu.</p>
-                    <div style="font-size: 24px;">
-                        <a href="#" style="color: #fff; margin-right: 15px; transition: color 0.3s;"
-                            onmouseover="this.style.color='#3b5998'" onmouseout="this.style.color='#fff'"><i
-                                class="fa fa-facebook-square"></i></a>
-                        <a href="#" style="color: #fff; margin-right: 15px; transition: color 0.3s;"
-                            onmouseover="this.style.color='#e1306c'" onmouseout="this.style.color='#fff'"><i
-                                class="fa fa-instagram"></i></a>
-                        <a href="#" style="color: #fff; margin-right: 15px; transition: color 0.3s;"
-                            onmouseover="this.style.color='#ff0000'" onmouseout="this.style.color='#fff'"><i
-                                class="fa fa-youtube-play"></i></a>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <h3>Liên Hệ</h3>
-                    <ul style="list-style-type: none; padding-left: 0; line-height: 2;">
-                        <li><i class="fa fa-phone" style="color: #29ca8e; width: 25px;"></i> <strong
-                                style="color: #fff;">0909 123 456</strong></li>
-                        <li><i class="fa fa-envelope-o" style="color: #29ca8e; width: 25px;"></i> contact@engcenter.com
-                        </li>
-                        <li><i class="fa fa-map-marker" style="color: #29ca8e; width: 25px;"></i> 123 Nguyễn Văn Cơ,
-                            Quận 10, TP.HCM</li>
-                    </ul>
-                </div>
-                <div class="col-md-3 col-sm-12">
-                    <h3>Liên Kết Nhanh</h3>
-                    <ul style="list-style-type: none; padding-left: 0; line-height: 2;">
-                        <li><a href="#" style="color: #aaa; text-decoration: none; transition: color 0.3s;"
-                                onmouseover="this.style.color='#29ca8e'" onmouseout="this.style.color='#aaa'"><i
-                                    class="fa fa-angle-right" style="margin-right: 5px;"></i> Khóa Học Nổi Bật</a></li>
-                        <li><a href="#" style="color: #aaa; text-decoration: none; transition: color 0.3s;"
-                                onmouseover="this.style.color='#29ca8e'" onmouseout="this.style.color='#aaa'"><i
-                                    class="fa fa-angle-right" style="margin-right: 5px;"></i> Đội Ngũ Giáo Viên</a></li>
-                        <li><a href="#" style="color: #aaa; text-decoration: none; transition: color 0.3s;"
-                                onmouseover="this.style.color='#29ca8e'" onmouseout="this.style.color='#aaa'"><i
-                                    class="fa fa-angle-right" style="margin-right: 5px;"></i> Lịch Khai Giảng</a></li>
-                        <li><a href="#" style="color: #aaa; text-decoration: none; transition: color 0.3s;"
-                                onmouseover="this.style.color='#29ca8e'" onmouseout="this.style.color='#aaa'"><i
-                                    class="fa fa-angle-right" style="margin-right: 5px;"></i> Tin Tức & Sự Kiện</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="row text-center" style="margin-top: 50px; border-top: 1px solid #333; padding-top: 25px;">
-                <p>&copy; 2026 EngCenter. Thiết kế với <i class="fa fa-heart" style="color: #e74a3b;"></i> vì mục tiêu
-                    giáo dục.</p>
-            </div>
-        </div>
-    </footer>
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.opacity -= this.fadeRate;
+    }
 
-    <!-- JS files -->
-    <script th:src="@{/js/jquery.js}"></script>
-    <script th:src="@{/js/bootstrap.min.js}"></script>
+    draw() {
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        for (let i = 0; i < 4; i++) {
+            ctx.lineTo(
+                this.x + Math.cos((i * 90) * Math.PI / 180) * this.size,
+                this.y + Math.sin((i * 90) * Math.PI / 180) * this.size
+            );
+            ctx.lineTo(
+                this.x + Math.cos((i * 90 + 45) * Math.PI / 180) * (this.size / 3),
+                this.y + Math.sin((i * 90 + 45) * Math.PI / 180) * (this.size / 3)
+            );
+        }
+        ctx.closePath();
+        ctx.fill();
+    }
+}
 
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+        if (particles[i].opacity <= 0) {
+            particles.splice(i, 1);
+            i--;
+        }
+    }
+    requestAnimationFrame(animate);
+}
+
+animate();
+</script>
 </body>
-
 </html>

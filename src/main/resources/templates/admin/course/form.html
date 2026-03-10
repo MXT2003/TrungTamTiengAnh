@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout :: layout(~{::section}, 'Cập nhật khóa học')}">
+<section>
+    <div class="max-w-3xl mx-auto">
+        <div class="gold-gradient-border rounded-2xl p-8 glass-card">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h1 class="text-3xl font-bold text-white font-display">Thêm / Sửa khóa học</h1>
+                    <p class="text-slate-400 text-sm">Cập nhật thông tin chương trình đào tạo</p>
+                </div>
+                <a class="text-primary hover:underline" href="/admin/course">Quay lại danh sách</a>
+            </div>
+
+            <form th:action="@{/admin/course/save}" th:object="${course}" method="post" class="space-y-6">
+                <input type="hidden" th:field="*{id}" />
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-300">Tên khóa học</label>
+                    <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="text" th:field="*{name}" required />
+                    <div th:if="${#fields.hasErrors('name')}" class="text-red-400 text-xs mt-2">
+                        <span th:errors="*{name}"></span>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-300">Mô tả</label>
+                    <textarea class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" rows="4" th:field="*{description}"></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Cấp độ</label>
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="text" th:field="*{level}" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Số tuần học</label>
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="number" th:field="*{durationWeeks}" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Học phí</label>
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="number" th:field="*{fee}" />
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-300">Trạng thái</label>
+                    <select class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" th:field="*{active}">
+                        <option th:value="true">ON</option>
+                        <option th:value="false">OFF</option>
+                    </select>
+                </div>
+
+                <div class="flex items-center gap-4 pt-2">
+                    <button type="submit" class="px-6 py-3 rounded-lg bg-primary text-background-dark font-bold hover:bg-champagne transition-all">Lưu</button>
+                    <a href="/admin/course" class="px-6 py-3 rounded-lg border border-primary/30 text-primary hover:border-primary transition-all">Hủy</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+</html>

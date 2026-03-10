@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Noto+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#e0b329",
+                        "background-light": "#f8f7f6",
+                        "background-dark": "#0a0c14",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"],
+                        "sans": ["Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            background-attachment: fixed;
+        }
+        h1, h2, h3, .font-display {
+            font-family: 'Noto Serif', serif;
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(224, 179, 41, 0.2);
+        }
+        .universe-bg {
+            background-image: 
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
+            background-size: 550px 550px, 350px 350px, 250px 250px;
+            background-position: 0 0, 40px 60px, 130px 270px;
+            animation: orbit 60s linear infinite;
+        }
+        @keyframes orbit {
+            from { background-position: 0 0, 40px 60px, 130px 270px; }
+            to { background-position: 550px 550px, 390px 410px, 380px 820px; }
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 universe-bg">
+<div class="flex min-h-screen overflow-x-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-72 bg-black/40 border-r border-primary/20 flex flex-col justify-between py-8 px-6 backdrop-blur-2xl sticky top-0 h-screen">
+<div class="flex flex-col gap-8">
+<div class="flex items-center gap-3">
+<div class="bg-primary/20 p-2 rounded-lg border border-primary/30">
+<span class="material-symbols-outlined text-primary text-3xl">crown</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-primary text-xl font-bold leading-tight font-display tracking-tight">Elite English</h1>
+<p class="text-primary/60 text-[10px] uppercase tracking-widest font-bold">Hệ thống quản trị cao cấp</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary text-slate-950 font-bold shadow-lg shadow-primary/20 transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm">Bảng điều khiển</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-primary/10 text-slate-400 hover:text-primary transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:fill-current">group</span>
+<span class="text-sm font-medium">Học viên</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-primary/10 text-slate-400 hover:text-primary transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:fill-current">school</span>
+<span class="text-sm font-medium">Giáo viên</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-primary/10 text-slate-400 hover:text-primary transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:fill-current">meeting_room</span>
+<span class="text-sm font-medium">Lớp học</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-primary/10 text-slate-400 hover:text-primary transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:fill-current">assignment_ind</span>
+<span class="text-sm font-medium">Ghi danh</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-primary/10 text-slate-400 hover:text-primary transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:fill-current">account_balance_wallet</span>
+<span class="text-sm font-medium">Tài chính</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-primary/10 text-slate-400 hover:text-primary transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:fill-current">settings</span>
+<span class="text-sm font-medium">Cấu hình</span>
+</a>
+</nav>
+</div>
+<div class="flex flex-col gap-4">
+<button class="w-full bg-primary text-slate-950 font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-white transition-all shadow-xl shadow-primary/10">
+<span class="material-symbols-outlined text-sm">add_circle</span>
+<span class="text-sm">Thêm lớp mới</span>
+</button>
+<div class="flex items-center gap-3 p-3 rounded-xl bg-slate-800/40 border border-slate-700/50">
+<img class="w-10 h-10 rounded-full border border-primary/30 object-cover" data-alt="Ảnh hồ sơ quản trị viên cao cấp" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUJaDwWdLvGHuLgkg6F3ssJG5dE5As-YnBaOaD2S4Pr3kXs-KdBPc-UuBCnncwVnJVBmU8si9xnmpIJl60nyRaBpDqPHF-bi4TJrhn6wXUz2RtYB6CD-HcX0C3lMiLxZHp1O5DA_hYImdej64g8H_PFX85ZwaY01wyI9KFd57FFu-EeOcpRD7dPrZhjmHNqQonUSn8AayWG1AS32eHAbZLbYpOsTA50WICvaTwgJgJ-L8fYlMgaaeEHFv449uW15o3BI0SLaHtsHjd"/>
+<div class="flex flex-col">
+<p class="text-xs font-bold text-slate-200">Hoàng Nam</p>
+<p class="text-[10px] text-primary">Director</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-screen overflow-y-auto">
+<!-- Header -->
+<header class="flex items-center justify-between px-10 py-6 border-b border-primary/10 bg-black/30 backdrop-blur-xl sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<h2 class="text-xl font-bold tracking-tight text-slate-200 font-display">Tổng Quan Hệ Thống</h2>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500">search</span>
+<input class="bg-white/5 border border-white/10 rounded-full py-2 pl-10 pr-4 w-64 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-slate-300 placeholder:text-slate-500 backdrop-blur-sm" placeholder="Tìm kiếm dữ liệu..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-full bg-slate-900 border border-slate-800 text-slate-400 hover:text-primary hover:border-primary/40 transition-all relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full ring-2 ring-background-dark"></span>
+</button>
+<button class="p-2 rounded-full bg-slate-900 border border-slate-800 text-slate-400 hover:text-primary hover:border-primary/40 transition-all">
+<span class="material-symbols-outlined">mail</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Dashboard Body -->
+<div class="p-10 flex flex-col gap-10">
+<!-- Hero Greeting -->
+<div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 to-black p-10 border border-primary/20 min-h-[240px] flex items-center glass-card" style="background: linear-gradient(135deg, rgba(10, 12, 20, 0.8) 0%, rgba(27, 39, 53, 0.6) 100%); border-color: rgba(224, 179, 41, 0.3);">
+<div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuChhcFIuLIaUmVS3DtgjHG9G_cDneRa1_xWdwEZkjwOrk4k2trK-GMgFGL9BBidGLuBm3wTp_gB1y015ScADFDP0FjS1NKbv5PwKbPHPPbnGtQRjj7xlEs_QKEO2L0IHUFPo0yy7Ugg42DADYvnJJivpiyZNvmbBmhZfZCixQUTEyeQsPG-vYVxc4ADwahs9HwUx8QDivZn6NM_ngHuxJvoOw4zlWnKpy_hnLGRcO_ZAUAyAfEY5mCKywgfzIwOMPTvWarlVpwXAeCA');"></div>
+<div class="absolute right-0 top-0 bottom-0 w-1/2 h-full hidden lg:block">
+<img class="w-full h-full object-cover mask-gradient opacity-60" data-alt="Hình ảnh phong cách thượng lưu chuyên nghiệp" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwatWTEuRjWTxqkrg8GeV3t7eohprlJaHzrdqfaEWk67iwoIJ1bl95uQyo0Sn337V_1joC9g6W3lQUAZRZ7Qib4w0G93Y2oB28JPUdmw5JKzmmjaF0lhyz-kWMJzSrpt9fthXgs7A8r7j3FhwIiFaDESscei484cq2PxZXas8W4dZlC1d0Vysrz6KJ_mJAWT55JsvUw7B2pZa-4v8lKWMkcZlBXA3mmX4spmpRvBzEJq1L3767oyrh2ZIzrIdBc1lVrhf8EF_qs4KT" style="mask-image: linear-gradient(to left, black, transparent);"/>
+</div>
+<div class="relative z-10 max-w-xl">
+<h1 class="text-5xl font-bold text-white mb-4 leading-tight tracking-tight font-display">Chào mừng trở lại, Quản trị viên</h1>
+<p class="text-slate-400 text-lg font-medium leading-relaxed">Dưới đây là tóm tắt hoạt động của trung tâm Elite English trong ngày hôm nay. Mọi chỉ số đang ở mức ổn định.</p>
+</div>
+</div>
+<!-- Metrics Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Students -->
+<div class="p-6 rounded-xl border border-primary/10 hover:border-primary/30 transition-all flex flex-col gap-4 group glass-card">
+<div class="flex justify-between items-start">
+<div class="p-3 rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined">school</span>
+</div>
+<span class="text-green-500 text-xs font-bold bg-green-500/10 px-2 py-1 rounded-full">+5.2%</span>
+</div>
+<div>
+<p class="text-slate-500 text-sm font-medium">Tổng học viên</p>
+<h3 class="text-3xl font-bold text-slate-100 mt-1 font-display">1,250</h3>
+</div>
+</div>
+<!-- Teachers -->
+<div class="p-6 rounded-xl border border-primary/10 hover:border-primary/30 transition-all flex flex-col gap-4 glass-card">
+<div class="flex justify-between items-start">
+<div class="p-3 rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined">diversity_3</span>
+</div>
+<span class="text-green-500 text-xs font-bold bg-green-500/10 px-2 py-1 rounded-full">+2.1%</span>
+</div>
+<div>
+<p class="text-slate-500 text-sm font-medium">Giáo viên</p>
+<h3 class="text-3xl font-bold text-slate-100 mt-1 font-display">48</h3>
+</div>
+</div>
+<!-- Classes -->
+<div class="p-6 rounded-xl border border-primary/10 hover:border-primary/30 transition-all flex flex-col gap-4 glass-card">
+<div class="flex justify-between items-start">
+<div class="p-3 rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined">meeting_room</span>
+</div>
+<span class="text-red-400 text-xs font-bold bg-red-400/10 px-2 py-1 rounded-full">-1.5%</span>
+</div>
+<div>
+<p class="text-slate-500 text-sm font-medium">Số lượng lớp</p>
+<h3 class="text-3xl font-bold text-slate-100 mt-1 font-display">85</h3>
+</div>
+</div>
+<!-- Pending Enrollments -->
+<div class="p-6 rounded-xl border border-primary/10 hover:border-primary/30 transition-all flex flex-col gap-4 glass-card">
+<div class="flex justify-between items-start">
+<div class="p-3 rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined">history_edu</span>
+</div>
+<span class="text-green-500 text-xs font-bold bg-green-500/10 px-2 py-1 rounded-full">+10%</span>
+</div>
+<div>
+<p class="text-slate-500 text-sm font-medium">Đăng ký chờ</p>
+<h3 class="text-3xl font-bold text-slate-100 mt-1 font-display">12</h3>
+</div>
+</div>
+</div>
+<!-- Detailed Analysis Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Class Revenue & Growth (Placeholder for Chart) -->
+<div class="lg:col-span-2 rounded-xl border border-primary/10 p-8 glass-card">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h2 class="text-2xl font-bold text-slate-100 font-display">Phân tích doanh thu &amp; Tăng trưởng</h2>
+<p class="text-slate-500 text-sm">Hiệu suất tài chính 6 tháng gần nhất</p>
+</div>
+<button class="text-sm font-bold text-primary flex items-center gap-1 hover:underline">
+                            Xem báo cáo đầy đủ
+                            <span class="material-symbols-outlined text-sm">trending_flat</span>
+</button>
+</div>
+<!-- Mockup Chart Area -->
+<div class="w-full h-64 bg-slate-800/20 rounded-lg flex items-end justify-between p-4 gap-4 border border-slate-800/40">
+<div class="bg-primary/20 w-full rounded-t-lg h-[40%]" title="Tháng 1"></div>
+<div class="bg-primary/30 w-full rounded-t-lg h-[60%]" title="Tháng 2"></div>
+<div class="bg-primary/40 w-full rounded-t-lg h-[45%]" title="Tháng 3"></div>
+<div class="bg-primary/50 w-full rounded-t-lg h-[80%]" title="Tháng 4"></div>
+<div class="bg-primary/70 w-full rounded-t-lg h-[70%]" title="Tháng 5"></div>
+<div class="bg-primary w-full rounded-t-lg h-[95%]" title="Tháng 6"></div>
+</div>
+<div class="flex justify-between mt-4 px-2">
+<span class="text-xs text-slate-600 font-bold uppercase">Th 1</span>
+<span class="text-xs text-slate-600 font-bold uppercase">Th 2</span>
+<span class="text-xs text-slate-600 font-bold uppercase">Th 3</span>
+<span class="text-xs text-slate-600 font-bold uppercase">Th 4</span>
+<span class="text-xs text-slate-600 font-bold uppercase">Th 5</span>
+<span class="text-xs text-slate-600 font-bold uppercase">Th 6</span>
+</div>
+</div>
+<!-- Upcoming Activities -->
+<div class="rounded-xl border border-primary/10 p-8">
+<h2 class="text-2xl font-bold text-slate-100 mb-6 font-display">Hoạt động sắp tới</h2>
+<div class="flex flex-col gap-6">
+<div class="flex gap-4">
+<div class="min-w-[48px] h-12 rounded-lg bg-primary/10 border border-primary/30 flex flex-col items-center justify-center backdrop-blur-sm">
+<span class="text-[10px] text-primary font-bold uppercase">Hôm nay</span>
+<span class="text-lg font-bold text-primary">15</span>
+</div>
+<div class="flex flex-col">
+<p class="text-sm font-bold text-slate-200">Họp Hội đồng Chuyên môn</p>
+<p class="text-xs text-slate-500">Phòng họp A - 14:00 PM</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="min-w-[48px] h-12 rounded-lg bg-primary/10 border border-primary/30 flex flex-col items-center justify-center backdrop-blur-sm">
+<span class="text-[10px] text-slate-500 font-bold uppercase">Mai</span>
+<span class="text-lg font-bold text-slate-400">16</span>
+</div>
+<div class="flex flex-col">
+<p class="text-sm font-bold text-slate-200">Khai giảng lớp IELTS 7.5+</p>
+<p class="text-xs text-slate-500">Phòng Elite 01 - 18:00 PM</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="min-w-[48px] h-12 rounded-lg bg-primary/10 border border-primary/30 flex flex-col items-center justify-center backdrop-blur-sm">
+<span class="text-[10px] text-slate-500 font-bold uppercase">T2</span>
+<span class="text-lg font-bold text-slate-400">18</span>
+</div>
+<div class="flex flex-col">
+<p class="text-sm font-bold text-slate-200">Kiểm tra đầu vào (Khối K12)</p>
+<p class="text-xs text-slate-500">Hội trường lớn - 08:30 AM</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-8 py-3 rounded-lg border border-primary/20 text-primary text-sm font-bold hover:bg-primary/5 transition-all">
+                        Xem tất cả lịch trình
+                    </button>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="px-10 py-6 text-slate-600 text-[10px] uppercase tracking-widest font-bold border-t border-primary/5 text-center">
+            © 2024 Elite English Management System • Bản quyền thuộc về Elite International Education Group
+        </footer>
+</main>
+</div>
+<script>
+        document.addEventListener('mousemove', function(e) {
+            const body = document.querySelector('body');
+            const star = document.createElement('div');
+            
+            // Randomize size
+            const size = Math.random() * 4 + 2;
+            
+            // Randomize color (Gold or White)
+            const colors = ['#e0b329', '#ffffff', '#f8f7f6'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            star.style.position = 'fixed';
+            star.style.left = e.clientX + 'px';
+            star.style.top = e.clientY + 'px';
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            star.style.backgroundColor = color;
+            star.style.borderRadius = '50%';
+            star.style.pointerEvents = 'none';
+            star.style.boxShadow = `0 0 ${size * 2}px ${color}`;
+            star.style.zIndex = '9999';
+            star.style.opacity = '1';
+            
+            // Random trajectory
+            const destinationX = (Math.random() - 0.5) * 100;
+            const destinationY = (Math.random() - 0.5) * 100;
+            
+            body.appendChild(star);
+            
+            const animation = star.animate([
+                {
+                    transform: 'translate(0, 0) scale(1)',
+                    opacity: 1
+                },
+                {
+                    transform: `translate(${destinationX}px, ${destinationY}px) scale(0)`,
+                    opacity: 0
+                }
+            ], {
+                duration: 1000 + Math.random() * 1000,
+                easing: 'cubic-bezier(0, .9, .57, 1)',
+                fill: 'forwards'
+            });
+            
+            animation.onfinish = () => star.remove();
+        });
+    </script></body></html>

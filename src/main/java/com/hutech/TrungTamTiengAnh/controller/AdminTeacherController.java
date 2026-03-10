@@ -7,11 +7,11 @@ import com.hutech.TrungTamTiengAnh.repository.TeacherRepository;
 import com.hutech.TrungTamTiengAnh.repository.UserRepository;
 import com.hutech.TrungTamTiengAnh.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/admin/teacher")
@@ -30,9 +30,18 @@ public class AdminTeacherController {
     }
 
     @GetMapping
-    public String list(Model model) {
-        List<Teacher> list = teacherRepository.findAll();
-        model.addAttribute("list", list);
+    public String list(Model model,
+                       @RequestParam(value = "q", required = false) String q,
+                       @RequestParam(value = "page", defaultValue = "0") int page,
+                       @RequestParam(value = "size", defaultValue = "10") int size) {
+        Page<Teacher> pageData;
+        if (q != null && !q.isBlank()) {
+            pageData = teacherRepository.findByFullNameContainingIgnoreCase(q, PageRequest.of(page, size));
+        } else {
+            pageData = teacherRepository.findAll(PageRequest.of(page, size));
+        }
+        model.addAttribute("page", pageData);
+        model.addAttribute("q", q);
         return "admin/teacher/list";
     }
 

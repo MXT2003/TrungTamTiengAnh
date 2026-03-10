@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{student/layout :: layout(~{::section}, 'Học phí')}">
+<section>
+    <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+        <table class="min-w-full divide-y divide-white/10">
+            <thead class="bg-white/5 text-slate-300">
+                <tr>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Lớp</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Số tiền</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Trạng thái</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Hạn nộp</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Ngày nộp</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+                <tr class="hover:bg-white/5" th:each="p : ${page.content}">
+                    <td class="px-4 py-3" th:text="${p.lopHoc != null ? p.lopHoc.tenLop : ''}"></td>
+                    <td class="px-4 py-3" th:text="${p.amount}"></td>
+                    <td class="px-4 py-3" th:text="${p.status}"></td>
+                    <td class="px-4 py-3" th:text="${p.dueDate}"></td>
+                    <td class="px-4 py-3" th:text="${p.paidDate}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-6 flex items-center gap-2" th:if="${page != null}">
+        <a class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary/30" th:classappend="${page.first} ? ' cursor-not-allowed' : ''" th:href="@{/student/payments(page=${page.number-1}, size=${page.size})}">
+            <span class="material-symbols-outlined">chevron_left</span>
+        </a>
+        <a class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary font-bold" th:each="i : ${#numbers.sequence(0, page.totalPages-1)}" th:classappend="${i==page.number} ? ' bg-primary text-background-dark border-primary' : ''" th:href="@{/student/payments(page=${i}, size=${page.size})}" th:text="${i+1}">1</a>
+        <a class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary/30" th:classappend="${page.last} ? ' cursor-not-allowed' : ''" th:href="@{/student/payments(page=${page.number+1}, size=${page.size})}">
+            <span class="material-symbols-outlined">chevron_right</span>
+        </a>
+    </div>
+</section>
+</html>

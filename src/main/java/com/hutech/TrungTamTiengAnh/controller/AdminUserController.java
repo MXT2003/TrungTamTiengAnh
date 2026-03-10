@@ -5,11 +5,11 @@ import com.hutech.TrungTamTiengAnh.entity.User;
 import com.hutech.TrungTamTiengAnh.repository.UserRepository;
 import com.hutech.TrungTamTiengAnh.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/admin/users")
@@ -24,9 +24,18 @@ public class AdminUserController {
     }
 
     @GetMapping
-    public String list(Model model) {
-        List<User> list = userRepository.findAll();
-        model.addAttribute("list", list);
+    public String list(Model model,
+                       @RequestParam(value = "q", required = false) String q,
+                       @RequestParam(value = "page", defaultValue = "0") int page,
+                       @RequestParam(value = "size", defaultValue = "10") int size) {
+        Page<User> pageData;
+        if (q != null && !q.isBlank()) {
+            pageData = userRepository.findByUsernameContainingIgnoreCase(q, PageRequest.of(page, size));
+        } else {
+            pageData = userRepository.findAll(PageRequest.of(page, size));
+        }
+        model.addAttribute("page", pageData);
+        model.addAttribute("q", q);
         return "admin/user/list";
     }
 

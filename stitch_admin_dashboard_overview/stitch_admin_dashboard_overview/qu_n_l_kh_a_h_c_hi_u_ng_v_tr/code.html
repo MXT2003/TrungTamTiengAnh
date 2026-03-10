@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#e0b329",
+                        "background-light": "#f8f7f6",
+                        "background-dark": "#211d11",
+                        "champagne": "#f3e5ab",
+                        "royal-dark": "#1a170e",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"],
+                        "sans": ["Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .gold-gradient-border {
+            border: 1px solid rgba(224, 179, 41, 0.3);
+            background: rgba(26, 23, 14, 0.4) padding-box,
+                        linear-gradient(135deg, #e0b329, #a67c00) border-box;
+        }
+        .premium-shadow {
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+        .glass-panel {
+            background: rgba(26, 23, 14, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(224, 179, 41, 0.2);
+        }
+        .universe-bg {
+            background: radial-gradient(circle at center, #1a170e 0%, #0d0b07 100%);
+            position: relative;
+        }
+        .universe-bg::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: 
+                radial-gradient(1px 1px at 20px 30px, #fff, rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 40px 70px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, rgba(224, 179, 41, 0.4), rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            opacity: 0.3;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .nebula {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at 80% 20%, rgba(224, 179, 41, 0.05) 0%, transparent 40%),
+                        radial-gradient(circle at 20% 80%, rgba(224, 179, 41, 0.03) 0%, transparent 40%);
+            z-index: -1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased universe-bg"><div class="nebula"></div>
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between border-b border-primary/20 px-6 py-4 lg:px-20 backdrop-blur-md sticky top-0 z-50 glass-panel" style="border-bottom: 1px solid rgba(224, 179, 41, 0.2);">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<span class="material-symbols-outlined text-4xl">storm</span>
+<h2 class="text-xl font-bold leading-tight tracking-tight uppercase">Elite English</h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-slate-100 hover:text-primary transition-colors text-sm font-medium" href="#">Trang chủ</a>
+<a class="text-primary border-b-2 border-primary pb-1 text-sm font-medium" href="#">Khóa học</a>
+<a class="text-slate-100 hover:text-primary transition-colors text-sm font-medium" href="#">Giảng viên</a>
+<a class="text-slate-100 hover:text-primary transition-colors text-sm font-medium" href="#">Liên hệ</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center bg-primary/10 border border-primary/20 rounded-lg px-3 py-1.5">
+<span class="material-symbols-outlined text-primary text-xl">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm text-slate-100 placeholder:text-primary/40 w-48" placeholder="Tìm kiếm đặc quyền..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden sm:block">
+<p class="text-xs text-primary/70 uppercase tracking-widest">Thành viên VIP</p>
+<p class="text-sm font-bold">Lê Hoàng Nam</p>
+</div>
+<div class="size-10 rounded-full border-2 border-primary p-0.5">
+<div class="w-full h-full rounded-full bg-cover bg-center" data-alt="Chân dung học viên cao cấp" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB5ncVyPW1F3rz_mZT74dbAYa7p-OjxiXY505E3XEtmwpIElEJYHJwn_vq2j11dQQKgF1v3hVP5mJ-43cubHKboKH-3zb9eeHXPM904U33PNhbapq5nUljL8uUE31sBGuF_Jajv51Z5LNQs2SwNSTS16rxwVpzmS64ezcxWi6gEvUsWKQo5ZmmCgFPobRtg6l47AHiBRi_kuUmc68anGEx6B9WWVL__au4RSISAJCMbdW5X8I1yznLtcWjYqBN5pBYaOkghnGlQKBW2')"></div>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 px-6 lg:px-20 py-10">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-12 border-l-4 border-primary pl-6">
+<div>
+<nav class="flex gap-2 text-xs uppercase tracking-[0.2em] text-primary/60 mb-2">
+<span>Hệ thống</span>
+<span>/</span>
+<span class="text-primary">Quản lý đào tạo</span>
+</nav>
+<h1 class="text-4xl md:text-5xl font-bold dark:text-white leading-tight">Quản Lý Khóa Học</h1>
+<p class="text-primary/70 mt-2 italic">Kiến tạo tương lai thông qua ngôn ngữ bậc thầy.</p>
+</div>
+<button class="flex items-center gap-2 px-8 py-3 bg-primary text-background-dark font-bold rounded-lg hover:bg-champagne transition-all transform hover:-translate-y-1 premium-shadow uppercase text-sm tracking-wider">
+<span class="material-symbols-outlined">add_circle</span>
+                Thiết kế khóa học mới
+            </button>
+</div>
+<!-- Filters & Search -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
+<div class="lg:col-span-8 flex flex-wrap gap-3">
+<button class="px-6 py-2 rounded-full border border-primary bg-primary text-background-dark text-sm font-bold transition-all">Tất cả</button>
+<button class="px-6 py-2 rounded-full border border-primary/30 hover:border-primary text-primary/70 hover:text-primary text-sm font-medium transition-all">IELTS Academy</button>
+<button class="px-6 py-2 rounded-full border border-primary/30 hover:border-primary text-primary/70 hover:text-primary text-sm font-medium transition-all">Business Elite</button>
+<button class="px-6 py-2 rounded-full border border-primary/30 hover:border-primary text-primary/70 hover:text-primary text-sm font-medium transition-all">TOEIC Master</button>
+<button class="px-6 py-2 rounded-full border border-primary/30 hover:border-primary text-primary/70 hover:text-primary text-sm font-medium transition-all">Giao tiếp Thượng lưu</button>
+</div>
+<div class="lg:col-span-4 flex justify-end">
+<div class="flex items-center gap-4 text-primary/60">
+<span class="text-sm font-medium uppercase tracking-widest">Sắp xếp:</span>
+<select class="bg-transparent border-none focus:ring-0 text-primary font-bold text-sm cursor-pointer">
+<option class="bg-background-dark">Mới nhất</option>
+<option class="bg-background-dark">Giá cao nhất</option>
+<option class="bg-background-dark">Phổ biến nhất</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Course Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+<!-- IELTS Card -->
+<div class="gold-gradient-border rounded-xl overflow-hidden group hover:scale-[1.02] transition-transform duration-500 premium-shadow">
+<div class="h-64 relative overflow-hidden">
+<div class="absolute inset-0 bg-background-dark/40 group-hover:bg-background-dark/20 transition-all z-10"></div>
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Thư viện cổ điển sang trọng" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCADxRQKVIkS5dIR7mEfsNsizoi_FYdtBNlcJwBN5I2S31eVPN_qUBuLm_lRVtBGnGa6FgSrnxfhOvYprWKBq2QIGbpOHxKaZsAZGVvBRE2EXVPiPXdlPYZj0hviB0P_eNWYwgXY1jsONxJbKqyEAS2pskiegk-0Sss6IYcO77uYtrd1xaHJAC5soKKX9hdsHAH1n2LVoFqd_YOrQEms-a9GLBihDZjfX2gUoB8ZWmTcTIdbRRXAt93f7G9ReA562tFAgbUt00tL_Aw')"></div>
+<div class="absolute top-4 right-4 z-20 flex flex-col gap-2">
+<span class="bg-primary text-background-dark text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter">Bestseller</span>
+</div>
+<div class="absolute bottom-4 left-4 z-20">
+<span class="text-xs font-bold text-primary bg-background-dark/80 px-3 py-1 rounded backdrop-blur uppercase tracking-widest border border-primary/30">Học thuật</span>
+</div>
+</div>
+<div class="p-8 bg-background-dark/50 glass-panel">
+<h3 class="text-2xl font-bold text-white mb-2 group-hover:text-primary transition-colors">IELTS Mastery Elite 8.5+</h3>
+<p class="text-slate-400 text-sm font-sans line-clamp-2 mb-6">Lộ trình cá nhân hóa được thiết kế bởi các chuyên gia ngôn ngữ hàng đầu từ Oxford.</p>
+<div class="flex items-center justify-between mb-8 pb-6 border-b border-primary/10">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-lg">schedule</span>
+<span class="text-sm font-medium uppercase tracking-tighter">6 Tháng chuyên sâu</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-primary text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-primary text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-primary text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-primary text-sm fill-1">star</span>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<p class="text-[10px] uppercase text-primary/50 tracking-widest">Học phí đầu tư</p>
+<p class="text-2xl font-bold text-primary">45.000.000 <span class="text-xs">VND</span></p>
+</div>
+<button class="p-3 rounded-full border border-primary/50 text-primary hover:bg-primary hover:text-background-dark transition-all">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Business English Card -->
+<div class="gold-gradient-border rounded-xl overflow-hidden group hover:scale-[1.02] transition-transform duration-500 premium-shadow">
+<div class="h-64 relative overflow-hidden">
+<div class="absolute inset-0 bg-background-dark/40 group-hover:bg-background-dark/20 transition-all z-10"></div>
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Tòa nhà văn phòng hiện đại ánh kim" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAGxahqZh3U9jSw24PtxW1lFQZbaxPTJw5xO4Or8VnR5fr82dUn66OKPFFUxiFw24H3rPBAg_6v5fJE8c13FKG3Fs_Y_Rx8jZCLEdQwDrBEXFZL4Un4j_Vv2k1im8CgQ3MOvo5GqzA_Or8Ql0JDUM-UozRVt1cCy2L-pIbz0nuIxcNge8FMenV0ZIrUUpD-UFuI-b19qguc4sdAx20aAzfaSGG9mkz-PI_ndF-Sqsfdrod0O718-vSCLnln9TeDfEzd1K362NsFemPl')"></div>
+<div class="absolute top-4 right-4 z-20 flex flex-col gap-2">
+<span class="bg-primary text-background-dark text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter">Bestseller</span>
+</div>
+<div class="absolute bottom-4 left-4 z-20">
+<span class="text-xs font-bold text-primary bg-background-dark/80 px-3 py-1 rounded backdrop-blur uppercase tracking-widest border border-primary/30">Doanh nhân</span>
+</div>
+</div>
+<div class="p-8 bg-background-dark/50 glass-panel">
+<h3 class="text-2xl font-bold text-white mb-2 group-hover:text-primary transition-colors">Global Business Leadership</h3>
+<p class="text-slate-400 text-sm font-sans line-clamp-2 mb-6">Nâng tầm kỹ năng đàm phán và thuyết trình chuyên nghiệp trong môi trường quốc tế.</p>
+<div class="flex items-center justify-between mb-8 pb-6 border-b border-primary/10">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-lg">schedule</span>
+<span class="text-sm font-medium uppercase tracking-tighter">3 Tháng hội nhập</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-primary text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-primary text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-primary text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-primary text-sm fill-1">star</span>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<p class="text-[10px] uppercase text-primary/50 tracking-widest">Học phí đầu tư</p>
+<p class="text-2xl font-bold text-primary">32.500.000 <span class="text-xs">VND</span></p>
+</div>
+<button class="p-3 rounded-full border border-primary/50 text-primary hover:bg-primary hover:text-background-dark transition-all">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- TOEIC Card -->
+<div class="gold-gradient-border rounded-xl overflow-hidden group hover:scale-[1.02] transition-transform duration-500 premium-shadow">
+<div class="h-64 relative overflow-hidden">
+<div class="absolute inset-0 bg-background-dark/40 group-hover:bg-background-dark/20 transition-all z-10"></div>
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Góc học tập phong cách hoàng gia" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCjoAk_oZLNkkFqlI2irqfhuiIyC-FdWLcXP2qJXADE7adcvnpzKszAHDPan3rcFsyuCCyxCnQukyv2utONiA2Lz7tBfqFvnDWoU5zxNOjT8OdIw-XIr7lEntZqyzTlryy9B7fd95UTaKUtC-2heYffAiW_t5VQY5r4UwlYspMWIgOApSpcT5FhtfTRav3O_VSPtblBv7FDd7YkhlA9dBcmYZt1_70UpxS3_62rzR5LWO0H3jJzDArayPMgkB6CzbeseIsVoevk2MFM')"></div>
+<div class="absolute bottom-4 left-4 z-20">
+<span class="text-xs font-bold text-primary bg-background-dark/80 px-3 py-1 rounded backdrop-blur uppercase tracking-widest border border-primary/30">Cấp tốc</span>
+</div>
+</div>
+<div class="p-8 bg-background-dark/50 glass-panel">
+<h3 class="text-2xl font-bold text-white mb-2 group-hover:text-primary transition-colors">TOEIC Platinum 990</h3>
+<p class="text-slate-400 text-sm font-sans line-clamp-2 mb-6">Chinh phục điểm số tối đa với phương pháp độc quyền dành riêng cho giới tinh hoa.</p>
+<div class="flex items-center justify-between mb-8 pb-6 border-b border-primary/10">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-lg">schedule</span>
+<span class="text-sm font-medium uppercase tracking-tighter">4 Tháng đột phá</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-primary text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-primary text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-primary text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-slate-600 text-sm">star</span>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<p class="text-[10px] uppercase text-primary/50 tracking-widest">Học phí đầu tư</p>
+<p class="text-2xl font-bold text-primary">18.900.000 <span class="text-xs">VND</span></p>
+</div>
+<button class="p-3 rounded-full border border-primary/50 text-primary hover:bg-primary hover:text-background-dark transition-all">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Pagination/Navigation -->
+<div class="mt-20 py-10 border-t border-primary/10 flex flex-col md:flex-row items-center justify-between gap-6">
+<p class="text-primary/40 text-sm">Hiển thị 3 trên tổng số 12 khóa học thượng lưu</p>
+<div class="flex items-center gap-4">
+<button class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary/30 cursor-not-allowed">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="size-10 flex items-center justify-center rounded border border-primary bg-primary text-background-dark font-bold">1</button>
+<button class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary hover:border-primary transition-all font-bold">2</button>
+<button class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary hover:border-primary transition-all font-bold">3</button>
+<button class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary hover:border-primary transition-all">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Sidebar Quick Access (Visual only) -->
+<div class="fixed right-6 top-1/2 -translate-y-1/2 hidden xl:flex flex-col gap-4 border border-primary/20 p-2 rounded-full backdrop-blur z-40 glass-panel">
+<button class="size-12 flex items-center justify-center rounded-full text-primary hover:bg-primary hover:text-background-dark transition-all" title="Dashboard">
+<span class="material-symbols-outlined">dashboard</span>
+</button>
+<button class="size-12 flex items-center justify-center rounded-full bg-primary text-background-dark transition-all" title="Khóa học">
+<span class="material-symbols-outlined">menu_book</span>
+</button>
+<button class="size-12 flex items-center justify-center rounded-full text-primary hover:bg-primary hover:text-background-dark transition-all" title="Lịch học">
+<span class="material-symbols-outlined">calendar_month</span>
+</button>
+<button class="size-12 flex items-center justify-center rounded-full text-primary hover:bg-primary hover:text-background-dark transition-all" title="Hồ sơ">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+<canvas class="fixed inset-0 z-[60] pointer-events-none" id="sparkle-canvas"></canvas><script>
+        const canvas = document.getElementById('sparkle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 2 - 1;
+                this.speedY = Math.random() * 2 - 1;
+                this.life = 1;
+                this.decay = Math.random() * 0.02 + 0.01;
+                this.color = Math.random() > 0.5 ? '#e0b329' : '#ffffff';
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.life -= this.decay;
+            }
+
+            draw() {
+                ctx.globalAlpha = this.life;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                // Drawing a tiny diamond/star shape
+                ctx.moveTo(this.x, this.y - this.size * 2);
+                ctx.lineTo(this.x + this.size, this.y);
+                ctx.lineTo(this.x, this.y + this.size * 2);
+                ctx.lineTo(this.x - this.size, this.y);
+                ctx.closePath();
+                ctx.fill();
+            }
+        }
+
+        function handleParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].life <= 0) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            for (let i = 0; i < 2; i++) {
+                particles.push(new Particle(e.clientX, e.clientY));
+            }
+        });
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            handleParticles();
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script></body></html>

@@ -1,6 +1,8 @@
 package com.hutech.TrungTamTiengAnh.controller;
 
 import com.hutech.TrungTamTiengAnh.entity.User;
+import com.hutech.TrungTamTiengAnh.entity.StudentProfile;
+import com.hutech.TrungTamTiengAnh.repository.StudentProfileRepository;
 import com.hutech.TrungTamTiengAnh.service.UserService;
 import jakarta.validation.Valid;
 import jakarta.servlet.http.HttpSession;
@@ -12,10 +14,12 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final UserService userService;
+    private final StudentProfileRepository studentProfileRepository;
 
     // Constructor Injection
-    public AuthController(UserService userService) {
+    public AuthController(UserService userService, StudentProfileRepository studentProfileRepository) {
         this.userService = userService;
+        this.studentProfileRepository = studentProfileRepository;
     }
 
     // ===================== LOGIN =====================
@@ -73,6 +77,10 @@ public class AuthController {
         String result = userService.register(user);
 
         if ("SUCCESS".equals(result)) {
+            StudentProfile profile = new StudentProfile();
+            profile.setUser(user);
+            profile.setFullName(user.getUsername());
+            studentProfileRepository.save(profile);
             return "redirect:/login";
         }
 

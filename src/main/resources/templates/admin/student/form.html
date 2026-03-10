@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout :: layout(~{::section}, 'Cập nhật học viên')}">
+<section>
+    <div class="max-w-4xl mx-auto">
+        <div class="gold-gradient-border rounded-2xl p-8 glass-card">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h1 class="text-3xl font-bold text-white font-display">Thêm / Sửa học viên</h1>
+                    <p class="text-slate-400 text-sm">Quản lý hồ sơ cá nhân và tài khoản</p>
+                </div>
+                <a class="text-primary hover:underline" href="/admin/students">Quay lại danh sách</a>
+            </div>
+
+            <div th:if="${error}" class="text-red-400 text-sm mb-4" th:text="${error}"></div>
+
+            <form th:action="@{/admin/students/save}" th:object="${studentForm}" method="post" class="space-y-6">
+                <input type="hidden" th:field="*{id}" />
+                <input type="hidden" th:field="*{userId}" />
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Username</label>
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="text" th:field="*{username}" required />
+                        <div th:if="${#fields.hasErrors('username')}" class="text-red-400 text-xs mt-2">
+                            <span th:errors="*{username}"></span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Password (để trống nếu không đổi)</label>
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="password" th:field="*{password}" />
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Active</label>
+                        <select class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" th:field="*{active}">
+                            <option th:value="true">ON</option>
+                            <option th:value="false">OFF</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Họ tên</label>
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="text" th:field="*{fullName}" required />
+                        <div th:if="${#fields.hasErrors('fullName')}" class="text-red-400 text-xs mt-2">
+                            <span th:errors="*{fullName}"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Số điện thoại</label>
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="text" th:field="*{phone}" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Email</label>
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="email" th:field="*{email}" />
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Ngày sinh</label>
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="date" th:field="*{dateOfBirth}" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Trình độ</label>
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="text" th:field="*{level}" />
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Địa chỉ</label>
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="text" th:field="*{address}" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Ghi chú</label>
+                        <textarea class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" rows="3" th:field="*{note}"></textarea>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 pt-2">
+                    <button type="submit" class="px-6 py-3 rounded-lg bg-primary text-background-dark font-bold hover:bg-champagne transition-all">Lưu</button>
+                    <a href="/admin/students" class="px-6 py-3 rounded-lg border border-primary/30 text-primary hover:border-primary transition-all">Hủy</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+</html>

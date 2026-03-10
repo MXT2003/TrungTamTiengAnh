@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout :: layout(~{::section}, 'Quản lý học viên')}">
+<section>
+    <div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-10 border-l-4 border-primary pl-6">
+        <div>
+            <h1 class="text-3xl md:text-4xl font-bold text-white font-display">Danh sách học viên</h1>
+            <p class="text-primary/70 mt-2 italic">Theo dõi thông tin và trình độ học viên</p>
+        </div>
+        <a class="flex items-center gap-2 px-6 py-3 bg-primary text-background-dark font-bold rounded-lg hover:bg-champagne transition-all" href="/admin/students/add">
+            <span class="material-symbols-outlined">add_circle</span>
+            Thêm học viên
+        </a>
+    </div>
+
+    <form class="mb-6" method="get">
+        <div class="flex flex-col md:flex-row gap-4">
+            <input class="flex-1 rounded-lg bg-white/5 border border-white/10 text-slate-100" name="q" placeholder="Tìm họ tên..." th:value="${q}" type="text"/>
+            <button class="px-6 py-3 rounded-lg border border-primary/30 text-primary hover:border-primary transition-all" type="submit">Tìm</button>
+        </div>
+    </form>
+
+    <div class="overflow-hidden rounded-2xl border border-primary/10 glass-card">
+        <table class="min-w-full divide-y divide-white/10">
+            <thead class="bg-white/5 text-slate-300">
+                <tr>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">ID</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Họ tên</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Username</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Phone</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Email</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Level</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Active</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Hành động</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+                <tr class="hover:bg-white/5" th:each="s : ${page.content}">
+                    <td class="px-4 py-3" th:text="${s.id}"></td>
+                    <td class="px-4 py-3 font-semibold text-slate-100" th:text="${s.fullName}"></td>
+                    <td class="px-4 py-3" th:text="${s.user != null ? s.user.username : ''}"></td>
+                    <td class="px-4 py-3" th:text="${s.phone}"></td>
+                    <td class="px-4 py-3" th:text="${s.email}"></td>
+                    <td class="px-4 py-3" th:text="${s.level}"></td>
+                    <td class="px-4 py-3" th:text="${s.user != null && s.user.active ? 'ON' : 'OFF'}"></td>
+                    <td class="px-4 py-3">
+                        <div class="flex items-center gap-2">
+                            <a class="px-3 py-2 rounded-lg border border-primary/30 text-primary hover:border-primary transition-all" th:href="@{/admin/students/edit/{id}(id=${s.id})}" title="Sửa">
+                                <span class="material-symbols-outlined text-sm">edit</span>
+                            </a>
+                            <form th:action="@{/admin/students/toggle/{id}(id=${s.id})}" method="post">
+                                <button type="submit" class="px-3 py-2 rounded-lg border border-red-500/40 text-red-400 hover:bg-red-500 hover:text-white transition-all" title="Khóa/Mở">
+                                    <span class="material-symbols-outlined text-sm">lock</span>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-8 flex justify-between items-center" th:if="${page != null}">
+        <div class="text-primary/50 text-sm" th:text="'Trang ' + ${page.number+1} + ' / ' + ${page.totalPages}">Trang 1 / 1</div>
+        <div class="flex items-center gap-2">
+            <a class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary/30" th:classappend="${page.first} ? ' cursor-not-allowed' : ''" th:href="@{/admin/students(page=${page.number-1}, size=${page.size}, q=${q})}">
+                <span class="material-symbols-outlined">chevron_left</span>
+            </a>
+            <a class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary font-bold" th:each="i : ${#numbers.sequence(0, page.totalPages-1)}" th:classappend="${i==page.number} ? ' bg-primary text-background-dark border-primary' : ''" th:href="@{/admin/students(page=${i}, size=${page.size}, q=${q})}" th:text="${i+1}">1</a>
+            <a class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary/30" th:classappend="${page.last} ? ' cursor-not-allowed' : ''" th:href="@{/admin/students(page=${page.number+1}, size=${page.size}, q=${q})}">
+                <span class="material-symbols-outlined">chevron_right</span>
+            </a>
+        </div>
+    </div>
+</section>
+</html>

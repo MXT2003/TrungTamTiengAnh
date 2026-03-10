@@ -1,189 +1,77 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="admin/layout :: layout(~{::section})">
-
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout :: layout(~{::section}, 'Quản lý lớp học')}">
 <section>
-    <style>
-        .panel-custom {
-            border-radius: 8px;
-            border-top: 5px solid #3f51b5;
-            /* Primary color for "Classes" related items in this theme */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            background: #fff;
-            padding: 30px;
-        }
-
-        .table>thead>tr>th {
-            border-bottom: 2px solid #3f51b5;
-            color: #353535;
-        }
-
-        .btn-custom-success {
-            background-color: #29ca8e;
-            color: #fff;
-            border-radius: 50px;
-            padding: 8px 20px;
-            border: none;
-            transition: all 0.3s;
-            margin-bottom: 20px;
-            display: inline-block;
-        }
-
-        .btn-custom-success:hover {
-            background-color: #23ba81;
-            color: #fff;
-        }
-
-        .btn-custom-warning {
-            background-color: #f6c23e;
-            color: #fff;
-            border-radius: 50px;
-            border: none;
-            transition: all 0.3s;
-        }
-
-        .btn-custom-warning:hover {
-            background-color: #dda116;
-            color: #fff;
-        }
-
-        .btn-custom-danger {
-            background-color: #e74a3b;
-            color: #fff;
-            border-radius: 50px;
-            border: none;
-            transition: all 0.3s;
-        }
-
-        .btn-custom-danger:hover {
-            background-color: #c7291a;
-            color: #fff;
-        }
-
-        .action-links {
-            margin-top: 20px;
-        }
-
-        .action-links a {
-            color: #757575;
-            font-weight: bold;
-        }
-
-        .action-links a:hover {
-            color: #353535;
-        }
-    </style>
-
-    <div class="panel-custom">
-        <h3 style="margin-bottom: 25px; color: #353535; font-weight: bold;">Danh sách lớp học</h3>
-
-        <a href="/admin/lophoc/add" class="btn btn-custom-success">
-            <i class="fa fa-plus"></i> Thêm lớp
+    <div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-10 border-l-4 border-primary pl-6">
+        <div>
+            <h1 class="text-3xl md:text-4xl font-bold text-white font-display">Danh sách lớp học</h1>
+            <p class="text-primary/70 mt-2 italic">Theo dõi tiến độ và sĩ số từng lớp</p>
+        </div>
+        <a class="flex items-center gap-2 px-6 py-3 bg-primary text-background-dark font-bold rounded-lg hover:bg-champagne transition-all" href="/admin/lophoc/add">
+            <span class="material-symbols-outlined">add_circle</span>
+            Thêm lớp mới
         </a>
-
-        <div
-            style="margin-bottom: 40px; background: #fdfdfd; padding: 20px; border-radius: 8px; border: 1px solid #eee;">
-            <h4 style="text-align: center; margin-bottom: 20px; color: #3f51b5; font-weight: bold;">Biểu đồ thống kê lớp
-                học theo giáo viên</h4>
-            <canvas id="teacherChart" height="100"></canvas>
-        </div>
-
-        <div class="table-responsive">
-            <table class="table table-hover table-striped" id="classesTable">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Tên lớp</th>
-                        <th>Giáo viên</th>
-                        <th>Lịch học</th>
-                        <th>Sĩ số</th>
-                        <th>Học phí</th>
-                        <th>Trang thai</th>
-                        <th>Hành động</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="lh : ${list}">
-                        <td th:text="${lh.id}"></td>
-                        <td th:text="${lh.tenLop}" style="font-weight: bold; color: #353535;"></td>
-                        <td class="teacher-name" th:text="${lh.teacher != null ? lh.teacher.fullName : lh.giaoVien}"></td>
-                        <td th:text="${lh.lichHoc}"></td>
-                        <td th:text="${lh.siSo}"></td>
-                        <td th:text="${lh.hocPhi}"></td>
-                        <td>
-                            <span th:text="${lh.moDangKy ? 'Mo' : 'Dong'}"></span>
-                        </td>
-                        <td>
-                            <a th:href="@{/admin/lophoc/edit/{id}(id=${lh.id})}" class="btn btn-custom-warning btn-sm"
-                                title="Sửa">
-                                <i class="fa fa-pencil"></i>
-                            </a>
-
-                            <a th:href="@{/admin/lophoc/delete/{id}(id=${lh.id})}" class="btn btn-custom-danger btn-sm"
-                                onclick="return confirm('Bạn có chắc muốn xoá?')" title="Xoá">
-                                <i class="fa fa-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                var teacherElements = document.querySelectorAll('.teacher-name');
-                var teacherCounts = {};
-
-                teacherElements.forEach(function (el) {
-                    var name = el.innerText.trim();
-                    if (name) {
-                        teacherCounts[name] = (teacherCounts[name] || 0) + 1;
-                    }
-                });
-
-                var labels = Object.keys(teacherCounts);
-                var data = Object.values(teacherCounts);
-
-                var ctx = document.getElementById('teacherChart').getContext('2d');
-                var chart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'Số lượng lớp học phụ trách',
-                            data: data,
-                            backgroundColor: 'rgba(63, 81, 181, 0.7)',
-                            borderColor: 'rgba(63, 81, 181, 1)',
-                            borderWidth: 1,
-                            borderRadius: 4
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                ticks: {
-                                    stepSize: 1
-                                }
-                            }
-                        },
-                        plugins: {
-                            legend: {
-                                display: false
-                            }
-                        }
-                    }
-                });
-            });
-        </script>
-
-        <div class="action-links">
-            <a href="/admin/home"><i class="fa fa-arrow-left"></i> Quay lại Dashboard</a>
-        </div>
     </div>
 
+    <form class="mb-6" method="get">
+        <div class="flex flex-col md:flex-row gap-4">
+            <input class="flex-1 rounded-lg bg-white/5 border border-white/10 text-slate-100" name="q" placeholder="Tìm tên lớp..." th:value="${q}" type="text"/>
+            <button class="px-6 py-3 rounded-lg border border-primary/30 text-primary hover:border-primary transition-all" type="submit">Tìm</button>
+        </div>
+    </form>
+
+    <div class="overflow-hidden rounded-2xl border border-primary/10 glass-card">
+        <table class="min-w-full divide-y divide-white/10">
+            <thead class="bg-white/5 text-slate-300">
+                <tr>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">ID</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Tên lớp</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Khóa học</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Giáo viên</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Lịch học</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Sĩ số</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Học phí</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Trạng thái</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Hành động</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+                <tr class="hover:bg-white/5" th:each="lh : ${page.content}">
+                    <td class="px-4 py-3" th:text="${lh.id}"></td>
+                    <td class="px-4 py-3 font-semibold text-slate-100" th:text="${lh.tenLop}"></td>
+                    <td class="px-4 py-3" th:text="${lh.course != null ? lh.course.name : ''}"></td>
+                    <td class="px-4 py-3" th:text="${lh.teacher != null ? lh.teacher.fullName : lh.giaoVien}"></td>
+                    <td class="px-4 py-3" th:text="${lh.lichHoc}"></td>
+                    <td class="px-4 py-3" th:text="${lh.siSo}"></td>
+                    <td class="px-4 py-3" th:text="${lh.hocPhi}"></td>
+                    <td class="px-4 py-3">
+                        <span class="px-2 py-1 text-xs rounded-full" th:classappend="${lh.moDangKy} ? ' bg-green-500/20 text-green-300' : ' bg-red-500/20 text-red-300'" th:text="${lh.moDangKy ? 'Mở' : 'Đóng'}"></span>
+                    </td>
+                    <td class="px-4 py-3">
+                        <div class="flex items-center gap-2">
+                            <a class="px-3 py-2 rounded-lg border border-primary/30 text-primary hover:border-primary transition-all" th:href="@{/admin/lophoc/edit/{id}(id=${lh.id})}" title="Sửa">
+                                <span class="material-symbols-outlined text-sm">edit</span>
+                            </a>
+                            <a class="px-3 py-2 rounded-lg border border-red-500/40 text-red-400 hover:bg-red-500 hover:text-white transition-all" th:href="@{/admin/lophoc/delete/{id}(id=${lh.id})}" onclick="return confirm('Bạn có chắc muốn xóa?')" title="Xóa">
+                                <span class="material-symbols-outlined text-sm">delete</span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-8 flex justify-between items-center" th:if="${page != null}">
+        <div class="text-primary/50 text-sm" th:text="'Trang ' + ${page.number+1} + ' / ' + ${page.totalPages}">Trang 1 / 1</div>
+        <div class="flex items-center gap-2">
+            <a class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary/30" th:classappend="${page.first} ? ' cursor-not-allowed' : ''" th:href="@{/admin/lophoc(page=${page.number-1}, size=${page.size}, q=${q})}">
+                <span class="material-symbols-outlined">chevron_left</span>
+            </a>
+            <a class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary font-bold" th:each="i : ${#numbers.sequence(0, page.totalPages-1)}" th:classappend="${i==page.number} ? ' bg-primary text-background-dark border-primary' : ''" th:href="@{/admin/lophoc(page=${i}, size=${page.size}, q=${q})}" th:text="${i+1}">1</a>
+            <a class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary/30" th:classappend="${page.last} ? ' cursor-not-allowed' : ''" th:href="@{/admin/lophoc(page=${page.number+1}, size=${page.size}, q=${q})}">
+                <span class="material-symbols-outlined">chevron_right</span>
+            </a>
+        </div>
+    </div>
 </section>
-
 </html>
-
-

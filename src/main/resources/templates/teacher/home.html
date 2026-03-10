@@ -1,22 +1,20 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Teacher Home</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
-    <link rel="stylesheet" th:href="@{/css/templatemo-style.css}">
-</head>
-
-<body>
-    <div class="container" style="padding-top: 80px;">
-        <div class="panel panel-default" style="padding: 30px;">
-            <h2>Teacher Home</h2>
-            <p>Trang nay la giao dien co ban cho giao vien.</p>
-            <a href="/logout" class="btn btn-danger">Logout</a>
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{teacher/layout :: layout(~{::section}, 'Bảng điều khiển giáo viên')}">
+<section>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
+            <p class="text-slate-400">Số lớp đang dạy</p>
+            <h3 class="text-3xl font-bold text-primary" th:text="${classCount}">0</h3>
+        </div>
+        <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
+            <p class="text-slate-400">Số học viên (đã duyệt)</p>
+            <h3 class="text-3xl font-bold text-primary" th:text="${studentCount}">0</h3>
         </div>
     </div>
-</body>
 
+    <div class="mt-8 flex flex-wrap gap-4">
+        <a class="px-6 py-3 rounded-lg border border-primary/30 text-primary hover:border-primary transition-all" href="/teacher/classes">Danh sách lớp</a>
+        <a class="px-6 py-3 rounded-lg border border-primary/30 text-primary hover:border-primary transition-all" href="/logout">Logout</a>
+    </div>
+</section>
 </html>

@@ -1,123 +1,140 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+﻿<!DOCTYPE html>
+<html class="dark" lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Đăng nhập r</title>
-    <!-- CSS files from "Known" template -->
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
-    <link rel="stylesheet" th:href="@{/css/templatemo-style.css}">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Đăng nhập</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#e0b329",
+                        "background-light": "#f8f7f6",
+                        "background-dark": "#0a0c14"
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"],
+                        "sans": ["Noto Sans", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body {
-            background-color: #f4f6f9;
+        body { font-family: 'Noto Sans', sans-serif; }
+        h1, h2, h3, .font-display { font-family: 'Noto Serif', serif; }
+        .universe-bg {
+            background-image:
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
+            background-size: 550px 550px, 350px 350px, 250px 250px;
+            background-position: 0 0, 40px 60px, 130px 270px;
+            animation: orbit 60s linear infinite;
         }
-
-        .main-content {
-            padding-top: 100px;
-            padding-bottom: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .login-panel {
-            background: #ffffff;
-            border-radius: 8px;
-            border-top: 5px solid #29ca8e;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            padding: 30px;
-            width: 100%;
-            max-width: 400px;
-            margin: 0 auto;
-            /* Center horizontally in older flexbox */
-        }
-
-        .login-panel h2 {
-            margin-top: 0;
-            margin-bottom: 25px;
-            color: #353535;
-            text-align: center;
-        }
-
-        .form-control {
-            border-radius: 4px;
-            box-shadow: none;
-            height: 45px;
-        }
-
-        .form-control:focus {
-            border-color: #29ca8e;
-            box-shadow: none;
-        }
-
-        .btn-custom {
-            background-color: #29ca8e;
-            color: #fff;
-            border-radius: 50px;
-            padding: 10px 20px;
-            border: none;
-            width: 100%;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-
-        .btn-custom:hover {
-            background-color: #23ba81;
-            color: #fff;
-        }
-
-        .register-link {
-            display: block;
-            text-align: center;
-            margin-top: 15px;
-            color: #757575;
-        }
-
-        .register-link a {
-            color: #3f51b5;
-            font-weight: bold;
-        }
-
-        .register-link a:hover {
-            color: #2e3a80;
+        @keyframes orbit {
+            from { background-position: 0 0, 40px 60px, 130px 270px; }
+            to { background-position: 550px 550px, 390px 410px, 380px 820px; }
         }
     </style>
 </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex items-center justify-center px-4 universe-bg">
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-900/30 blur-[150px] rounded-full"></div>
+        <div class="absolute top-1/4 right-1/4 w-[30%] h-[30%] bg-primary/10 blur-[100px] rounded-full"></div>
+    </div>
 
-<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
-
-    <div class="container main-content">
-        <div class="login-panel">
-            <h2>Đăng nhập</h2>
-            <div th:if="${error}" style="color:#e74a3b; text-align:center; margin-bottom:15px;">
-                <span th:text="${error}"></span>
+    <div class="relative z-10 w-full max-w-md bg-white/5 border border-white/10 rounded-2xl p-8">
+        <h2 class="text-2xl font-bold font-display text-center mb-6">Đăng nhập</h2>
+        <div th:if="${error}" class="text-red-400 text-center mb-4">
+            <span th:text="${error}"></span>
+        </div>
+        <form action="/login" method="post" class="space-y-4">
+            <div>
+                <label class="block text-sm text-slate-300">Username</label>
+                <input type="text" name="username" class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" required />
             </div>
-
-            <form action="/login" method="post">
-                <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" name="username" class="form-control" required />
-                </div>
-
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" name="password" class="form-control" required />
-                </div>
-
-                <button type="submit" class="btn btn-custom">Login</button>
-                <div class="register-link">
-                    Chưa có tài khoản? <a href="/register">Đăng ký ngay</a>
-                </div>
-            </form>
+            <div>
+                <label class="block text-sm text-slate-300">Password</label>
+                <input type="password" name="password" class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" required />
+            </div>
+            <button type="submit" class="w-full px-6 py-3 rounded-lg bg-primary text-background-dark font-bold hover:bg-white transition-all">Đăng nhập</button>
+        </form>
+        <div class="text-center text-sm text-slate-400 mt-4">
+            Chưa có tài khoản? <a class="text-primary hover:underline" href="/register">Đăng ký ngay</a>
         </div>
     </div>
 
-    <!-- JS files -->
-    <script th:src="@{/js/jquery.js}"></script>
-    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <canvas class="fixed inset-0 z-[60] pointer-events-none" id="sparkle-canvas"></canvas>
+    <script>
+        const canvas = document.getElementById('sparkle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
 
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 2 - 1;
+                this.speedY = Math.random() * 2 - 1;
+                this.life = 1;
+                this.decay = Math.random() * 0.02 + 0.01;
+                this.color = Math.random() > 0.5 ? '#e0b329' : '#ffffff';
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.life -= this.decay;
+            }
+
+            draw() {
+                ctx.globalAlpha = this.life;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y - this.size * 2);
+                ctx.lineTo(this.x + this.size, this.y);
+                ctx.lineTo(this.x, this.y + this.size * 2);
+                ctx.lineTo(this.x - this.size, this.y);
+                ctx.closePath();
+                ctx.fill();
+            }
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            for (let i = 0; i < 2; i++) {
+                particles.push(new Particle(e.clientX, e.clientY));
+            }
+        });
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].life <= 0) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
 </body>
-
 </html>

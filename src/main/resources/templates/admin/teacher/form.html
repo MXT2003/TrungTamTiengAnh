@@ -1,76 +1,75 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="admin/layout :: layout(~{::section})">
-
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout :: layout(~{::section}, 'Cập nhật giáo viên')}">
 <section>
-    <style>
-        .panel-custom {
-            border-radius: 8px;
-            border-top: 5px solid #3f51b5;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            background: #fff;
-            padding: 30px;
-        }
-    </style>
+    <div class="max-w-3xl mx-auto">
+        <div class="gold-gradient-border rounded-2xl p-8 glass-card">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h1 class="text-3xl font-bold text-white font-display">Thông tin giáo viên</h1>
+                    <p class="text-slate-400 text-sm">Cập nhật hồ sơ giảng dạy</p>
+                </div>
+                <a class="text-primary hover:underline" href="/admin/teacher">Quay lại danh sách</a>
+            </div>
 
-    <div class="panel-custom">
-        <h3 style="margin-bottom: 25px; color: #353535; font-weight: bold;">Giao vien</h3>
+            <div th:if="${error}" class="text-red-400 text-sm mb-4">
+                <span th:text="${error}"></span>
+            </div>
 
-        <div th:if="${error}" style="color:#e74a3b; margin-bottom:10px;">
-            <span th:text="${error}"></span>
+            <form th:action="@{/admin/teacher/save}" th:object="${teacherForm}" method="post" class="space-y-6">
+                <input type="hidden" th:field="*{id}" />
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-300">Tên giáo viên</label>
+                    <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="text" th:field="*{fullName}" required />
+                    <div th:if="${#fields.hasErrors('fullName')}" class="text-red-400 text-xs mt-2">
+                        <span th:errors="*{fullName}"></span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Phone</label>
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="text" th:field="*{phone}" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Email</label>
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="text" th:field="*{email}" />
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-300">Chuyên môn</label>
+                    <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="text" th:field="*{specialization}" />
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Username</label>
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="text" th:field="*{username}" required />
+                        <div th:if="${#fields.hasErrors('username')}" class="text-red-400 text-xs mt-2">
+                            <span th:errors="*{username}"></span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Password (bỏ trống nếu không đổi)</label>
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="password" th:field="*{password}" />
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-300">Active</label>
+                    <select class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" th:field="*{active}">
+                        <option th:value="true">ON</option>
+                        <option th:value="false">OFF</option>
+                    </select>
+                </div>
+
+                <div class="flex items-center gap-4 pt-2">
+                    <button type="submit" class="px-6 py-3 rounded-lg bg-primary text-background-dark font-bold hover:bg-champagne transition-all">Lưu</button>
+                    <a href="/admin/teacher" class="px-6 py-3 rounded-lg border border-primary/30 text-primary hover:border-primary transition-all">Hủy</a>
+                </div>
+            </form>
         </div>
-
-        <form th:action="@{/admin/teacher/save}" th:object="${teacherForm}" method="post">
-            <input type="hidden" th:field="*{id}" />
-
-            <div class="form-group">
-                <label>Ten giao vien</label>
-                <input type="text" class="form-control" th:field="*{fullName}" required />
-                <div th:if="${#fields.hasErrors('fullName')}" style="color:#e74a3b; font-size:12px;">
-                    <span th:errors="*{fullName}"></span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Phone</label>
-                <input type="text" class="form-control" th:field="*{phone}" />
-            </div>
-
-            <div class="form-group">
-                <label>Email</label>
-                <input type="text" class="form-control" th:field="*{email}" />
-            </div>
-
-            <div class="form-group">
-                <label>Chuyen mon</label>
-                <input type="text" class="form-control" th:field="*{specialization}" />
-            </div>
-
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" class="form-control" th:field="*{username}" required />
-                <div th:if="${#fields.hasErrors('username')}" style="color:#e74a3b; font-size:12px;">
-                    <span th:errors="*{username}"></span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Password (bo trong neu khong doi)</label>
-                <input type="password" class="form-control" th:field="*{password}" />
-            </div>
-
-            <div class="form-group">
-                <label>Active</label>
-                <select class="form-control" th:field="*{active}">
-                    <option th:value="true">ON</option>
-                    <option th:value="false">OFF</option>
-                </select>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Luu</button>
-            <a href="/admin/teacher" class="btn btn-default">Quay lai</a>
-        </form>
     </div>
-
 </section>
-
 </html>

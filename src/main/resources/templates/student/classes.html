@@ -1,151 +1,41 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{student/layout :: layout(~{::section}, 'Đăng ký lớp')}">
+<section>
+    <div th:if="${error}" class="mb-4 text-red-400" th:text="${error}"></div>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Danh sách lớp</title>
-    <!-- CSS files from "Known" template -->
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
-    <link rel="stylesheet" th:href="@{/css/templatemo-style.css}">
-
-    <style>
-        body {
-            background-color: #f4f6f9;
-        }
-
-        .custom-navbar {
-            background: #ffffff;
-            border-top: 5px solid #29ca8e;
-            box-shadow: 0 1px 30px rgba(0, 0, 0, 0.1);
-            margin-bottom: 0;
-            padding: 12px 0;
-        }
-
-        .navbar-brand {
-            color: #454545 !important;
-            font-size: 24px !important;
-            font-weight: bold;
-        }
-
-        .main-content {
-            padding-top: 120px;
-            padding-bottom: 50px;
-        }
-
-        .panel-custom {
-            border-radius: 8px;
-            border-top: 5px solid #3f51b5;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            background: #fff;
-            padding: 30px;
-        }
-
-        .table>thead>tr>th {
-            border-bottom: 2px solid #3f51b5;
-            color: #353535;
-        }
-
-        .btn-custom {
-            background-color: #29ca8e;
-            color: #fff;
-            border-radius: 50px;
-            padding: 5px 15px;
-            border: none;
-            transition: all 0.3s;
-        }
-
-        .btn-custom:hover {
-            background-color: #23ba81;
-            color: #fff;
-        }
-
-        .action-links {
-            margin-top: 20px;
-        }
-
-        .action-links a {
-            margin-right: 15px;
-            color: #3f51b5;
-            font-weight: bold;
-        }
-
-        .action-links a:hover {
-            color: #2e3a80;
-        }
-    </style>
-</head>
-
-<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
-
-    <!-- MENU -->
-    <section class="navbar custom-navbar navbar-fixed-top" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <a href="/student/home" class="navbar-brand">Student Portal</a>
-            </div>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/logout" style="color: #e74a3b !important;">Logout</a></li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <div class="container main-content">
-        <div class="panel-custom">
-            <h2 style="margin-bottom: 25px;">Danh sách lớp học</h2>
-            <div th:if="${error}" style="color:#e74a3b; margin-bottom:15px;">
-                <span th:text="${error}"></span>
-            </div>
-
-            <div class="table-responsive">
-                <table class="table table-hover table-striped">
-                    <thead>
-                        <tr>
-                            <th>Tên lớp</th>
-                            <th>Giáo viên</th>
-                            <th>Lich hoc</th>
-                            <th>Si so</th>
-                            <th>Con cho</th>
-                            <th>Trang thai</th>
-                            <th>Hành động</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="lh : ${list}">
-                            <td th:text="${lh.tenLop}" style="font-weight: bold; color: #353535;"></td>
-                            <td th:text="${lh.teacher != null ? lh.teacher.fullName : lh.giaoVien}"></td>
-                            <td th:text="${lh.lichHoc}"></td>
-                            <td th:text="${lh.siSo}"></td>
-                            <td th:text="${conChoMap[lh.id]}"></td>
-                            <td th:text="${lh.moDangKy ? 'Mo' : 'Dong'}"></td>
-                            <td>
-                                <a th:if="${lh.moDangKy and conChoMap[lh.id] > 0}" th:href="@{/student/register/{id}(id=${lh.id})}" class="btn btn-custom btn-sm">
-                                    <i class="fa fa-pencil"></i> Dang ky
-                                </a>
-                                <span th:if="${!lh.moDangKy or conChoMap[lh.id] <= 0}" style="color:#e74a3b; font-weight:bold;">Khong the dang ky</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="action-links">
-                <a href="/student/my-classes"><i class="fa fa-list"></i> Xem lớp đã đăng ký</a>
-                <a href="/student/home" style="color: #757575;"><i class="fa fa-arrow-left"></i> Quay lại Trang chủ</a>
-            </div>
-        </div>
+    <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+        <table class="min-w-full divide-y divide-white/10">
+            <thead class="bg-white/5 text-slate-300">
+                <tr>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Tên lớp</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Giáo viên</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Lịch học</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Sĩ số</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Còn chỗ</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Trạng thái</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Hành động</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+                <tr class="hover:bg-white/5" th:each="lh : ${list}">
+                    <td class="px-4 py-3 font-semibold text-slate-100" th:text="${lh.tenLop}"></td>
+                    <td class="px-4 py-3" th:text="${lh.teacher != null ? lh.teacher.fullName : lh.giaoVien}"></td>
+                    <td class="px-4 py-3" th:text="${lh.lichHoc}"></td>
+                    <td class="px-4 py-3" th:text="${lh.siSo}"></td>
+                    <td class="px-4 py-3" th:text="${conChoMap[lh.id]}"></td>
+                    <td class="px-4 py-3" th:text="${lh.moDangKy ? 'Mở' : 'Đóng'}"></td>
+                    <td class="px-4 py-3">
+                        <a th:if="${lh.moDangKy and conChoMap[lh.id] > 0}" th:href="@{/student/register/{id}(id=${lh.id})}" class="px-3 py-2 rounded-lg bg-primary text-background-dark font-bold">Đăng ký</a>
+                        <span th:if="${!lh.moDangKy or conChoMap[lh.id] <= 0}" class="text-red-400 font-semibold">Không thể đăng ký</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
-    <!-- JS files -->
-    <script th:src="@{/js/jquery.js}"></script>
-    <script th:src="@{/js/bootstrap.min.js}"></script>
-
-</body>
-
+    <div class="mt-6 flex flex-wrap gap-4">
+        <a href="/student/my-classes" class="text-primary hover:underline">Xem lớp đã đăng ký</a>
+        <a href="/student/home" class="text-slate-400 hover:text-primary">Quay lại trang chủ</a>
+    </div>
+</section>
 </html>
-
-
-
-

@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{teacher/layout :: layout(~{::section}, 'Điểm danh')}">
+<section>
+    <h3 class="text-xl font-bold mb-4" th:text="'Điểm danh lớp: ' + ${lopHoc.tenLop}"></h3>
+
+    <form method="get" th:action="@{/teacher/class/{id}/attendance(id=${lopHoc.id})}" class="mb-6 flex flex-col md:flex-row gap-4">
+        <div>
+            <label class="block text-sm text-slate-300 mb-2">Ngày học</label>
+            <input type="date" class="rounded-lg bg-white/5 border border-white/10 text-slate-100" name="date" th:value="${ngay}">
+        </div>
+        <div class="flex items-end">
+            <button type="submit" class="px-6 py-3 rounded-lg border border-primary/30 text-primary hover:border-primary transition-all">Xem</button>
+        </div>
+    </form>
+
+    <form method="post" th:action="@{/teacher/class/{id}/attendance(id=${lopHoc.id})}" class="space-y-4">
+        <input type="hidden" name="date" th:value="${ngay}">
+        <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+            <table class="min-w-full divide-y divide-white/10">
+                <thead class="bg-white/5 text-slate-300">
+                    <tr>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Học viên</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Trạng thái</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Ghi chú</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white/5">
+                    <tr class="hover:bg-white/5" th:each="dk : ${list}">
+                        <td class="px-4 py-3" th:text="${dk.student.username}"></td>
+                        <td class="px-4 py-3">
+                            <input type="hidden" name="studentId" th:value="${dk.student.id}">
+                            <select name="status" class="rounded-lg bg-white/5 border border-white/10 text-slate-100">
+                                <option value="PRESENT">PRESENT</option>
+                                <option value="ABSENT">ABSENT</option>
+                            </select>
+                        </td>
+                        <td class="px-4 py-3">
+                            <input type="text" name="note" class="w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" placeholder="Ghi chú">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="flex items-center gap-4">
+            <button type="submit" class="px-6 py-3 rounded-lg bg-primary text-background-dark font-bold hover:bg-champagne transition-all">Lưu điểm danh</button>
+            <a th:href="@{/teacher/classes}" class="text-primary hover:underline">Quay lại</a>
+        </div>
+    </form>
+</section>
+</html>

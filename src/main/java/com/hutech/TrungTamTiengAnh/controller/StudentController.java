@@ -2,11 +2,15 @@ package com.hutech.TrungTamTiengAnh.controller;
 
 import com.hutech.TrungTamTiengAnh.entity.DangKy;
 import com.hutech.TrungTamTiengAnh.entity.LopHoc;
+import com.hutech.TrungTamTiengAnh.entity.Payment;
 import com.hutech.TrungTamTiengAnh.entity.User;
 import com.hutech.TrungTamTiengAnh.repository.DangKyRepository;
 import com.hutech.TrungTamTiengAnh.repository.LopHocRepository;
+import com.hutech.TrungTamTiengAnh.repository.PaymentRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +30,9 @@ public class StudentController {
 
     @Autowired
     private DangKyRepository dangKyRepository;
+
+    @Autowired
+    private PaymentRepository paymentRepository;
     // ==============================
     // 📌 Trang Home Student
     // ==============================
@@ -156,6 +163,20 @@ public class StudentController {
         model.addAttribute("list", list);
 
         return "student/my-classes";
+    }
+
+    @GetMapping("/payments")
+    public String payments(Model model,
+                           HttpSession session,
+                           @RequestParam(value = "page", defaultValue = "0") int page,
+                           @RequestParam(value = "size", defaultValue = "10") int size) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+        Page<Payment> pageData = paymentRepository.findByStudentId(user.getId(), PageRequest.of(page, size));
+        model.addAttribute("page", pageData);
+        return "student/payments";
     }
 
     @PostMapping("/cancel/{id}")
