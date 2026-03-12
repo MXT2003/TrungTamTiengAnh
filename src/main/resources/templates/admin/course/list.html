@@ -19,11 +19,11 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
         <div class="lg:col-span-8 flex flex-wrap gap-3">
-            <button class="px-6 py-2 rounded-full border border-primary bg-primary text-background-dark text-sm font-bold transition-all">Tất cả</button>
-            <button class="px-6 py-2 rounded-full border border-primary/30 hover:border-primary text-primary/70 hover:text-primary text-sm font-medium transition-all">IELTS Academy</button>
-            <button class="px-6 py-2 rounded-full border border-primary/30 hover:border-primary text-primary/70 hover:text-primary text-sm font-medium transition-all">Business Elite</button>
-            <button class="px-6 py-2 rounded-full border border-primary/30 hover:border-primary text-primary/70 hover:text-primary text-sm font-medium transition-all">TOEIC Master</button>
-            <button class="px-6 py-2 rounded-full border border-primary/30 hover:border-primary text-primary/70 hover:text-primary text-sm font-medium transition-all">Giao tiếp Thượng lưu</button>
+            <a class="px-6 py-2 rounded-full border border-primary bg-primary text-background-dark text-sm font-bold transition-all" href="/admin/course">Tất cả</a>
+            <a class="px-6 py-2 rounded-full border border-primary/30 hover:border-primary text-primary/70 hover:text-primary text-sm font-medium transition-all" href="/admin/course?q=IELTS">IELTS Academy</a>
+            <a class="px-6 py-2 rounded-full border border-primary/30 hover:border-primary text-primary/70 hover:text-primary text-sm font-medium transition-all" href="/admin/course?q=Business">Business Elite</a>
+            <a class="px-6 py-2 rounded-full border border-primary/30 hover:border-primary text-primary/70 hover:text-primary text-sm font-medium transition-all" href="/admin/course?q=TOEIC">TOEIC Master</a>
+            <a class="px-6 py-2 rounded-full border border-primary/30 hover:border-primary text-primary/70 hover:text-primary text-sm font-medium transition-all" href="/admin/course?q=Giao%20tiep">Giao tiếp Thượng lưu</a>
         </div>
         <div class="lg:col-span-4 flex justify-end">
             <form class="flex items-center gap-4 text-primary/60" method="get" th:action="@{/admin/course}">
@@ -65,7 +65,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-[10px] uppercase text-primary/50 tracking-widest">Học phí đầu tư</p>
-                        <p class="text-2xl font-bold text-primary" th:text="${c.fee}">45.000.000</p>
+                        <p class="text-2xl font-bold text-primary" th:text="|${#numbers.formatDecimal(c.fee, 0, 'POINT', 0, 'COMMA')} VND|">45.000.000</p>
                     </div>
                     <div class="flex items-center gap-2">
                         <a class="p-3 rounded-full border border-primary/50 text-primary hover:bg-primary hover:text-background-dark transition-all" th:href="@{/admin/course/edit/{id}(id=${c.id})}" title="Sửa">

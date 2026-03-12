@@ -23,6 +23,16 @@ public class AuthFilter implements Filter {
 
         // 1. Allow public access
         if (uri.equals("/") ||
+                uri.equals("/courses") ||
+                uri.startsWith("/course/") ||
+                uri.equals("/about") ||
+                uri.equals("/teachers") ||
+                uri.equals("/facilities") ||
+                uri.equals("/careers") ||
+                uri.equals("/help") ||
+                uri.equals("/tuition-policy") ||
+                uri.equals("/rules") ||
+                uri.equals("/contact") ||
                 uri.equals("/login") ||
                 uri.equals("/register") ||
                 uri.equals("/error") ||

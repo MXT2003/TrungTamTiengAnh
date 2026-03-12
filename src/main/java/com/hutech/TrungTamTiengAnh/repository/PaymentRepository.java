@@ -13,6 +13,8 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
     Page<Payment> findByStudentId(Long studentId, Pageable pageable);
 
+    Page<Payment> findByStatusOrderByDueDateAsc(String status, Pageable pageable);
+
     @Query("SELECT COALESCE(SUM(p.amount), 0) FROM Payment p WHERE p.status = 'PAID'")
     double sumPaid();
 

@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{public/layout :: layout(~{::section}, 'Chi tiết khóa học')}">
+<section>
+    <div class="mb-8">
+        <a class="text-primary hover:underline" href="/courses">← Quay lại danh sách</a>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 p-6 rounded-xl bg-white/5 border border-white/10">
+            <h1 class="text-4xl font-display font-bold text-white mb-3" th:text="${course.name}">Khóa học</h1>
+            <p class="text-slate-300 text-lg mb-6" th:text="${course.description}">Mô tả khóa học</p>
+            <div class="flex flex-wrap gap-4 text-sm text-slate-400">
+                <span>Trình độ: <strong class="text-primary" th:text="${course.level}">---</strong></span>
+                <span>Thời lượng: <strong class="text-primary" th:text="${course.durationWeeks + ' tuần'}">0</strong></span>
+                <span>Học phí: <strong class="text-primary" th:text="|${#numbers.formatDecimal(course.fee, 0, 'POINT', 0, 'COMMA')} VND|">0</strong></span>
+            </div>
+        </div>
+        <div class="p-6 rounded-xl bg-white/5 border border-white/10">
+            <h3 class="text-xl font-bold text-white mb-4">Hành động</h3>
+            <a class="w-full inline-flex items-center justify-center px-4 py-3 rounded-lg bg-primary text-background-dark font-bold" href="/register">Ghi danh</a>
+            <a class="w-full inline-flex items-center justify-center px-4 py-3 mt-3 rounded-lg border border-primary/30 text-primary" href="/student/classes">Xem lớp đang mở</a>
+        </div>
+    </div>
+
+    <div class="mt-10">
+        <h2 class="text-2xl font-display font-bold text-white mb-4">Lớp đang mở</h2>
+        <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/5" th:if="${classes != null and !classes.isEmpty()}">
+            <table class="min-w-full divide-y divide-white/10">
+                <thead class="bg-white/5 text-slate-300">
+                    <tr>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Tên lớp</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Giáo viên</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Lịch học</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Ngày bắt đầu</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Trạng thái</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white/5">
+                    <tr class="hover:bg-white/5" th:each="lh : ${classes}">
+                        <td class="px-4 py-3 font-semibold text-slate-100" th:text="${lh.tenLop}"></td>
+                        <td class="px-4 py-3" th:text="${lh.teacher != null ? lh.teacher.fullName : lh.giaoVien}"></td>
+                        <td class="px-4 py-3" th:text="${lh.lichHoc}"></td>
+                        <td class="px-4 py-3" th:text="${lh.ngayBatDau}"></td>
+                        <td class="px-4 py-3" th:text="${lh.moDangKy ? 'Mở' : 'Đóng'}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="p-6 rounded-xl bg-white/5 border border-white/10 text-slate-300" th:if="${classes == null or classes.isEmpty()}">
+            Hiện chưa có lớp nào mở cho khóa học này. Vui lòng quay lại sau.
+        </div>
+    </div>
+</section>
+</html>

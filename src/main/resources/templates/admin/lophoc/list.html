@@ -42,7 +42,7 @@
                     <td class="px-4 py-3" th:text="${lh.teacher != null ? lh.teacher.fullName : lh.giaoVien}"></td>
                     <td class="px-4 py-3" th:text="${lh.lichHoc}"></td>
                     <td class="px-4 py-3" th:text="${lh.siSo}"></td>
-                    <td class="px-4 py-3" th:text="${lh.hocPhi}"></td>
+                    <td class="px-4 py-3" th:text="|${#numbers.formatDecimal(lh.hocPhi, 0, 'POINT', 0, 'COMMA')} VND|"></td>
                     <td class="px-4 py-3">
                         <span class="px-2 py-1 text-xs rounded-full" th:classappend="${lh.moDangKy} ? ' bg-green-500/20 text-green-300' : ' bg-red-500/20 text-red-300'" th:text="${lh.moDangKy ? 'Mở' : 'Đóng'}"></span>
                     </td>

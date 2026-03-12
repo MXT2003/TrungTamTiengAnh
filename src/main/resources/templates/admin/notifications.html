@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout :: layout(~{::section}, 'Thông báo')}">
+<section>
+    <div class="mb-8">
+        <h2 class="text-2xl font-display font-bold text-white">Thông báo hệ thống</h2>
+        <p class="text-slate-500">Tổng hợp các đăng ký chờ duyệt và học phí chưa thanh toán.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="p-6 rounded-xl border border-primary/10 glass-card">
+            <h3 class="text-xl font-bold text-white mb-4">Đăng ký chờ duyệt</h3>
+            <div th:if="${pendingRegistrations != null and pendingRegistrations.hasContent()}">
+                <ul class="space-y-3">
+                    <li class="flex justify-between text-slate-300" th:each="dk : ${pendingRegistrations.content}">
+                        <span th:text="${dk.student != null ? dk.student.username : 'N/A'}"></span>
+                        <span th:text="${dk.lopHoc != null ? dk.lopHoc.tenLop : 'N/A'}"></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="text-slate-400" th:if="${pendingRegistrations == null or !pendingRegistrations.hasContent()}">
+                Không có đăng ký chờ duyệt.
+            </div>
+            <a class="inline-flex mt-4 text-primary hover:underline" href="/admin/dangky">Đi tới duyệt đăng ký</a>
+        </div>
+
+        <div class="p-6 rounded-xl border border-primary/10 glass-card">
+            <h3 class="text-xl font-bold text-white mb-4">Học phí chưa thanh toán</h3>
+            <div th:if="${unpaidPayments != null and unpaidPayments.hasContent()}">
+                <ul class="space-y-3">
+                    <li class="flex justify-between text-slate-300" th:each="p : ${unpaidPayments.content}">
+                        <span th:text="${p.student != null ? p.student.username : 'N/A'}"></span>
+                        <span>
+                            <span th:text="${p.dueDate}"></span>
+                            <span class="text-red-300" th:if="${p.dueDate != null and p.dueDate.isBefore(today)}"> (Quá hạn)</span>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="text-slate-400" th:if="${unpaidPayments == null or !unpaidPayments.hasContent()}">
+                Không có học phí quá hạn.
+            </div>
+            <a class="inline-flex mt-4 text-primary hover:underline" href="/admin/payments">Đi tới quản lý học phí</a>
+        </div>
+    </div>
+</section>
+</html>

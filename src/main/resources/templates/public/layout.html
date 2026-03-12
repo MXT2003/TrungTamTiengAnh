@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html class="dark" lang="vi" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content, pageTitle)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="${pageTitle}">Royal Academy</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#e0b329",
+                        "background-light": "#f8f7f6",
+                        "background-dark": "#1a1710",
+                        "surface-dark": "#2a261a"
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"],
+                        "sans": ["Noto Sans", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans', sans-serif; }
+        h1, h2, h3, .font-display { font-family: 'Noto Serif', serif; }
+    </style>
+</head>
+<body class="text-slate-100 min-h-screen bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-slate-900 via-purple-900 to-slate-900">
+<div class="relative min-h-screen flex flex-col">
+    <header class="flex items-center justify-between border-b border-white/10 px-6 py-4 lg:px-20 bg-black/40 backdrop-blur-xl sticky top-0 z-50">
+        <div class="flex items-center gap-3 text-primary">
+            <span class="material-symbols-outlined text-2xl">school</span>
+            <h2 class="text-lg font-display font-bold uppercase tracking-tight">Royal Academy</h2>
+        </div>
+        <nav class="hidden md:flex items-center gap-6 text-sm">
+            <a class="text-slate-300 hover:text-primary transition-colors" href="/">Trang chủ</a>
+            <a class="text-slate-300 hover:text-primary transition-colors" href="/courses">Khóa học</a>
+            <a class="text-slate-300 hover:text-primary transition-colors" href="/about">Về chúng tôi</a>
+            <a class="text-slate-300 hover:text-primary transition-colors" href="/contact">Liên hệ</a>
+        </nav>
+        <div class="flex items-center gap-3">
+            <a class="px-4 py-2 rounded-lg border border-primary/30 text-primary hover:border-primary transition-all text-sm" href="/login">Đăng nhập</a>
+            <a class="px-4 py-2 rounded-lg bg-primary text-background-dark font-bold text-sm hover:bg-white transition-all" href="/register">Đăng ký</a>
+        </div>
+    </header>
+
+    <main class="flex-1">
+        <div class="max-w-6xl mx-auto px-6 lg:px-20 py-12" th:replace="${content}"></div>
+    </main>
+
+    <footer class="bg-black/60 backdrop-blur-md border-t border-white/5 py-10">
+        <div class="max-w-6xl mx-auto px-6 lg:px-20 grid grid-cols-1 md:grid-cols-3 gap-8 text-sm text-slate-400">
+            <div>
+                <h4 class="text-white font-bold mb-3">Royal Academy</h4>
+                <p>Định hình tương lai qua ngôn ngữ, đồng hành cùng lộ trình học tập chuẩn quốc tế.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-3">Liên kết</h4>
+                <ul class="space-y-2">
+                    <li><a class="hover:text-primary" href="/about">Câu chuyện thương hiệu</a></li>
+                    <li><a class="hover:text-primary" href="/teachers">Đội ngũ giảng viên</a></li>
+                    <li><a class="hover:text-primary" href="/facilities">Cơ sở vật chất</a></li>
+                    <li><a class="hover:text-primary" href="/careers">Tuyển dụng</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-3">Hỗ trợ</h4>
+                <ul class="space-y-2">
+                    <li><a class="hover:text-primary" href="/help">Trung tâm trợ giúp</a></li>
+                    <li><a class="hover:text-primary" href="/tuition-policy">Chính sách học phí</a></li>
+                    <li><a class="hover:text-primary" href="/rules">Nội quy lớp học</a></li>
+                    <li><a class="hover:text-primary" href="/contact">Liên hệ</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-6xl mx-auto px-6 lg:px-20 mt-8 pt-6 border-t border-white/5 text-xs text-slate-600 text-center">
+            © 2024 Royal Academy English Center. All rights reserved.
+        </div>
+    </footer>
+</div>
+</body>
+</html>

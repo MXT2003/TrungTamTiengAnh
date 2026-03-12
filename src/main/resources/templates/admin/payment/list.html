@@ -11,11 +11,11 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         <div class="glass-card rounded-xl p-4">
             <p class="text-slate-400 text-sm">Đã thu</p>
-            <p class="text-xl font-bold text-primary" th:text="${sumPaid}">0</p>
+            <p class="text-xl font-bold text-primary" th:text="|${#numbers.formatDecimal(sumPaid, 0, 'POINT', 0, 'COMMA')} VND|">0</p>
         </div>
         <div class="glass-card rounded-xl p-4">
             <p class="text-slate-400 text-sm">Chưa thu</p>
-            <p class="text-xl font-bold text-primary" th:text="${sumUnpaid}">0</p>
+            <p class="text-xl font-bold text-primary" th:text="|${#numbers.formatDecimal(sumUnpaid, 0, 'POINT', 0, 'COMMA')} VND|">0</p>
         </div>
     </div>
 
@@ -57,7 +57,7 @@
                 <tr class="hover:bg-white/5" th:each="p : ${page.content}">
                     <td class="px-4 py-3" th:text="${p.student != null ? p.student.username : ''}"></td>
                     <td class="px-4 py-3" th:text="${p.lopHoc != null ? p.lopHoc.tenLop : ''}"></td>
-                    <td class="px-4 py-3" th:text="${p.amount}"></td>
+                    <td class="px-4 py-3" th:text="|${#numbers.formatDecimal(p.amount, 0, 'POINT', 0, 'COMMA')} VND|"></td>
                     <td class="px-4 py-3" th:text="${p.status}"></td>
                     <td class="px-4 py-3" th:text="${p.dueDate}"></td>
                     <td class="px-4 py-3" th:text="${p.paidDate}"></td>

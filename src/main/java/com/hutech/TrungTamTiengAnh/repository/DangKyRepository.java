@@ -22,6 +22,8 @@ public interface DangKyRepository extends JpaRepository<DangKy, Long> {
 
     Page<DangKy> findByTrangThai(String trangThai, Pageable pageable);
 
+    Page<DangKy> findByTrangThaiOrderByNgayDangKyDesc(String trangThai, Pageable pageable);
+
     long count();
 
     @Query("""

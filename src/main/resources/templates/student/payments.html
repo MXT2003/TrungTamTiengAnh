@@ -15,7 +15,7 @@
             <tbody class="divide-y divide-white/5">
                 <tr class="hover:bg-white/5" th:each="p : ${page.content}">
                     <td class="px-4 py-3" th:text="${p.lopHoc != null ? p.lopHoc.tenLop : ''}"></td>
-                    <td class="px-4 py-3" th:text="${p.amount}"></td>
+                    <td class="px-4 py-3" th:text="|${#numbers.formatDecimal(p.amount, 0, 'POINT', 0, 'COMMA')} VND|"></td>
                     <td class="px-4 py-3" th:text="${p.status}"></td>
                     <td class="px-4 py-3" th:text="${p.dueDate}"></td>
                     <td class="px-4 py-3" th:text="${p.paidDate}"></td>

@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{public/layout :: layout(~{::section}, 'Đội ngũ giảng viên')}">
+<section>
+    <div class="mb-10">
+        <h1 class="text-4xl font-display font-bold text-white mb-4">Đội ngũ giảng viên</h1>
+        <p class="text-slate-300 text-lg">Chúng tôi quy tụ giảng viên bản ngữ và chuyên gia học thuật với chứng chỉ quốc tế, đảm bảo chuẩn đầu ra rõ ràng.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="p-6 rounded-xl bg-white/5 border border-white/10">
+            <h3 class="text-xl font-bold text-white">ThS. Daniel Moore</h3>
+            <p class="text-primary text-sm mb-2">IELTS Examiner</p>
+            <p class="text-slate-300">10 năm kinh nghiệm luyện thi IELTS 7.0+.</p>
+        </div>
+        <div class="p-6 rounded-xl bg-white/5 border border-white/10">
+            <h3 class="text-xl font-bold text-white">Cô. Lê Thanh Mai</h3>
+            <p class="text-primary text-sm mb-2">Academic Writing</p>
+            <p class="text-slate-300">Chuyên gia viết học thuật, cố vấn du học.</p>
+        </div>
+        <div class="p-6 rounded-xl bg-white/5 border border-white/10">
+            <h3 class="text-xl font-bold text-white">Mr. Kevin Tran</h3>
+            <p class="text-primary text-sm mb-2">Business English</p>
+            <p class="text-slate-300">Huấn luyện giao tiếp thương mại cho doanh nghiệp.</p>
+        </div>
+    </div>
+</section>
+</html>

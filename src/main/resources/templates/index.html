@@ -64,16 +64,16 @@
 </div>
 <nav class="hidden md:flex items-center gap-8">
 <a class="text-slate-300 hover:text-primary transition-colors text-sm font-medium" href="/">Trang chủ</a>
-<a class="text-slate-300 hover:text-primary transition-colors text-sm font-medium" href="#courses">Khóa học</a>
+<a class="text-slate-300 hover:text-primary transition-colors text-sm font-medium" href="/courses">Khóa học</a>
 <a class="text-slate-300 hover:text-primary transition-colors text-sm font-medium" href="/login">Đăng nhập</a>
 <a class="text-slate-300 hover:text-primary transition-colors text-sm font-medium" href="/register">Đăng ký</a>
 </nav>
 </div>
 <div class="flex flex-1 justify-end gap-6 items-center">
-<div class="hidden sm:flex items-center bg-surface-dark border border-primary/20 rounded-lg px-3 py-1.5 w-64">
+<form class="hidden sm:flex items-center bg-surface-dark border border-primary/20 rounded-lg px-3 py-1.5 w-64" action="/courses" method="get">
 <span class="material-symbols-outlined text-primary/60 text-xl">search</span>
-<input class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder:text-slate-500" placeholder="Tìm kiếm khóa học..." type="text"/>
-</div>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder:text-slate-500" placeholder="Tìm kiếm khóa học..." type="text" name="q"/>
+</form>
 <div class="flex gap-3">
 <a class="flex items-center justify-center rounded-lg size-10 bg-surface-dark border border-primary/20 text-primary hover:bg-primary/10 transition-all" href="/login" title="Đăng nhập">
 <span class="material-symbols-outlined">account_circle</span>
@@ -101,7 +101,7 @@
 <a class="gold-gradient text-background-dark px-8 py-4 rounded-lg font-bold uppercase tracking-wider text-sm hover:scale-105 transition-transform soft-glow" href="/register">
                                     Ghi danh ngay
                                 </a>
-<a class="border border-primary/50 text-primary px-8 py-4 rounded-lg font-bold uppercase tracking-wider text-sm hover:bg-primary/10 transition-all" href="#courses">
+<a class="border border-primary/50 text-primary px-8 py-4 rounded-lg font-bold uppercase tracking-wider text-sm hover:bg-primary/10 transition-all" href="/courses">
                                     Khám phá lộ trình
                                 </a>
 </div>
@@ -145,7 +145,7 @@
 <h2 class="text-primary text-sm font-bold uppercase tracking-[0.3em] mb-2">My Learning Journey</h2>
 <h3 class="text-white text-3xl font-display font-bold">Tiến độ học tập của bạn</h3>
 </div>
-<a class="text-primary hover:underline flex items-center gap-2 font-medium" href="#">
+<a class="text-primary hover:underline flex items-center gap-2 font-medium" href="/student/my-classes">
                             Tất cả lịch sử <span class="material-symbols-outlined">arrow_right_alt</span>
 </a>
 </div>
@@ -195,43 +195,17 @@
 <h3 class="text-white text-4xl font-display font-bold">Khóa học đặc quyền</h3>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-<div class="group bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden hover:border-primary/50 transition-all shadow-lg hover:-translate-y-2">
+<div class="group bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden hover:border-primary/50 transition-all shadow-lg hover:-translate-y-2" th:each="c : ${featuredCourses}">
 <div class="aspect-[4/3] overflow-hidden relative">
 <div class="absolute inset-0 bg-gradient-to-t from-surface-dark to-transparent z-10"></div>
 <div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="IELTS study materials and pen" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAVUsQ_W7p8Zl47JLq_iQzk6WqSwKrwrejeatdemVU0EabcQ2YwyXykKabDQ2HFXaOxEfgBoRsMSFUKsOIexhVVD1fXPpDHaBm5DpX1nHDuSxmdS50S1fpu09Z-ZBw-2aiUftloujZf0PtFrCVMKllyQ4oDX1XQoN-oaaQlro5u8MvK9rlllIiDs--bef8w0-NIC1Yngr32xd3g8RLeSpm7WQ0b3GLoxvg6BigD_4LBqRf7jKPBo-VMC8NNAEVehHMwFuKQHqKmYDcO");'></div>
 </div>
 <div class="p-8 relative z-20">
-<h4 class="text-white text-xl font-display font-bold mb-2">IELTS Premium</h4>
-<p class="text-slate-400 text-sm mb-6 leading-relaxed">Lộ trình cá nhân hóa 1:1 cùng cựu giám khảo IELTS, cam kết đầu ra bằng văn bản.</p>
-<button class="w-full border border-primary/30 text-primary py-3 rounded-lg font-bold text-sm group-hover:bg-primary group-hover:text-background-dark transition-all">
+<h4 class="text-white text-xl font-display font-bold mb-2" th:text="${c.name}">IELTS Premium</h4>
+<p class="text-slate-400 text-sm mb-6 leading-relaxed" th:text="${c.description}">Lộ trình cá nhân hóa 1:1 cùng cựu giám khảo IELTS, cam kết đầu ra bằng văn bản.</p>
+<a class="w-full text-center border border-primary/30 text-primary py-3 rounded-lg font-bold text-sm group-hover:bg-primary group-hover:text-background-dark transition-all" th:href="@{/course/{id}(id=${c.id})}">
                                         Xem chi tiết
-                                    </button>
-</div>
-</div>
-<div class="group bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden hover:border-primary/50 transition-all shadow-lg hover:-translate-y-2">
-<div class="aspect-[4/3] overflow-hidden relative">
-<div class="absolute inset-0 bg-gradient-to-t from-surface-dark to-transparent z-10"></div>
-<div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="Professional business person" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCAnFd6D3spW-60URzibunmjfOZtmNmYUF-lQFMYWhE9KvD_6GyYEBeAFdayyCRKKnRfmr94SUqq0FAsDQuqcy2ndmTxDGKxstwPFskt64LM6GjYTrCVXBjTIHPFcxTTKTcPywAhWfR8JnbAL3Ewg2SUm-u3mfZ4DcJANaosvvfyGCSUmCLtPvyEggj3zZrtfjUzlfWNHtUrV911wtuh7LxN6NkwzP3mBCgdiZ8O8DEma7pSo1lnkgsWkiqqYv2NXQ5j2psaEJdxHTu");'></div>
-</div>
-<div class="p-8 relative z-20">
-<h4 class="text-white text-xl font-display font-bold mb-2">Business English Elite</h4>
-<p class="text-slate-400 text-sm mb-6 leading-relaxed">Giao tiếp thương mại cấp cao dành cho lãnh đạo và quản lý doanh nghiệp quốc tế.</p>
-<button class="w-full border border-primary/30 text-primary py-3 rounded-lg font-bold text-sm group-hover:bg-primary group-hover:text-background-dark transition-all">
-                                        Xem chi tiết
-                                    </button>
-</div>
-</div>
-<div class="group bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden hover:border-primary/50 transition-all shadow-lg hover:-translate-y-2">
-<div class="aspect-[4/3] overflow-hidden relative">
-<div class="absolute inset-0 bg-gradient-to-t from-surface-dark to-transparent z-10"></div>
-<div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="Hand writing in an elegant journal" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAf3-KHEkVXK_RpIUXCMbC5az14KTE_SHj5kGe4xw2YO8mWiGGcS-ascMdpaBUUCadJwGacZ4qjQZgYHBivc6LGcVrzGayGBOoPogaDSmn4FhHnGyX-sa5BnPNcdEl_CHSW65WpTgk0cqyPV4UeUZqAj7nfZrz-EX_A5muFAmc-pMAIoVnWOixkTxlBjjuKPSrdzYEqKcxL8_18vaeqZd0ULa8Kb3GH_FW1A1M0H_BZhQpe4p6KCBBPaGE6RhxFDbMDKbVjBSmSZBYd");'></div>
-</div>
-<div class="p-8 relative z-20">
-<h4 class="text-white text-xl font-display font-bold mb-2">Academic Writing</h4>
-<p class="text-slate-400 text-sm mb-6 leading-relaxed">Kỹ thuật viết luận chuyên sâu phục vụ nghiên cứu và du học tại các đại học danh tiếng.</p>
-<button class="w-full border border-primary/30 text-primary py-3 rounded-lg font-bold text-sm group-hover:bg-primary group-hover:text-background-dark transition-all">
-                                        Xem chi tiết
-                                    </button>
+                                    </a>
 </div>
 </div>
 </div>
@@ -265,19 +239,19 @@
 <div>
 <h5 class="text-white font-bold mb-6">Về chúng tôi</h5>
 <ul class="space-y-4 text-slate-500 text-sm">
-<li><a class="hover:text-primary transition-colors" href="#">Câu chuyện thương hiệu</a></li>
-<li><a class="hover:text-primary transition-colors" href="#">Đội ngũ giảng viên</a></li>
-<li><a class="hover:text-primary transition-colors" href="#">Cơ sở vật chất</a></li>
-<li><a class="hover:text-primary transition-colors" href="#">Tuyển dụng</a></li>
+<li><a class="hover:text-primary transition-colors" href="/about">Câu chuyện thương hiệu</a></li>
+<li><a class="hover:text-primary transition-colors" href="/teachers">Đội ngũ giảng viên</a></li>
+<li><a class="hover:text-primary transition-colors" href="/facilities">Cơ sở vật chất</a></li>
+<li><a class="hover:text-primary transition-colors" href="/careers">Tuyển dụng</a></li>
 </ul>
 </div>
 <div>
 <h5 class="text-white font-bold mb-6">Hỗ trợ học viên</h5>
 <ul class="space-y-4 text-slate-500 text-sm">
-<li><a class="hover:text-primary transition-colors" href="#">Trung tâm trợ giúp</a></li>
-<li><a class="hover:text-primary transition-colors" href="#">Chính sách học phí</a></li>
-<li><a class="hover:text-primary transition-colors" href="#">Nội quy lớp học</a></li>
-<li><a class="hover:text-primary transition-colors" href="#">Liên hệ</a></li>
+<li><a class="hover:text-primary transition-colors" href="/help">Trung tâm trợ giúp</a></li>
+<li><a class="hover:text-primary transition-colors" href="/tuition-policy">Chính sách học phí</a></li>
+<li><a class="hover:text-primary transition-colors" href="/rules">Nội quy lớp học</a></li>
+<li><a class="hover:text-primary transition-colors" href="/contact">Liên hệ</a></li>
 </ul>
 </div>
 <div>

@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{public/layout :: layout(~{::section}, 'Liên hệ')}">
+<section>
+    <div class="mb-10">
+        <h1 class="text-4xl font-display font-bold text-white mb-4">Liên hệ</h1>
+        <p class="text-slate-300 text-lg">Kết nối với Royal Academy để được tư vấn lộ trình học tập phù hợp.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 rounded-xl bg-white/5 border border-white/10">
+            <h3 class="text-xl font-bold text-white mb-3">Thông tin liên hệ</h3>
+            <ul class="space-y-2 text-slate-300">
+                <li>Địa chỉ: 123 Đại lộ Hoàng Gia, Quận 1, TP. Hồ Chí Minh</li>
+                <li>Hotline: <a class="text-primary hover:underline" href="tel:19008888">1900 8888</a></li>
+                <li>Email: <a class="text-primary hover:underline" href="mailto:contact@royalacademy.edu.vn">contact@royalacademy.edu.vn</a></li>
+                <li>Giờ làm việc: 08:00 - 20:00 (T2 - CN)</li>
+            </ul>
+        </div>
+        <div class="p-6 rounded-xl bg-white/5 border border-white/10">
+            <h3 class="text-xl font-bold text-white mb-3">Đặt lịch tư vấn</h3>
+            <p class="text-slate-300 mb-4">Đăng ký tài khoản để nhận tư vấn 1:1 từ đội ngũ chuyên gia.</p>
+            <a class="inline-flex items-center px-6 py-3 rounded-lg bg-primary text-background-dark font-bold hover:bg-white transition-all" href="/register">Đăng ký ngay</a>
+        </div>
+    </div>
+</section>
+</html>
