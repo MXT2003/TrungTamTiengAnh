@@ -41,19 +41,6 @@
             backdrop-filter: blur(12px);
             border: 1px solid rgba(224, 179, 41, 0.2);
         }
-        .universe-bg {
-            background-image:
-                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
-                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
-                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
-            background-size: 550px 550px, 350px 350px, 250px 250px;
-            background-position: 0 0, 40px 60px, 130px 270px;
-            animation: orbit 60s linear infinite;
-        }
-        @keyframes orbit {
-            from { background-position: 0 0, 40px 60px, 130px 270px; }
-            to { background-position: 550px 550px, 390px 410px, 380px 820px; }
-        }
         .gold-gradient-border {
             border: 1px solid rgba(224, 179, 41, 0.3);
             background: rgba(26, 23, 14, 0.4) padding-box,
@@ -70,9 +57,22 @@
             background-color: #0f172a;
             color: #e2e8f0;
         }
+        .universe-bg {
+            background-image:
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
+            background-size: 550px 550px, 350px 350px, 250px 250px;
+            background-position: 0 0, 40px 60px, 130px 270px;
+            animation: orbit 60s linear infinite;
+        }
+        @keyframes orbit {
+            from { background-position: 0 0, 40px 60px, 130px 270px; }
+            to { background-position: 550px 550px, 390px 410px, 380px 820px; }
+        }
     </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 universe-bg">
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen universe-bg">
 <div class="flex min-h-screen overflow-x-hidden">
     <aside class="w-72 bg-black/40 border-r border-primary/20 flex flex-col justify-between py-8 px-6 backdrop-blur-2xl sticky top-0 h-screen">
         <div class="flex flex-col gap-8">

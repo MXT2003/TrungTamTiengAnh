@@ -25,7 +25,11 @@
         }
     </script>
     <style>
-        body { font-family: 'Noto Sans', sans-serif; }
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            background-attachment: fixed;
+        }
         h1, h2, h3, .font-display { font-family: 'Noto Serif', serif; }
         .universe-bg {
             background-image:
@@ -43,18 +47,13 @@
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex items-center justify-center px-4 universe-bg">
-    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-900/30 blur-[150px] rounded-full"></div>
-        <div class="absolute top-1/4 right-1/4 w-[30%] h-[30%] bg-primary/10 blur-[100px] rounded-full"></div>
-    </div>
 
     <div class="relative z-10 w-full max-w-md bg-white/5 border border-white/10 rounded-2xl p-8">
         <h2 class="text-2xl font-bold font-display text-center mb-6">Đăng ký tài khoản</h2>
         <div th:if="${error}" class="text-red-400 text-center mb-4">
             <span th:text="${error}"></span>
         </div>
-        <form th:action="@{/register}" th:object="${user}" method="post" class="space-y-4">
+        <form th:action="@{/register}" th:object="${form}" method="post" class="space-y-4">
             <div>
                 <label class="block text-sm text-slate-300">Username</label>
                 <input type="text" th:field="*{username}" class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" required />
@@ -67,6 +66,27 @@
                 <input type="password" th:field="*{password}" class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" required />
                 <div th:if="${#fields.hasErrors('password')}" class="text-red-400 text-xs mt-2">
                     <span th:errors="*{password}"></span>
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm text-slate-300">Họ tên</label>
+                <input type="text" th:field="*{fullName}" class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" required />
+                <div th:if="${#fields.hasErrors('fullName')}" class="text-red-400 text-xs mt-2">
+                    <span th:errors="*{fullName}"></span>
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm text-slate-300">Số điện thoại</label>
+                <input type="text" th:field="*{phone}" class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" />
+                <div th:if="${#fields.hasErrors('phone')}" class="text-red-400 text-xs mt-2">
+                    <span th:errors="*{phone}"></span>
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm text-slate-300">Email</label>
+                <input type="email" th:field="*{email}" class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" required />
+                <div th:if="${#fields.hasErrors('email')}" class="text-red-400 text-xs mt-2">
+                    <span th:errors="*{email}"></span>
                 </div>
             </div>
             <button type="submit" class="w-full px-6 py-3 rounded-lg bg-primary text-background-dark font-bold hover:bg-white transition-all">Đăng ký</button>

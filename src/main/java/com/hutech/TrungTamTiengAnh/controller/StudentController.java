@@ -7,6 +7,8 @@ import com.hutech.TrungTamTiengAnh.entity.User;
 import com.hutech.TrungTamTiengAnh.repository.DangKyRepository;
 import com.hutech.TrungTamTiengAnh.repository.LopHocRepository;
 import com.hutech.TrungTamTiengAnh.repository.PaymentRepository;
+import com.hutech.TrungTamTiengAnh.repository.StudentProfileRepository;
+import com.hutech.TrungTamTiengAnh.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,6 +35,12 @@ public class StudentController {
 
     @Autowired
     private PaymentRepository paymentRepository;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private StudentProfileRepository studentProfileRepository;
     // ==============================
     // 📌 Trang Home Student
     // ==============================
@@ -177,6 +185,55 @@ public class StudentController {
         Page<Payment> pageData = paymentRepository.findByStudentId(user.getId(), PageRequest.of(page, size));
         model.addAttribute("page", pageData);
         return "student/payments";
+    }
+
+    @GetMapping("/profile")
+    public String profile(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("user", user);
+        model.addAttribute("profile", studentProfileRepository.findByUserId(user.getId()));
+        return "student/profile";
+    }
+
+    @PostMapping("/profile/password")
+    public String changePassword(HttpSession session,
+                                 @RequestParam("currentPassword") String currentPassword,
+                                 @RequestParam("newPassword") String newPassword,
+                                 @RequestParam("confirmPassword") String confirmPassword,
+                                 Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        if (newPassword == null || !newPassword.equals(confirmPassword)) {
+            model.addAttribute("user", user);
+            model.addAttribute("profile", studentProfileRepository.findByUserId(user.getId()));
+            model.addAttribute("error", "Mật khẩu mới không khớp.");
+            return "student/profile";
+        }
+
+        String result = userService.changePassword(user, currentPassword, newPassword);
+        if (!"SUCCESS".equals(result)) {
+            model.addAttribute("user", user);
+            model.addAttribute("profile", studentProfileRepository.findByUserId(user.getId()));
+            String message = switch (result) {
+                case "CURRENT_REQUIRED" -> "Vui lòng nhập mật khẩu hiện tại.";
+                case "NEW_INVALID" -> "Mật khẩu mới tối thiểu 6 ký tự.";
+                case "CURRENT_WRONG" -> "Mật khẩu hiện tại không đúng.";
+                default -> "Không thể đổi mật khẩu.";
+            };
+            model.addAttribute("error", message);
+            return "student/profile";
+        }
+
+        model.addAttribute("user", user);
+        model.addAttribute("profile", studentProfileRepository.findByUserId(user.getId()));
+        model.addAttribute("success", "Đổi mật khẩu thành công.");
+        return "student/profile";
     }
 
     @PostMapping("/cancel/{id}")

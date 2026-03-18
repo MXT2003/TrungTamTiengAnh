@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+<html class="dark" lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Hồ sơ học viên</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#e0b329",
+                        "background-dark": "#1a1710",
+                        "surface-dark": "#2a261a",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"],
+                        "sans": ["Noto Sans", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            background-attachment: fixed;
+        }
+        h1, h2, h3, .font-display { font-family: 'Noto Serif', serif; }
+        .universe-bg {
+            background-image:
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
+            background-size: 550px 550px, 350px 350px, 250px 250px;
+            background-position: 0 0, 40px 60px, 130px 270px;
+            animation: orbit 60s linear infinite;
+        }
+        @keyframes orbit {
+            from { background-position: 0 0, 40px 60px, 130px 270px; }
+            to { background-position: 550px 550px, 390px 410px, 380px 820px; }
+        }
+    </style>
+</head>
+<body class="text-slate-100 min-h-screen universe-bg">
+<canvas class="fixed inset-0 z-10 pointer-events-none" id="particle-canvas"></canvas>
+
+<div class="relative z-20 max-w-3xl mx-auto px-6 py-10">
+    <div class="mb-8">
+        <a class="text-primary hover:underline" href="/student/home">← Quay lại</a>
+        <h1 class="text-3xl font-display font-bold mt-3">Thông tin tài khoản</h1>
+        <p class="text-slate-400 mt-2">Quản lý hồ sơ và đổi mật khẩu.</p>
+    </div>
+
+    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <p class="text-xs uppercase tracking-widest text-slate-500">Username</p>
+                <p class="text-lg font-bold" th:text="${user.username}">student</p>
+            </div>
+            <div>
+                <p class="text-xs uppercase tracking-widest text-slate-500">Họ và tên</p>
+                <p class="text-lg font-bold" th:text="${profile != null ? profile.fullName : ''}">Nguyễn Văn A</p>
+            </div>
+            <div>
+                <p class="text-xs uppercase tracking-widest text-slate-500">Email</p>
+                <p class="text-lg font-bold" th:text="${profile != null ? profile.email : ''}">example@email.com</p>
+            </div>
+            <div>
+                <p class="text-xs uppercase tracking-widest text-slate-500">Số điện thoại</p>
+                <p class="text-lg font-bold" th:text="${profile != null ? profile.phone : ''}">0900000000</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+        <h2 class="text-xl font-display font-bold mb-4">Đổi mật khẩu</h2>
+
+        <div th:if="${error}" class="text-red-400 mb-4" th:text="${error}"></div>
+        <div th:if="${success}" class="text-green-400 mb-4" th:text="${success}"></div>
+
+        <form action="/student/profile/password" method="post" class="space-y-4">
+            <div>
+                <label class="block text-sm text-slate-300">Mật khẩu hiện tại</label>
+                <input type="password" name="currentPassword" class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" required />
+            </div>
+            <div>
+                <label class="block text-sm text-slate-300">Mật khẩu mới</label>
+                <input type="password" name="newPassword" class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" required />
+            </div>
+            <div>
+                <label class="block text-sm text-slate-300">Nhập lại mật khẩu mới</label>
+                <input type="password" name="confirmPassword" class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" required />
+            </div>
+            <button type="submit" class="px-6 py-3 rounded-lg bg-primary text-background-dark font-bold hover:bg-white transition-all">
+                Cập nhật mật khẩu
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let mouse = { x: null, y: null };
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+    for (let i = 0; i < 2; i++) {
+        particles.push(new Particle());
+    }
+});
+
+class Particle {
+    constructor() {
+        this.x = mouse.x;
+        this.y = mouse.y;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 1.5;
+        this.speedY = (Math.random() - 0.5) * 1.5;
+        this.color = Math.random() > 0.5 ? '#e0b329' : '#ffffff';
+        this.opacity = 1;
+        this.fadeRate = Math.random() * 0.02 + 0.01;
+    }
+
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.opacity -= this.fadeRate;
+    }
+
+    draw() {
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        for (let i = 0; i < 4; i++) {
+            ctx.lineTo(
+                this.x + Math.cos((i * 90) * Math.PI / 180) * this.size,
+                this.y + Math.sin((i * 90) * Math.PI / 180) * this.size
+            );
+            ctx.lineTo(
+                this.x + Math.cos((i * 90 + 45) * Math.PI / 180) * (this.size / 3),
+                this.y + Math.sin((i * 90 + 45) * Math.PI / 180) * (this.size / 3)
+            );
+        }
+        ctx.closePath();
+        ctx.fill();
+    }
+}
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+        if (particles[i].opacity <= 0) {
+            particles.splice(i, 1);
+            i--;
+        }
+    }
+    requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+</body>
+</html>

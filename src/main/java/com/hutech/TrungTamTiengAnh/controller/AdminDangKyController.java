@@ -1,7 +1,10 @@
 package com.hutech.TrungTamTiengAnh.controller;
 
 import com.hutech.TrungTamTiengAnh.entity.DangKy;
+import com.hutech.TrungTamTiengAnh.entity.LopHoc;
+import com.hutech.TrungTamTiengAnh.entity.Payment;
 import com.hutech.TrungTamTiengAnh.repository.DangKyRepository;
+import com.hutech.TrungTamTiengAnh.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +20,9 @@ public class AdminDangKyController {
 
     @Autowired
     private DangKyRepository dangKyRepository;
+
+    @Autowired
+    private PaymentRepository paymentRepository;
 
     @GetMapping
     public String list(Model model,
@@ -46,6 +52,8 @@ public class AdminDangKyController {
             dk.setGhiChu(null);
             dk.setNgayCapNhat(LocalDate.now());
             dangKyRepository.save(dk);
+
+            createPaymentIfNeeded(dk);
         }
 
         return "redirect:/admin/dangky";
@@ -63,5 +71,23 @@ public class AdminDangKyController {
         }
         return "redirect:/admin/dangky";
     }
-}
 
+    private void createPaymentIfNeeded(DangKy dk) {
+        if (dk.getStudent() == null || dk.getLopHoc() == null) {
+            return;
+        }
+        Payment existed = paymentRepository.findByStudentIdAndLopHocId(
+                dk.getStudent().getId(), dk.getLopHoc().getId());
+        if (existed != null) {
+            return;
+        }
+        LopHoc lopHoc = dk.getLopHoc();
+        Payment p = new Payment();
+        p.setStudent(dk.getStudent());
+        p.setLopHoc(lopHoc);
+        p.setAmount(lopHoc.getHocPhi());
+        p.setStatus("UNPAID");
+        p.setDueDate(LocalDate.now().plusDays(7));
+        paymentRepository.save(p);
+    }
+}

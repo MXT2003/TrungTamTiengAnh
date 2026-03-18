@@ -25,7 +25,11 @@
         }
     </script>
     <style>
-        body { font-family: 'Noto Sans', sans-serif; }
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            background-attachment: fixed;
+        }
         h1, h2, h3, .font-display { font-family: 'Noto Serif', serif; }
         .universe-bg {
             background-image:
@@ -43,11 +47,6 @@
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex items-center justify-center px-4 universe-bg">
-    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-900/30 blur-[150px] rounded-full"></div>
-        <div class="absolute top-1/4 right-1/4 w-[30%] h-[30%] bg-primary/10 blur-[100px] rounded-full"></div>
-    </div>
 
     <div class="relative z-10 w-full max-w-md bg-white/5 border border-white/10 rounded-2xl p-8">
         <h2 class="text-2xl font-bold font-display text-center mb-6">Đăng nhập</h2>

@@ -21,11 +21,22 @@ public class TrungTamTiengAnhApplication {
                 repo.save(
                         User.builder()
                                 .username("admin")
-                                .password("123")
+                                .password("admin123")
                                 .role("ADMIN")
                                 .build()
                 );
                 System.out.println("Admin account created!");
+            }
+
+            if (repo.findByUsername("VanA") == null) {
+                repo.save(
+                        User.builder()
+                                .username("VanA")
+                                .password("111111")
+                                .role("TEACHER")
+                                .build()
+                );
+                System.out.println("Teacher account VanA created!");
             }
         };
     }

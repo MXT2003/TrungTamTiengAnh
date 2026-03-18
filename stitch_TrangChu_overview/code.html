@@ -1,11 +1,12 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
-<html class="dark" lang="vi"><head>
+<html lang="vi"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Royal Academy - Chinh Phục Tiếng Anh</title>
+<title>Elite English - Chinh Phục Tiếng Anh</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
@@ -13,17 +14,13 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#e0b329",
-                        "background-light": "#f8f7f6",
-                        "background-dark": "#0a0c14",
-                        "deep-purple": "#31116f",
+                        "primary": "#f2b90d", // Gold from image
+                        "deep-purple": "#31116f", // Deep purple from image
                         "light-purple": "#4a1d96",
-                        "accent-blue": "#3b82f6",
-                        "accent-mint": "#34d399"
+                        "background-dark": "#1a0b3a",
                     },
                     fontFamily: {
-                        "display": ["Noto Serif", "serif"],
-                        "sans": ["Noto Sans", "sans-serif"]
+                        "display": ["Inter", "sans-serif"]
                     },
                     borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
                 },
@@ -31,48 +28,22 @@
         }
     </script>
 <style>
-        body {
-            font-family: 'Noto Sans', sans-serif;
-            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
-            background-attachment: fixed;
-        }
-        h1, h2, h3, .font-display {
-            font-family: 'Noto Serif', serif;
-        }
         .galaxy-gradient {
-            background: linear-gradient(135deg, rgba(10, 12, 20, 0.9) 0%, rgba(27, 39, 53, 0.7) 100%);
+            background: linear-gradient(135deg, #31116f 0%, #1a0b3a 100%);
         }
         .star-pattern {
-            background-image: radial-gradient(circle, #e0b329 1px, transparent 1px);
+            background-image: radial-gradient(circle, #f2b90d 1px, transparent 1px);
             background-size: 60px 60px;
             opacity: 0.15;
         }
         .glass-purple {
-            background: rgba(15, 23, 42, 0.6);
+            background: rgba(74, 29, 150, 0.2);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(224, 179, 41, 0.2);
-        }
-        .glass-card {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(224, 179, 41, 0.2);
-        }
-        .universe-bg {
-            background-image:
-                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
-                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
-                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
-            background-size: 550px 550px, 350px 350px, 250px 250px;
-            background-position: 0 0, 40px 60px, 130px 270px;
-            animation: orbit 60s linear infinite;
-        }
-        @keyframes orbit {
-            from { background-position: 0 0, 40px 60px, 130px 270px; }
-            to { background-position: 550px 550px, 390px 410px, 380px 820px; }
+            border: 1px solid rgba(242, 185, 13, 0.2);
         }
     </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 overflow-x-hidden universe-bg">
+<body class="font-display bg-background-dark text-white overflow-x-hidden">
 <div class="relative min-h-screen flex flex-col">
 <!-- Top Navigation -->
 <header class="sticky top-0 z-50 w-full border-b border-primary/10 bg-deep-purple/80 backdrop-blur-md">
@@ -80,18 +51,18 @@
 <div class="flex h-16 items-center justify-between">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-primary text-3xl">auto_awesome</span>
-<h1 class="text-xl font-extrabold tracking-tight text-white">ROYAL <span class="text-primary">ACADEMY</span></h1>
+<h1 class="text-xl font-extrabold tracking-tight text-white">ELITE <span class="text-primary">ENGLISH</span></h1>
 </div>
 <nav class="hidden md:flex items-center gap-8">
-<a class="text-sm font-semibold text-slate-300 hover:text-primary transition-colors" href="/courses">Khóa học</a>
-<a class="text-sm font-semibold text-slate-300 hover:text-primary transition-colors" href="#about">Về chúng tôi</a>
-<a class="text-sm font-semibold text-slate-300 hover:text-primary transition-colors" href="#testimonials">Cảm nhận</a>
-<a class="text-sm font-semibold text-slate-300 hover:text-primary transition-colors" href="#contact">Liên hệ</a>
+<a class="text-sm font-semibold text-slate-300 hover:text-primary transition-colors" href="#">Khóa học</a>
+<a class="text-sm font-semibold text-slate-300 hover:text-primary transition-colors" href="#">Về chúng tôi</a>
+<a class="text-sm font-semibold text-slate-300 hover:text-primary transition-colors" href="#">Cảm nhận</a>
+<a class="text-sm font-semibold text-slate-300 hover:text-primary transition-colors" href="#">Liên hệ</a>
 </nav>
 <div class="flex items-center gap-4">
-<a class="bg-primary hover:bg-primary/90 text-slate-900 px-6 py-2.5 rounded-full text-sm font-bold transition-all shadow-lg shadow-primary/20" href="/register">
+<button class="bg-primary hover:bg-primary/90 text-slate-900 px-6 py-2.5 rounded-full text-sm font-bold transition-all shadow-lg shadow-primary/20">
                             Đăng ký ngay
-                        </a>
+                        </button>
 </div>
 </div>
 </div>
@@ -113,12 +84,12 @@
                             Trải nghiệm không gian học tập phong cách Galaxy sáng tạo. Lộ trình cá nhân hóa giúp bạn bứt phá IELTS &amp; TOEIC trong thời gian ngắn nhất.
                         </p>
 <div class="flex flex-col sm:flex-row gap-4">
-<a class="bg-primary hover:bg-primary/90 text-slate-900 px-8 py-4 rounded-xl text-lg font-bold transition-all flex items-center justify-center gap-2 shadow-xl shadow-primary/30" href="/register">
+<button class="bg-primary hover:bg-primary/90 text-slate-900 px-8 py-4 rounded-xl text-lg font-bold transition-all flex items-center justify-center gap-2 shadow-xl shadow-primary/30">
                                 Bắt đầu ngay <span class="material-symbols-outlined">arrow_forward</span>
-</a>
-<a class="bg-deep-purple/40 hover:bg-deep-purple/60 text-white border border-primary/30 px-8 py-4 rounded-xl text-lg font-bold transition-all flex items-center justify-center gap-2 backdrop-blur-sm" href="#about">
+</button>
+<button class="bg-deep-purple/40 hover:bg-deep-purple/60 text-white border border-primary/30 px-8 py-4 rounded-xl text-lg font-bold transition-all flex items-center justify-center gap-2 backdrop-blur-sm">
 <span class="material-symbols-outlined">play_circle</span> Xem giới thiệu
-                            </a>
+                            </button>
 </div>
 </div>
 <div class="relative">
@@ -167,7 +138,7 @@
 <span class="material-symbols-outlined text-primary text-sm">check_circle</span> Tài liệu độc quyền
                             </li>
 </ul>
-<a class="text-primary font-bold flex items-center gap-2 group-hover:gap-3 transition-all" href="/courses">Tìm hiểu thêm <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+<a class="text-primary font-bold flex items-center gap-2 group-hover:gap-3 transition-all" href="#">Tìm hiểu thêm <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
 </div>
 <!-- TOEIC Card -->
 <div class="group p-8 rounded-2xl border border-slate-100 hover:border-primary/30 transition-all hover:shadow-xl relative overflow-hidden glass-purple">
@@ -187,7 +158,7 @@
 <span class="material-symbols-outlined text-primary text-sm">check_circle</span> Học phí linh hoạt
                             </li>
 </ul>
-<a class="text-primary font-bold flex items-center gap-2 group-hover:gap-3 transition-all" href="/courses">Tìm hiểu thêm <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+<a class="text-primary font-bold flex items-center gap-2 group-hover:gap-3 transition-all" href="#">Tìm hiểu thêm <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
 </div>
 <!-- Communication Card -->
 <div class="group p-8 rounded-2xl border border-slate-100 hover:border-primary/30 transition-all hover:shadow-xl relative overflow-hidden glass-purple">
@@ -207,13 +178,13 @@
 <span class="material-symbols-outlined text-primary text-sm">check_circle</span> Workshop hàng tuần
                             </li>
 </ul>
-<a class="text-primary font-bold flex items-center gap-2 group-hover:gap-3 transition-all" href="/courses">Tìm hiểu thêm <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+<a class="text-primary font-bold flex items-center gap-2 group-hover:gap-3 transition-all" href="#">Tìm hiểu thêm <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
 </div>
 </div>
 </div>
 </section>
 <!-- About Us Section -->
-<section id="about" class="py-24 galaxy-gradient overflow-hidden">
+<section class="py-24 galaxy-gradient overflow-hidden">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="grid lg:grid-cols-2 gap-16 items-center">
 <div class="relative order-2 lg:order-1">
@@ -236,7 +207,7 @@
 </div>
 <div class="space-y-8 order-1 lg:order-2">
 <h3 class="text-primary font-bold tracking-[0.2em] uppercase text-sm">Về Chúng Tôi</h3>
-<h2 class="text-4xl font-black text-white">Tại Sao Chọn Royal Academy?</h2>
+<h2 class="text-4xl font-black text-white">Tại Sao Chọn Elite English?</h2>
 <div class="space-y-6">
 <div class="flex gap-4 p-4 rounded-xl border border-white backdrop-blur-sm glass-purple">
 <div class="shrink-0 size-12 rounded-full bg-primary/20 text-primary flex items-center justify-center">
@@ -252,7 +223,7 @@
 <span class="material-symbols-outlined">psychology</span>
 </div>
 <div>
-<h5 class="font-bold text-white">Phương Pháp Royal Method</h5>
+<h5 class="font-bold text-white">Phương Pháp Elite Method</h5>
 <p class="text-lg text-slate-300 leading-relaxed max-w-xl">Ứng dụng tâm lý học hành vi giúp học viên ghi nhớ từ vựng và cấu trúc gấp 3 lần bình thường.</p>
 </div>
 </div>
@@ -271,11 +242,11 @@
 </div>
 </section>
 <!-- Testimonials -->
-<section id="testimonials" class="py-24 bg-background-dark">
+<section class="py-24 bg-background-dark">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="text-center mb-16">
 <h2 class="text-4xl font-black text-white">Cảm Nhận Từ Học Viên</h2>
-<p class="text-slate-500 mt-4">Những câu chuyện thành công đầy cảm hứng tại Royal Academy</p>
+<p class="text-slate-500 mt-4">Những câu chuyện thành công đầy cảm hứng tại Elite English</p>
 </div>
 <div class="grid md:grid-cols-3 gap-8">
 <!-- Testimonial 1 -->
@@ -316,7 +287,7 @@
 <span class="material-symbols-outlined text-5xl">format_quote</span>
 </div>
 <p class="text-lg text-slate-300 leading-relaxed max-w-xl">
-                            "TOEIC 900+ không còn là giấc mơ khi mình theo học tại Royal Academy. Các mẹo làm bài thực sự rất hiệu quả và tiết kiệm thời gian."
+                            "TOEIC 900+ không còn là giấc mơ khi mình theo học tại Elite. Các mẹo làm bài thực sự rất hiệu quả và tiết kiệm thời gian."
                         </p>
 <div class="flex items-center gap-4">
 <img alt="Portrait of student Phương Thảo" class="size-12 rounded-full border-2 border-primary" data-alt="Chân dung học viên Phương Thảo rạng rỡ" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASkFUumGTRKUe5O71uZGH70KV074Mh9KEIu2qcZu3zVidjaGzAywtanEldfBzJhk_rghOG54c_y-1EMNV4hlRa2l3tIrFsIkO04nue4aaMn6MHx6r85Fv2lQZcFeDfG34xT_hAgic5dPGFeIlny1PDlGAlDx2MoZa1LjILxqGZbTSrPhNHWs0HmthrmHo9GiOUWdHKPezbkd4Qbdrw-BL_em9dP9dYCKTi5dEPvaJxJlk65mKF0Xtnt90lgx1HYa27OAZSeDteYBZ6"/>
@@ -337,21 +308,21 @@
 <div class="relative z-10 max-w-2xl mx-auto">
 <h2 class="text-3xl md:text-5xl font-black text-white mb-6">Sẵn sàng để tỏa sáng?</h2>
 <p class="text-slate-400 mb-10 text-lg">Đăng ký kiểm tra trình độ miễn phí và nhận ngay học bổng lên đến 50% cho khóa học đầu tiên.</p>
-<a class="bg-primary hover:bg-primary/90 text-slate-900 px-10 py-4 rounded-xl text-lg font-bold transition-all shadow-xl shadow-primary/20" href="/register">
+<button class="bg-primary hover:bg-primary/90 text-slate-900 px-10 py-4 rounded-xl text-lg font-bold transition-all shadow-xl shadow-primary/20">
                             Nhận tư vấn miễn phí
-                        </a>
+                        </button>
 </div>
 </div>
 </div>
 </section>
 <!-- Footer -->
-<footer id="contact" class="bg-deep-purple border-t border-primary/10 py-16">
+<footer class="bg-deep-purple border-t border-primary/10 py-16">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12">
 <div class="col-span-2">
 <div class="flex items-center gap-2 mb-6">
 <span class="material-symbols-outlined text-primary text-3xl">auto_awesome</span>
-<h1 class="text-xl font-extrabold tracking-tight text-white">ROYAL <span class="text-primary">ACADEMY</span></h1>
+<h1 class="text-xl font-extrabold tracking-tight text-white">ELITE <span class="text-primary">ENGLISH</span></h1>
 </div>
 <p class="text-slate-300 max-w-sm mb-6">Hệ thống đào tạo tiếng Anh chuẩn quốc tế với phong cách Galaxy độc đáo tại Việt Nam.</p>
 <div class="flex gap-4">
@@ -371,17 +342,17 @@
 <ul class="space-y-4 text-sm text-slate-500">
 <li><a class="hover:text-primary transition-colors" href="#">IELTS Master</a></li>
 <li><a class="hover:text-primary transition-colors" href="#">TOEIC Success</a></li>
-<li><a class="hover:text-primary transition-colors" href="#">Giao tiếp Royal</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Giao tiếp Elite</a></li>
 <li><a class="hover:text-primary transition-colors" href="#">Tiếng Anh trẻ em</a></li>
 </ul>
 </div>
 <div>
 <h6 class="font-bold text-white mb-6 uppercase text-xs tracking-widest">Hệ thống</h6>
 <ul class="space-y-4 text-sm text-slate-500">
-<li><a class="hover:text-primary transition-colors" href="#about">Về chúng tôi</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Về chúng tôi</a></li>
 <li><a class="hover:text-primary transition-colors" href="#">Đội ngũ giảng viên</a></li>
 <li><a class="hover:text-primary transition-colors" href="#">Cơ sở vật chất</a></li>
-<li><a class="hover:text-primary transition-colors" href="#contact">Liên hệ</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Liên hệ</a></li>
 </ul>
 </div>
 <div>
@@ -403,7 +374,7 @@
 </div>
 </div>
 <div class="mt-16 pt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-400">
-<p>© 2024 Royal Academy Center. All rights reserved.</p>
+<p>© 2024 Elite English Center. All rights reserved.</p>
 <div class="flex gap-8">
 <a class="hover:text-primary" href="#">Điều khoản dịch vụ</a>
 <a class="hover:text-primary" href="#">Chính sách bảo mật</a>
@@ -413,6 +384,3 @@
 </footer>
 </div>
 </body></html>
-
-
-

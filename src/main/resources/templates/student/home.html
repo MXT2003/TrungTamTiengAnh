@@ -1,24 +1,172 @@
 ﻿<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{student/layout :: layout(~{::section}, 'Trang học viên')}">
-<section>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
-            <h3 class="text-xl font-bold font-display mb-2">Chào mừng bạn trở lại</h3>
-            <p class="text-slate-400">Quản lý lớp học và học phí ngay tại đây.</p>
-        </div>
-        <div class="p-6 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between">
-            <div>
-                <p class="text-slate-400 text-sm">Truy cập nhanh</p>
-                <h4 class="text-lg font-bold">Đăng ký lớp mới</h4>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{student/layout :: layout(~{::section}, 'Cổng học viên')}">
+<section class="font-sans">
+    <div class="relative w-full aspect-[21/9] min-h-[500px] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-background-dark via-background-dark/60 to-transparent z-10 bg-gradient-to-r from-black via-black/40 to-transparent z-10"></div>
+        <div class="absolute inset-0 bg-cover bg-center" data-alt="Luxury library interior with golden lighting" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBN_pDQTeU-j-msEkCxrjYJNCoSM_19KCeMLTsQeWpjqbJ1vzGTn0tnD6chlMibLQNE70_AdIXw8c8iU_fmSwWx0W0VCeTNLwUj3sqEhGdGGCf_5JBMom9lrThEOaVCJ-75qilKqzgonGKFnTiL9skvLVBReO9ATmJCwc0fk_Dbe6wuIbg4BKk7ECCINQ87MIu2B2ENw1Uz9V6vNF1J4wakpPMh6oYD6BDsqV3u8b-ZMqNHTRA4Zwn7mPZBarmm_OjSegdJMa6-SkeY");'></div>
+        <div class="relative z-20 container mx-auto px-6 lg:px-20 text-left max-w-4xl mr-auto">
+            <div class="space-y-6">
+                <span class="text-primary tracking-[0.2em] uppercase text-sm font-bold border-l-2 border-primary pl-4">Chào mừng đến với Royal Academy</span>
+                <h1 class="text-white text-5xl lg:text-7xl font-display font-bold leading-[1.1] drop-shadow-lg">
+                    Mở cánh cửa <br/><span class="text-primary italic">tri thức hoàng gia</span>
+                </h1>
+                <p class="text-slate-300 text-lg max-w-xl italic">
+                    Trải nghiệm môi trường giáo dục đẳng cấp quốc tế với đội ngũ chuyên gia hàng đầu và lộ trình cá nhân hóa.
+                </p>
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <a class="gold-gradient text-background-dark px-8 py-4 rounded-lg font-bold uppercase tracking-wider text-sm hover:scale-105 transition-transform soft-glow" href="/student/classes">
+                        Ghi danh ngay
+                    </a>
+                    <a class="border border-primary/50 text-primary px-8 py-4 rounded-lg font-bold uppercase tracking-wider text-sm hover:bg-primary/10 transition-all" href="/student/my-classes">
+                        Khám phá lộ trình
+                    </a>
+                </div>
             </div>
-            <a class="px-4 py-2 rounded-lg bg-primary text-background-dark font-bold" href="/student/classes">Đi tới</a>
         </div>
     </div>
 
-    <div class="mt-8 flex flex-wrap gap-4">
-        <a href="/student/classes" class="px-6 py-3 rounded-lg border border-primary/30 text-primary hover:border-primary transition-all">Xem lớp học</a>
-        <a href="/student/my-classes" class="px-6 py-3 rounded-lg border border-primary/30 text-primary hover:border-primary transition-all">Lớp đã đăng ký</a>
-        <a href="/student/payments" class="px-6 py-3 rounded-lg border border-primary/30 text-primary hover:border-primary transition-all">Học phí</a>
+    <div class="container mx-auto px-6 lg:px-20 -mt-16 relative z-30">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-xl flex items-center gap-6 shadow-2xl hover:border-primary/40 transition-all duration-500">
+                <div class="size-14 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                    <span class="material-symbols-outlined text-3xl">school</span>
+                </div>
+                <div>
+                    <p class="text-slate-400 text-xs uppercase tracking-widest font-bold">Học viên thành đạt</p>
+                    <p class="text-white text-3xl font-display font-bold">5,000+</p>
+                </div>
+            </div>
+            <div class="bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-xl flex items-center gap-6 shadow-2xl hover:border-primary/40 transition-all duration-500">
+                <div class="size-14 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                    <span class="material-symbols-outlined text-3xl">language</span>
+                </div>
+                <div>
+                    <p class="text-slate-400 text-xs uppercase tracking-widest font-bold">Giáo viên bản ngữ</p>
+                    <p class="text-white text-3xl font-display font-bold">100%</p>
+                </div>
+            </div>
+            <div class="bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-xl flex items-center gap-6 shadow-2xl hover:border-primary/40 transition-all duration-500">
+                <div class="size-14 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                    <span class="material-symbols-outlined text-3xl">star</span>
+                </div>
+                <div>
+                    <p class="text-slate-400 text-xs uppercase tracking-widest font-bold">Tỷ lệ hài lòng</p>
+                    <p class="text-white text-3xl font-display font-bold">99%</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-6 lg:px-20 py-20">
+        <div class="flex justify-between items-end mb-12 border-b border-primary/10 pb-6">
+            <div>
+                <h2 class="text-primary text-sm font-bold uppercase tracking-[0.3em] mb-2">My Learning Journey</h2>
+                <h3 class="text-white text-3xl font-display font-bold">Tiến độ học tập của bạn</h3>
+            </div>
+            <a class="text-primary hover:underline flex items-center gap-2 font-medium" href="/student/my-classes">
+                Tất cả lịch sử <span class="material-symbols-outlined">arrow_right_alt</span>
+            </a>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-6 flex gap-6 items-center hover:bg-white/10 transition-all">
+                <div class="size-24 rounded-lg overflow-hidden shrink-0">
+                    <div class="w-full h-full bg-cover bg-center" data-alt="English classroom discussion" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDT_psJGdnplCP_5zAVW-HKrPS33S9xKVz1i_V4P-94Yczdcci4_OBCsYBhKYmxV1IHiaMbI3VxdHO6HNsuhDy1tyG2rUCvAVBGVUEviIYoTaFH8EOXa9khvkzRm4z9y-eM5yqmp4eRKgBhg68HTqA9S1DMaPW4kMriLN8zd6mqKhVL_lyR39hToJBzFoQq3-Kd140aM1DTu1xjzLvHzEBBTh-1Gu4QaQDw-BLvdOmmdLYmKPFby5jB4S8kaJWPikzLAFmyKs9Ivmwa");'></div>
+                </div>
+                <div class="flex-1">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="text-white font-display font-bold text-lg">IELTS Intensive Band 7.5+</h4>
+                        <span class="bg-primary/20 text-primary text-[10px] px-2 py-1 rounded uppercase font-bold">Đang học</span>
+                    </div>
+                    <div class="w-full bg-background-dark h-2 rounded-full mb-3">
+                        <div class="bg-primary h-full rounded-full" style="width: 65%"></div>
+                    </div>
+                    <div class="flex justify-between text-xs text-slate-400">
+                        <span>Bài 12/20: Advanced Writing</span>
+                        <span>65% Hoàn thành</span>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-6 flex gap-6 items-center hover:bg-white/10 transition-all">
+                <div class="size-24 rounded-lg overflow-hidden shrink-0">
+                    <div class="w-full h-full bg-cover bg-center" data-alt="Business meeting scenario" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBCpTJ5Ais_l3_s-4yS6lkHHF_JK73Gn5c0BWYOHApYxWcXDcWmK4U1i1HPmgRQ0dIc4fTxe4ZWJCj3dApTmX3YarQl6n3TWyENS-zICAm7cj6sXzxiOOAedJKnQWdZmIaA7YBl78yfgWcrxTXrskDP8qDynTpJox7qVmyzHav8OYq9x0r4KbIicPah4H5LDNx5n2Lvggz5AMCo3PY2qcuPPQQI8dxDb0qG411vFuU2G0nOPh08di8bC8rhB2_p4xZs7ftg1jDcryKk");'></div>
+                </div>
+                <div class="flex-1">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="text-white font-display font-bold text-lg">Business English Elite</h4>
+                        <span class="bg-green-500/20 text-green-500 text-[10px] px-2 py-1 rounded uppercase font-bold">Hoàn thành</span>
+                    </div>
+                    <div class="w-full bg-background-dark h-2 rounded-full mb-3">
+                        <div class="bg-green-500 h-full rounded-full" style="width: 100%"></div>
+                    </div>
+                    <div class="flex justify-between text-xs text-slate-400">
+                        <span>Chứng chỉ cấp ngày 15/10/2023</span>
+                        <span>100% Hoàn thành</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="py-20">
+        <div class="container mx-auto px-6 lg:px-20">
+            <div class="text-center mb-16">
+                <h2 class="text-primary text-sm font-bold uppercase tracking-[0.3em] mb-4">Exclusive Curriculums</h2>
+                <h3 class="text-white text-4xl font-display font-bold">Khóa học đặc quyền</h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="group bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden hover:border-primary/50 transition-all shadow-lg hover:-translate-y-2">
+                    <div class="aspect-[4/3] overflow-hidden relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-surface-dark to-transparent z-10"></div>
+                        <div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="IELTS study materials and pen" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAVUsQ_W7p8Zl47JLq_iQzk6WqSwKrwrejeatdemVU0EabcQ2YwyXykKabDQ2HFXaOxEfgBoRsMSFUKsOIexhVVD1fXPpDHaBm5DpX1nHDuSxmdS50S1fpu09Z-ZBw-2aiUftloujZf0PtFrCVMKllyQ4oDX1XQoN-oaaQlro5u8MvK9rlllIiDs--bef8w0-NIC1Yngr32xd3g8RLeSpm7WQ0b3GLoxvg6BigD_4LBqRf7jKPBo-VMC8NNAEVehHMwFuKQHqKmYDcO");'></div>
+                    </div>
+                    <div class="p-8 relative z-20">
+                        <h4 class="text-white text-xl font-display font-bold mb-2">IELTS Premium</h4>
+                        <p class="text-slate-400 text-sm mb-6 leading-relaxed">Lộ trình cá nhân hóa 1:1 cùng cựu giám khảo IELTS, cam kết đầu ra bằng văn bản.</p>
+                        <a class="w-full text-center border border-primary/30 text-primary py-3 rounded-lg font-bold text-sm group-hover:bg-primary group-hover:text-background-dark transition-all" href="/student/classes">
+                            Xem chi tiết
+                        </a>
+                    </div>
+                </div>
+                <div class="group bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden hover:border-primary/50 transition-all shadow-lg hover:-translate-y-2">
+                    <div class="aspect-[4/3] overflow-hidden relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-surface-dark to-transparent z-10"></div>
+                        <div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="Professional business person" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCAnFd6D3spW-60URzibunmjfOZtmNmYUF-lQFMYWhE9KvD_6GyYEBeAFdayyCRKKnRfmr94SUqq0FAsDQuqcy2ndmTxDGKxstwPFskt64LM6GjYTrCVXBjTIHPFcxTTKTcPywAhWfR8JnbAL3Ewg2SUm-u3mfZ4DcJANaosvvfyGCSUmCLtPvyEggj3zZrtfjUzlfWNHtUrV911wtuh7LxN6NkwzP3mBCgdiZ8O8DEma7pSo1lnkgsWkiqqYv2NXQ5j2psaEJdxHTu");'></div>
+                    </div>
+                    <div class="p-8 relative z-20">
+                        <h4 class="text-white text-xl font-display font-bold mb-2">Business English Elite</h4>
+                        <p class="text-slate-400 text-sm mb-6 leading-relaxed">Giao tiếp thương mại cấp cao dành cho lãnh đạo và quản lý doanh nghiệp quốc tế.</p>
+                        <a class="w-full text-center border border-primary/30 text-primary py-3 rounded-lg font-bold text-sm group-hover:bg-primary group-hover:text-background-dark transition-all" href="/student/classes">
+                            Xem chi tiết
+                        </a>
+                    </div>
+                </div>
+                <div class="group bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden hover:border-primary/50 transition-all shadow-lg hover:-translate-y-2">
+                    <div class="aspect-[4/3] overflow-hidden relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-surface-dark to-transparent z-10"></div>
+                        <div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="Hand writing in an elegant journal" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAf3-KHEkVXK_RpIUXCMbC5az14KTE_SHj5kGe4xw2YO8mWiGGcS-ascMdpaBUUCadJwGacZ4qjQZgYHBivc6LGcVrzGayGBOoPogaDSmn4FhHnGyX-sa5BnPNcdEl_CHSW65WpTgk0cqyPV4UeUZqAj7nfZrz-EX_A5muFAmc-pMAIoVnWOixkTxlBjjuKPSrdzYEqKcxL8_18vaeqZd0ULa8Kb3GH_FW1A1M0H_BZhQpe4p6KCBBPaGE6RhxFDbMDKbVjBSmSZBYd");'></div>
+                    </div>
+                    <div class="p-8 relative z-20">
+                        <h4 class="text-white text-xl font-display font-bold mb-2">Academic Writing</h4>
+                        <p class="text-slate-400 text-sm mb-6 leading-relaxed">Kỹ thuật viết luận chuyên sâu phục vụ nghiên cứu và du học tại các đại học danh tiếng.</p>
+                        <a class="w-full text-center border border-primary/30 text-primary py-3 rounded-lg font-bold text-sm group-hover:bg-primary group-hover:text-background-dark transition-all" href="/student/classes">
+                            Xem chi tiết
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-6 lg:px-20 py-20">
+        <div class="bg-gradient-to-br from-primary/10 via-white/5 to-white/5 backdrop-blur-2xl border border-white/10 rounded-2xl p-12 flex flex-col md:flex-row items-center justify-between gap-10">
+            <div class="max-w-2xl">
+                <h3 class="text-3xl font-display font-bold text-white mb-4">Bạn cần tư vấn lộ trình học tập?</h3>
+                <p class="text-slate-300 text-lg">Đội ngũ chuyên gia của chúng tôi luôn sẵn sàng hỗ trợ bạn thiết kế một hành trình chinh phục Anh ngữ dành riêng cho bạn.</p>
+            </div>
+            <a class="gold-gradient text-background-dark px-10 py-5 rounded-xl font-bold uppercase tracking-widest whitespace-nowrap hover:scale-105 transition-transform shadow-xl" href="/student/classes">
+                Đặt lịch tư vấn 1:1
+            </a>
+        </div>
     </div>
 </section>
 </html>

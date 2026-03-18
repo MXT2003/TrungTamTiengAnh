@@ -15,7 +15,7 @@
                     colors: {
                         "primary": "#e0b329",
                         "background-light": "#f8f7f6",
-                        "background-dark": "#1a1710",
+                        "background-dark": "#0a0c14",
                         "surface-dark": "#2a261a"
                     },
                     fontFamily: {
@@ -27,11 +27,33 @@
         }
     </script>
     <style>
-        body { font-family: 'Noto Sans', sans-serif; }
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            background-attachment: fixed;
+        }
         h1, h2, h3, .font-display { font-family: 'Noto Serif', serif; }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(224, 179, 41, 0.2);
+        }
+        .universe-bg {
+            background-image:
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
+            background-size: 550px 550px, 350px 350px, 250px 250px;
+            background-position: 0 0, 40px 60px, 130px 270px;
+            animation: orbit 60s linear infinite;
+        }
+        @keyframes orbit {
+            from { background-position: 0 0, 40px 60px, 130px 270px; }
+            to { background-position: 550px 550px, 390px 410px, 380px 820px; }
+        }
     </style>
 </head>
-<body class="text-slate-100 min-h-screen bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-slate-900 via-purple-900 to-slate-900">
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen universe-bg">
 <div class="relative min-h-screen flex flex-col">
     <header class="flex items-center justify-between border-b border-white/10 px-6 py-4 lg:px-20 bg-black/40 backdrop-blur-xl sticky top-0 z-50">
         <div class="flex items-center gap-3 text-primary">
@@ -52,7 +74,7 @@
 
     <main class="flex-1">
         <div class="max-w-6xl mx-auto px-6 lg:px-20 py-12" th:replace="${content}"></div>
-    </main>
+</main>
 
     <footer class="bg-black/60 backdrop-blur-md border-t border-white/5 py-10">
         <div class="max-w-6xl mx-auto px-6 lg:px-20 grid grid-cols-1 md:grid-cols-3 gap-8 text-sm text-slate-400">
@@ -84,5 +106,71 @@
         </div>
     </footer>
 </div>
+<canvas class="fixed inset-0 z-[60] pointer-events-none" id="sparkle-canvas"></canvas>
+<script>
+    const canvas = document.getElementById('sparkle-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.size = Math.random() * 2 + 0.5;
+            this.speedX = Math.random() * 2 - 1;
+            this.speedY = Math.random() * 2 - 1;
+            this.life = 1;
+            this.decay = Math.random() * 0.02 + 0.01;
+            this.color = Math.random() > 0.5 ? '#e0b329' : '#ffffff';
+        }
+
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            this.life -= this.decay;
+        }
+
+        draw() {
+            ctx.globalAlpha = this.life;
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y - this.size * 2);
+            ctx.lineTo(this.x + this.size, this.y);
+            ctx.lineTo(this.x, this.y + this.size * 2);
+            ctx.lineTo(this.x - this.size, this.y);
+            ctx.closePath();
+            ctx.fill();
+        }
+    }
+
+    window.addEventListener('mousemove', (e) => {
+        for (let i = 0; i < 2; i++) {
+            particles.push(new Particle(e.clientX, e.clientY));
+        }
+    });
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw();
+            if (particles[i].life <= 0) {
+                particles.splice(i, 1);
+                i--;
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+</script>
 </body>
 </html>

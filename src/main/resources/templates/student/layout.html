@@ -15,19 +15,35 @@
                     colors: {
                         "primary": "#e0b329",
                         "background-light": "#f8f7f6",
-                        "background-dark": "#0a0c14"
+                        "background-dark": "#0a0c14",
+                        "surface-dark": "#2a261a"
                     },
                     fontFamily: {
                         "display": ["Noto Serif", "serif"],
                         "sans": ["Noto Sans", "sans-serif"]
-                    }
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"}
                 }
             }
         }
     </script>
     <style>
-        body { font-family: 'Noto Sans', sans-serif; }
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            background-attachment: fixed;
+        }
         h1, h2, h3, .font-display { font-family: 'Noto Serif', serif; }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(224, 179, 41, 0.2);
+        }        .gold-gradient {
+            background: linear-gradient(135deg, #e0b329 0%, #b38b1d 100%);
+        }
+        .soft-glow {
+            box-shadow: 0 0 20px rgba(224, 179, 41, 0.15);
+        }
         .universe-bg {
             background-image:
                 radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
@@ -37,6 +53,10 @@
             background-position: 0 0, 40px 60px, 130px 270px;
             animation: orbit 60s linear infinite;
         }
+        @keyframes orbit {
+            from { background-position: 0 0, 40px 60px, 130px 270px; }
+            to { background-position: 550px 550px, 390px 410px, 380px 820px; }
+        }
         select {
             background-color: rgba(15, 23, 42, 0.85);
             color: #e2e8f0;
@@ -45,108 +65,192 @@
             background-color: #0f172a;
             color: #e2e8f0;
         }
-        @keyframes orbit {
-            from { background-position: 0 0, 40px 60px, 130px 270px; }
-            to { background-position: 550px 550px, 390px 410px, 380px 820px; }
+        .material-symbols-outlined {
+            font-family: "Material Symbols Outlined";
+            font-weight: 400;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-smoothing: antialiased;
+            font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
         }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen universe-bg">
-    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-900/30 blur-[150px] rounded-full"></div>
-        <div class="absolute top-1/4 right-1/4 w-[30%] h-[30%] bg-primary/10 blur-[100px] rounded-full"></div>
-    </div>
 
-    <header class="relative z-10 sticky top-0 bg-black/40 backdrop-blur-xl border-b border-white/10">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-3 text-primary">
-                <span class="material-symbols-outlined text-3xl">school</span>
-                <h1 class="text-lg font-display font-bold uppercase tracking-wide">Student Portal</h1>
+<div class="flex min-h-screen overflow-x-hidden">
+    <aside class="w-72 bg-black/40 border-r border-primary/20 flex flex-col justify-between py-8 px-6 backdrop-blur-2xl sticky top-0 h-screen">
+        <div class="flex flex-col gap-8">
+            <div class="flex items-center gap-3">
+                <div class="bg-primary/20 p-2 rounded-lg border border-primary/30">
+                    <svg class="text-primary" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M3 7l9-4 9 4-9 4-9-4z"></path>
+                        <path d="M7 10v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-5"></path>
+                        <path d="M3 7v6"></path>
+                        <path d="M3 13l2 1"></path>
+                    </svg>
+                </div>
+                <div class="flex flex-col">
+                    <h1 class="text-primary text-xl font-bold leading-tight font-display tracking-tight">Elite English</h1>
+                    <p class="text-primary/60 text-[10px] uppercase tracking-widest font-bold">Cổng học viên</p>
+                </div>
             </div>
-            <nav class="flex items-center gap-4 text-sm">
-                <a class="text-slate-300 hover:text-primary transition-colors" href="/student/home">Trang chủ</a>
-                <a class="text-slate-300 hover:text-primary transition-colors" href="/student/classes">Đăng ký lớp</a>
-                <a class="text-slate-300 hover:text-primary transition-colors" href="/student/my-classes">Lớp của tôi</a>
-                <a class="text-slate-300 hover:text-primary transition-colors" href="/student/payments">Học phí</a>
-                <a class="text-red-300 hover:text-red-200 transition-colors" href="/logout">Đăng xuất</a>
+            <nav class="flex flex-col gap-2">
+                <a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-primary/10 text-slate-400 hover:text-primary transition-all group" href="/student/home">
+                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3" y="3" width="8" height="8"></rect>
+                        <rect x="13" y="3" width="8" height="5"></rect>
+                        <rect x="13" y="10" width="8" height="11"></rect>
+                        <rect x="3" y="13" width="8" height="8"></rect>
+                    </svg>
+                    <span class="text-sm font-medium">Tổng quan</span>
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-primary/10 text-slate-400 hover:text-primary transition-all group" href="/student/classes">
+                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M4 4h10a2 2 0 0 1 2 2v13H6a2 2 0 0 0-2 2V4z"></path>
+                        <path d="M20 4h-8a2 2 0 0 0-2 2v13h8a2 2 0 0 1 2 2V4z"></path>
+                    </svg>
+                    <span class="text-sm font-medium">Đăng ký lớp</span>
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-primary/10 text-slate-400 hover:text-primary transition-all group" href="/student/my-classes">
+                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M4 21V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v17"></path>
+                        <path d="M16 12h4v9"></path>
+                        <circle cx="9" cy="12" r="1"></circle>
+                    </svg>
+                    <span class="text-sm font-medium">Lớp của tôi</span>
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-primary/10 text-slate-400 hover:text-primary transition-all group" href="/student/payments">
+                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M4 7h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z"></path>
+                        <path d="M18 7V5a2 2 0 0 0-2-2H4"></path>
+                        <circle cx="16" cy="12" r="1.5"></circle>
+                    </svg>
+                    <span class="text-sm font-medium">Học phí</span>
+                </a>
             </nav>
         </div>
-    </header>
-
-    <main class="relative z-10 max-w-6xl mx-auto px-6 py-10">
-        <div class="mb-8">
-            <h2 class="text-2xl font-bold font-display" th:text="${pageTitle}">Trang học viên</h2>
-            <p class="text-slate-400 text-sm">Theo dõi tiến độ học tập và đăng ký lớp</p>
+        <div class="flex flex-col gap-4">
+            <a class="w-full bg-primary text-slate-950 font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-white transition-all shadow-xl shadow-primary/10" href="/student/classes">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <path d="M12 8v8"></path>
+                    <path d="M8 12h8"></path>
+                </svg>
+                <span class="text-sm">Đăng ký lớp</span>
+            </a>
+            <a class="flex items-center gap-3 p-3 rounded-xl bg-slate-800/40 border border-slate-700/50" href="/logout">
+                <svg class="h-5 w-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M10 17l5-5-5-5"></path>
+                    <path d="M15 12H4"></path>
+                    <path d="M20 4v16"></path>
+                </svg>
+                <div class="flex flex-col">
+                    <p class="text-xs font-bold text-slate-200">Đăng xuất</p>
+                    <p class="text-[10px] text-primary">Thoát tài khoản</p>
+                </div>
+            </a>
         </div>
-        <div th:replace="${content}"></div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
+        <header class="flex items-center justify-between px-10 py-6 border-b border-primary/10 bg-black/30 backdrop-blur-xl sticky top-0 z-50">
+            <div class="flex items-center gap-4">
+                <h2 class="text-xl font-bold tracking-tight text-slate-200 font-display" th:text="${pageTitle}">Trang học viên</h2>
+            </div>
+            <div class="flex items-center gap-2">
+            <a class="p-2 rounded-full bg-slate-900 border border-slate-800 text-slate-400 hover:text-primary hover:border-primary/40 transition-all" href="/logout" title="Đăng xuất">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M10 17l5-5-5-5"></path>
+                    <path d="M15 12H4"></path>
+                    <path d="M20 4v16"></path>
+                </svg>
+            </a>
+            </div>
+        </header>
+
+        <div class="p-10">
+            <div th:replace="${content}"></div>
+        </div>
+
+        <footer class="px-10 py-6 text-slate-600 text-[10px] uppercase tracking-widest font-bold border-t border-primary/5 text-center">
+            © 2024 Elite English Management System • Bản quyền thuộc về Elite International Education Group
+        </footer>
     </main>
+</div>
 
-    <canvas class="fixed inset-0 z-[60] pointer-events-none" id="sparkle-canvas"></canvas>
-    <script>
-        const canvas = document.getElementById('sparkle-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
+<canvas class="fixed inset-0 z-[60] pointer-events-none" id="sparkle-canvas"></canvas>
+<script>
+    const canvas = document.getElementById('sparkle-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
 
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.size = Math.random() * 2 + 0.5;
+            this.speedX = Math.random() * 2 - 1;
+            this.speedY = Math.random() * 2 - 1;
+            this.life = 1;
+            this.decay = Math.random() * 0.02 + 0.01;
+            this.color = Math.random() > 0.5 ? '#e0b329' : '#ffffff';
         }
 
-        window.addEventListener('resize', resize);
-        resize();
-
-        class Particle {
-            constructor(x, y) {
-                this.x = x;
-                this.y = y;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedX = Math.random() * 2 - 1;
-                this.speedY = Math.random() * 2 - 1;
-                this.life = 1;
-                this.decay = Math.random() * 0.02 + 0.01;
-                this.color = Math.random() > 0.5 ? '#e0b329' : '#ffffff';
-            }
-
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                this.life -= this.decay;
-            }
-
-            draw() {
-                ctx.globalAlpha = this.life;
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.moveTo(this.x, this.y - this.size * 2);
-                ctx.lineTo(this.x + this.size, this.y);
-                ctx.lineTo(this.x, this.y + this.size * 2);
-                ctx.lineTo(this.x - this.size, this.y);
-                ctx.closePath();
-                ctx.fill();
-            }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            this.life -= this.decay;
         }
 
-        window.addEventListener('mousemove', (e) => {
-            for (let i = 0; i < 2; i++) {
-                particles.push(new Particle(e.clientX, e.clientY));
-            }
-        });
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
-                if (particles[i].life <= 0) {
-                    particles.splice(i, 1);
-                    i--;
-                }
-            }
-            requestAnimationFrame(animate);
+        draw() {
+            ctx.globalAlpha = this.life;
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y - this.size * 2);
+            ctx.lineTo(this.x + this.size, this.y);
+            ctx.lineTo(this.x, this.y + this.size * 2);
+            ctx.lineTo(this.x - this.size, this.y);
+            ctx.closePath();
+            ctx.fill();
         }
+    }
 
-        animate();
-    </script>
+    window.addEventListener('mousemove', (e) => {
+        for (let i = 0; i < 2; i++) {
+            particles.push(new Particle(e.clientX, e.clientY));
+        }
+    });
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw();
+            if (particles[i].life <= 0) {
+                particles.splice(i, 1);
+                i--;
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+</script>
 </body>
 </html>
+

@@ -13,9 +13,10 @@ spring.datasource.password=
 ```
 
 ## Tai khoan mac dinh
-- Admin: `admin` / `123`
-- Hoc sinh: `truong` / `123456`
-- Giao vien: `VanA` / `1`
+- Admin: `admin` / `admin123`
+- Teacher: `VanA` / `111111`
+- Student: `truong` / `123456`
+
 
 ## Chay du an
 ```

@@ -26,8 +26,17 @@
         }
     </script>
     <style>
-        body { font-family: 'Noto Sans', sans-serif; }
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            background-attachment: fixed;
+        }
         h1, h2, h3, .font-display { font-family: 'Noto Serif', serif; }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(224, 179, 41, 0.2);
+        }
         .universe-bg {
             background-image:
                 radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
@@ -37,6 +46,10 @@
             background-position: 0 0, 40px 60px, 130px 270px;
             animation: orbit 60s linear infinite;
         }
+        @keyframes orbit {
+            from { background-position: 0 0, 40px 60px, 130px 270px; }
+            to { background-position: 550px 550px, 390px 410px, 380px 820px; }
+        }
         select {
             background-color: rgba(15, 23, 42, 0.85);
             color: #e2e8f0;
@@ -45,18 +58,9 @@
             background-color: #0f172a;
             color: #e2e8f0;
         }
-        @keyframes orbit {
-            from { background-position: 0 0, 40px 60px, 130px 270px; }
-            to { background-position: 550px 550px, 390px 410px, 380px 820px; }
-        }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen universe-bg">
-    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-900/30 blur-[150px] rounded-full"></div>
-        <div class="absolute top-1/4 right-1/4 w-[30%] h-[30%] bg-primary/10 blur-[100px] rounded-full"></div>
-    </div>
 
     <header class="relative z-10 sticky top-0 bg-black/40 backdrop-blur-xl border-b border-white/10">
         <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">

@@ -100,6 +100,34 @@ public class UserService {
         return "SUCCESS";
     }
 
+    public String changePassword(User user, String currentPassword, String newPassword) {
+        if (user == null) {
+            return "USER_NOT_FOUND";
+        }
+        if (currentPassword == null || currentPassword.isBlank()) {
+            return "CURRENT_REQUIRED";
+        }
+        if (newPassword == null || newPassword.isBlank() || newPassword.length() < 6) {
+            return "NEW_INVALID";
+        }
+
+        String stored = user.getPassword();
+        boolean matched = false;
+        if (stored != null && isBcryptHash(stored)) {
+            matched = passwordEncoder.matches(currentPassword, stored);
+        } else if (stored != null) {
+            matched = stored.equals(currentPassword);
+        }
+
+        if (!matched) {
+            return "CURRENT_WRONG";
+        }
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+        return "SUCCESS";
+    }
+
     private boolean isBcryptHash(String value) {
         return value.startsWith("$2a$") || value.startsWith("$2b$") || value.startsWith("$2y$");
     }

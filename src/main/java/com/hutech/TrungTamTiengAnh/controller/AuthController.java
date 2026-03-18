@@ -1,5 +1,6 @@
 package com.hutech.TrungTamTiengAnh.controller;
 
+import com.hutech.TrungTamTiengAnh.dto.RegisterForm;
 import com.hutech.TrungTamTiengAnh.entity.User;
 import com.hutech.TrungTamTiengAnh.entity.StudentProfile;
 import com.hutech.TrungTamTiengAnh.repository.StudentProfileRepository;
@@ -58,18 +59,22 @@ public class AuthController {
 
     @GetMapping("/register")
     public String registerPage(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("form", new RegisterForm());
         return "register";
     }
 
     @PostMapping("/register")
-    public String register(@Valid @ModelAttribute User user,
+    public String register(@Valid @ModelAttribute("form") RegisterForm form,
                            org.springframework.validation.BindingResult bindingResult,
                            Model model) {
 
         if (bindingResult.hasErrors()) {
             return "register";
         }
+
+        User user = new User();
+        user.setUsername(form.getUsername());
+        user.setPassword(form.getPassword());
 
         // Mac dinh tai khoan dang ky la STUDENT
         user.setRole("STUDENT");
@@ -79,7 +84,9 @@ public class AuthController {
         if ("SUCCESS".equals(result)) {
             StudentProfile profile = new StudentProfile();
             profile.setUser(user);
-            profile.setFullName(user.getUsername());
+            profile.setFullName(form.getFullName());
+            profile.setPhone(form.getPhone());
+            profile.setEmail(form.getEmail());
             studentProfileRepository.save(profile);
             return "redirect:/login";
         }
