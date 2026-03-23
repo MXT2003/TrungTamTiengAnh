@@ -17,15 +17,17 @@ public class Course {
     private String name;
 
     @Size(max = 500, message = "Mo ta toi da 500 ky tu")
+    @NotBlank(message = "Mo ta khong duoc de trong")
     private String description;
 
     @Size(max = 50, message = "Cap do toi da 50 ky tu")
+    @NotBlank(message = "Cap do khong duoc de trong")
     private String level;
 
     @Min(value = 1, message = "So tuan hoc phai >= 1")
     private int durationWeeks;
 
-    @Min(value = 0, message = "Hoc phi phai >= 0")
+    @Min(value = 1, message = "Hoc phi phai >= 1")
     private double fee;
 
     private boolean active = true;
@@ -51,4 +53,3 @@ public class Course {
     public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
 }
-

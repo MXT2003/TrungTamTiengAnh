@@ -56,6 +56,7 @@ public class LopHocController {
                        org.springframework.validation.BindingResult bindingResult,
                        @RequestParam(value = "courseId", required = false) Long courseId,
                        @RequestParam(value = "teacherId", required = false) Long teacherId,
+                       @RequestParam(value = "thu", required = false) java.util.List<String> thuList,
                        Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("courses", courseRepository.findAll());
@@ -63,7 +64,7 @@ public class LopHocController {
             return "admin/lophoc/form";
         }
 
-        boolean hasThu = lopHoc.getThu() != null && !lopHoc.getThu().isBlank();
+        boolean hasThu = thuList != null && !thuList.isEmpty();
         boolean hasStart = lopHoc.getGioBatDau() != null;
         boolean hasEnd = lopHoc.getGioKetThuc() != null;
 
@@ -81,9 +82,21 @@ public class LopHocController {
             return "admin/lophoc/form";
         }
 
-        if (lopHoc.getThu() != null && !lopHoc.getThu().isBlank()
-                && lopHoc.getGioBatDau() != null && lopHoc.getGioKetThuc() != null) {
-            lopHoc.setLichHoc(lopHoc.getThu() + " " + lopHoc.getGioBatDau() + "-" + lopHoc.getGioKetThuc());
+        if (hasThu) {
+            lopHoc.setThu(String.join(",", thuList));
+        } else {
+            lopHoc.setThu(null);
+        }
+
+        if (hasThu && lopHoc.getGioBatDau() != null && lopHoc.getGioKetThuc() != null) {
+            String lichHoc = String.join(", ", thuList) + " " + lopHoc.getGioBatDau() + "-" + lopHoc.getGioKetThuc();
+            if (lopHoc.getNgayBatDau() != null && lopHoc.getNgayKetThuc() != null) {
+                java.time.format.DateTimeFormatter fmt = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                lichHoc = lopHoc.getNgayBatDau().format(fmt) + " - " + lopHoc.getNgayKetThuc().format(fmt)
+                        + " | " + String.join(", ", thuList)
+                        + " | " + lopHoc.getGioBatDau() + "-" + lopHoc.getGioKetThuc();
+            }
+            lopHoc.setLichHoc(lichHoc);
         }
 
         if (courseId != null) {
@@ -125,4 +138,3 @@ public class LopHocController {
         return "redirect:/admin/lophoc";
     }
 }
-

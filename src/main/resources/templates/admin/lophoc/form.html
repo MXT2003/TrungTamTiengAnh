@@ -54,39 +54,66 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-slate-300">Ngày bắt đầu</label>
-                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="date" th:field="*{ngayBatDau}" />
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="date" th:field="*{ngayBatDau}" id="ngayBatDau" />
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-300">Ngày kết thúc</label>
-                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="date" th:field="*{ngayKetThuc}" />
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="date" th:field="*{ngayKetThuc}" id="ngayKetThuc" />
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-300">Thứ</label>
-                        <select class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" th:field="*{thu}">
-                            <option value="">-- Chọn --</option>
-                            <option value="MON">Mon</option>
-                            <option value="TUE">Tue</option>
-                            <option value="WED">Wed</option>
-                            <option value="THU">Thu</option>
-                            <option value="FRI">Fri</option>
-                            <option value="SAT">Sat</option>
-                            <option value="SUN">Sun</option>
-                        </select>
+                        <div class="mt-2 grid grid-cols-3 gap-2 text-slate-100">
+                            <label class="flex items-center gap-2 text-sm">
+                                <input type="checkbox" name="thu" value="MON" class="accent-primary"
+                                       th:checked="${lophoc.thu != null && #lists.contains(#strings.arraySplit(lophoc.thu, ','), 'MON')}" />
+                                Mon
+                            </label>
+                            <label class="flex items-center gap-2 text-sm">
+                                <input type="checkbox" name="thu" value="TUE" class="accent-primary"
+                                       th:checked="${lophoc.thu != null && #lists.contains(#strings.arraySplit(lophoc.thu, ','), 'TUE')}" />
+                                Tue
+                            </label>
+                            <label class="flex items-center gap-2 text-sm">
+                                <input type="checkbox" name="thu" value="WED" class="accent-primary"
+                                       th:checked="${lophoc.thu != null && #lists.contains(#strings.arraySplit(lophoc.thu, ','), 'WED')}" />
+                                Wed
+                            </label>
+                            <label class="flex items-center gap-2 text-sm">
+                                <input type="checkbox" name="thu" value="THU" class="accent-primary"
+                                       th:checked="${lophoc.thu != null && #lists.contains(#strings.arraySplit(lophoc.thu, ','), 'THU')}" />
+                                Thu
+                            </label>
+                            <label class="flex items-center gap-2 text-sm">
+                                <input type="checkbox" name="thu" value="FRI" class="accent-primary"
+                                       th:checked="${lophoc.thu != null && #lists.contains(#strings.arraySplit(lophoc.thu, ','), 'FRI')}" />
+                                Fri
+                            </label>
+                            <label class="flex items-center gap-2 text-sm">
+                                <input type="checkbox" name="thu" value="SAT" class="accent-primary"
+                                       th:checked="${lophoc.thu != null && #lists.contains(#strings.arraySplit(lophoc.thu, ','), 'SAT')}" />
+                                Sat
+                            </label>
+                            <label class="flex items-center gap-2 text-sm">
+                                <input type="checkbox" name="thu" value="SUN" class="accent-primary"
+                                       th:checked="${lophoc.thu != null && #lists.contains(#strings.arraySplit(lophoc.thu, ','), 'SUN')}" />
+                                Sun
+                            </label>
+                        </div>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-300">Giờ bắt đầu</label>
-                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="time" th:field="*{gioBatDau}" />
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="time" th:field="*{gioBatDau}" id="gioBatDau" />
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-slate-300">Giờ kết thúc</label>
-                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="time" th:field="*{gioKetThuc}" />
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="time" th:field="*{gioKetThuc}" id="gioKetThuc" />
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-300">Lịch học</label>
-                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="text" th:field="*{lichHoc}" required />
+                        <input class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" type="text" th:field="*{lichHoc}" id="lichHoc" readonly required />
                         <div th:if="${#fields.hasErrors('lichHoc')}" class="text-red-400 text-xs mt-2">
                             <span th:errors="*{lichHoc}"></span>
                         </div>
@@ -124,5 +151,51 @@
             </form>
         </div>
     </div>
+    <script>
+        (function () {
+            function formatDate(iso) {
+                if (!iso) return "";
+                var parts = iso.split("-");
+                if (parts.length !== 3) return iso;
+                return parts[2] + "/" + parts[1] + "/" + parts[0];
+            }
+
+            function getSelectedDays() {
+                var boxes = document.querySelectorAll('input[name="thu"]:checked');
+                var labels = [];
+                boxes.forEach(function (b) { labels.push(b.value); });
+                return labels;
+            }
+
+            function updateSchedule() {
+                var startDate = document.getElementById("ngayBatDau").value;
+                var endDate = document.getElementById("ngayKetThuc").value;
+                var startTime = document.getElementById("gioBatDau").value;
+                var endTime = document.getElementById("gioKetThuc").value;
+                var days = getSelectedDays();
+
+                var parts = [];
+                if (startDate && endDate) {
+                    parts.push(formatDate(startDate) + " - " + formatDate(endDate));
+                }
+                if (days.length > 0) {
+                    parts.push(days.join(", "));
+                }
+                if (startTime && endTime) {
+                    parts.push(startTime + "-" + endTime);
+                }
+
+                document.getElementById("lichHoc").value = parts.join(" | ");
+            }
+
+            document.addEventListener("change", function (e) {
+                if (e.target.matches('#ngayBatDau, #ngayKetThuc, #gioBatDau, #gioKetThuc, input[name="thu"]')) {
+                    updateSchedule();
+                }
+            });
+
+            document.addEventListener("DOMContentLoaded", updateSchedule);
+        })();
+    </script>
 </section>
 </html>
