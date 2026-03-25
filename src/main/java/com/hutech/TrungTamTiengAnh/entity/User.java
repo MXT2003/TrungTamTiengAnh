@@ -19,19 +19,22 @@ public class User {
     private Long id;
 
     @Column(unique = true)
-    @NotBlank(message = "Username không được để trống")
-    @Size(min = 4, max = 50, message = "Username từ 4 đến 50 ký tự")
+    @NotBlank(message = "Username khong duoc de trong")
+    @Size(min = 4, max = 50, message = "Username tu 4 den 50 ky tu")
     private String username;
 
-    @NotBlank(message = "Mật khẩu không được để trống")
-    @Size(min = 6, max = 100, message = "Mật khẩu tối thiểu 6 ký tự")
+    @NotBlank(message = "Mat khau khong duoc de trong")
+    @Size(min = 6, max = 100, message = "Mat khau toi thieu 6 ky tu")
     private String password;
 
-    private String role; // ADMIN hoac STUDENT
+    @Size(max = 120, message = "Email toi da 120 ky tu")
+    private String email;
+
+    @Size(max = 20, message = "So dien thoai toi da 20 ky tu")
+    private String phone;
+
+    private String role;
 
     @Builder.Default
     private boolean active = true;
 }
-
-
-

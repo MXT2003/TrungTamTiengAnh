@@ -2,6 +2,7 @@ package com.hutech.TrungTamTiengAnh.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
@@ -24,18 +25,23 @@ public class StudentForm {
     @Size(max = 100, message = "Ho ten toi da 100 ky tu")
     private String fullName;
 
+    @NotBlank(message = "So dien thoai khong duoc de trong")
     @Size(max = 20, message = "So dien thoai toi da 20 ky tu")
     private String phone;
 
+    @NotBlank(message = "Email khong duoc de trong")
     @Email(message = "Email khong hop le")
     @Size(max = 120, message = "Email toi da 120 ky tu")
     private String email;
 
+    @NotNull(message = "Ngay sinh khong duoc de trong")
     private LocalDate dateOfBirth;
 
+    @NotBlank(message = "Trinh do khong duoc de trong")
     @Size(max = 50, message = "Trinh do toi da 50 ky tu")
     private String level;
 
+    @NotBlank(message = "Dia chi khong duoc de trong")
     @Size(max = 255, message = "Dia chi toi da 255 ky tu")
     private String address;
 
@@ -78,4 +84,3 @@ public class StudentForm {
     public String getNote() { return note; }
     public void setNote(String note) { this.note = note; }
 }
-

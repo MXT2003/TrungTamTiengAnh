@@ -1,6 +1,11 @@
 ﻿<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{student/layout :: layout(~{::section}, 'Học phí')}">
 <section>
+    <div class="mb-6 rounded-2xl border border-primary/20 bg-primary/5 px-5 py-4 text-sm text-slate-200">
+        Học phí được tạo khi admin duyệt đăng ký lớp. Hạn thanh toán là <span class="font-semibold text-primary">7 ngày</span> kể từ lúc duyệt.
+        Trạng thái <span class="font-semibold text-green-300">Đã nộp</span> chỉ xuất hiện khi admin đã xác nhận học phí của bạn.
+    </div>
+
     <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
         <table class="min-w-full divide-y divide-white/10">
             <thead class="bg-white/5 text-slate-300">
@@ -16,9 +21,13 @@
                 <tr class="hover:bg-white/5" th:each="p : ${page.content}">
                     <td class="px-4 py-3" th:text="${p.lopHoc != null ? p.lopHoc.tenLop : ''}"></td>
                     <td class="px-4 py-3" th:text="|${#numbers.formatDecimal(p.amount, 0, 'POINT', 0, 'COMMA')} VND|"></td>
-                    <td class="px-4 py-3" th:text="${p.status}"></td>
+                    <td class="px-4 py-3">
+                        <span class="px-2 py-1 text-xs rounded-full"
+                              th:classappend="${p.status == 'PAID' ? ' bg-green-500/20 text-green-300' : ' bg-amber-500/20 text-amber-300'}"
+                              th:text="${p.status == 'PAID' ? 'Đã nộp' : 'Chưa nộp'}"></span>
+                    </td>
                     <td class="px-4 py-3" th:text="${p.dueDate}"></td>
-                    <td class="px-4 py-3" th:text="${p.paidDate}"></td>
+                    <td class="px-4 py-3" th:text="${p.paidDate != null ? p.paidDate : 'Đang chờ admin xác nhận'}"></td>
                 </tr>
             </tbody>
         </table>

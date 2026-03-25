@@ -87,6 +87,7 @@ public class AuthController {
             profile.setFullName(form.getFullName());
             profile.setPhone(form.getPhone());
             profile.setEmail(form.getEmail());
+            profile.setDateOfBirth(form.getDateOfBirth());
             studentProfileRepository.save(profile);
             return "redirect:/login";
         }

@@ -89,13 +89,7 @@ public class AdminPaymentController {
 
     @PostMapping("/mark-unpaid/{id}")
     public String markUnpaid(@PathVariable Long id) {
-        Payment p = paymentRepository.findById(id).orElse(null);
-        if (p != null) {
-            p.setStatus("UNPAID");
-            p.setPaidDate(null);
-            paymentRepository.save(p);
-        }
+        // Once a payment is confirmed by admin, keep it locked.
         return "redirect:/admin/payments";
     }
 }
-

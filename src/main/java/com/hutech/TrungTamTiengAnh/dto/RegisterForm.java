@@ -2,7 +2,10 @@ package com.hutech.TrungTamTiengAnh.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import java.time.LocalDate;
 
 public class RegisterForm {
 
@@ -18,6 +21,7 @@ public class RegisterForm {
     @Size(max = 100, message = "Full name max 100 characters")
     private String fullName;
 
+    @NotBlank(message = "Phone is required")
     @Size(max = 20, message = "Phone max 20 characters")
     private String phone;
 
@@ -25,6 +29,9 @@ public class RegisterForm {
     @Email(message = "Email is invalid")
     @Size(max = 120, message = "Email max 120 characters")
     private String email;
+
+    @NotNull(message = "Date of birth is required")
+    private LocalDate dateOfBirth;
 
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
@@ -40,4 +47,7 @@ public class RegisterForm {
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
+
+    public LocalDate getDateOfBirth() { return dateOfBirth; }
+    public void setDateOfBirth(LocalDate dateOfBirth) { this.dateOfBirth = dateOfBirth; }
 }

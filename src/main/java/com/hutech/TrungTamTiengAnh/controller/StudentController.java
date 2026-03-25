@@ -3,6 +3,7 @@ package com.hutech.TrungTamTiengAnh.controller;
 import com.hutech.TrungTamTiengAnh.entity.DangKy;
 import com.hutech.TrungTamTiengAnh.entity.LopHoc;
 import com.hutech.TrungTamTiengAnh.entity.Payment;
+import com.hutech.TrungTamTiengAnh.entity.StudentProfile;
 import com.hutech.TrungTamTiengAnh.entity.User;
 import com.hutech.TrungTamTiengAnh.repository.DangKyRepository;
 import com.hutech.TrungTamTiengAnh.repository.LopHocRepository;
@@ -135,8 +136,7 @@ public class StudentController {
         }
 
         // Kiem tra da dang ky chua
-        DangKy existed = dangKyRepository
-                .findByStudentIdAndLopHocId(user.getId(), id);
+        DangKy existed = dangKyRepository.findByStudentIdAndLopHocId(user.getId(), id);
 
         if (existed != null && activeStatuses.contains(existed.getTrangThai())) {
             return "redirect:/student/my-classes";
@@ -193,8 +193,50 @@ public class StudentController {
         if (user == null) {
             return "redirect:/login";
         }
+        StudentProfile profile = studentProfileRepository.findByUserId(user.getId());
+        if (profile == null) {
+            profile = new StudentProfile();
+            profile.setUser(user);
+            profile.setFullName(user.getUsername());
+        }
         model.addAttribute("user", user);
-        model.addAttribute("profile", studentProfileRepository.findByUserId(user.getId()));
+        model.addAttribute("profile", profile);
+        return "student/profile";
+    }
+
+    @PostMapping("/profile/update")
+    public String updateProfile(HttpSession session,
+                                @RequestParam(value = "phone", required = false) String phone,
+                                @RequestParam(value = "email", required = false) String email,
+                                @RequestParam(value = "address", required = false) String address,
+                                Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        StudentProfile profile = studentProfileRepository.findByUserId(user.getId());
+        if (profile == null) {
+            profile = new StudentProfile();
+            profile.setUser(user);
+            profile.setFullName(user.getUsername());
+        }
+
+        if (phone == null || phone.isBlank() || email == null || email.isBlank() || address == null || address.isBlank()) {
+            model.addAttribute("user", user);
+            model.addAttribute("profile", profile);
+            model.addAttribute("error", "Vui long dien day du thong tin bat buoc.");
+            return "student/profile";
+        }
+
+        profile.setPhone(phone);
+        profile.setEmail(email);
+        profile.setAddress(address);
+        studentProfileRepository.save(profile);
+
+        model.addAttribute("user", user);
+        model.addAttribute("profile", profile);
+        model.addAttribute("success", "Cap nhat thong tin thanh cong.");
         return "student/profile";
     }
 
@@ -280,9 +322,6 @@ public class StudentController {
         return false;
     }
 }
-
-
-
 
 
 

@@ -1,41 +1,33 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{student/layout :: layout(~{::section}, 'Cài đặt tài khoản')}">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{teacher/layout :: layout(~{::section}, 'Cài đặt tài khoản')}">
 <section>
     <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
         <div class="glass-card rounded-2xl p-6">
-            <h3 class="text-2xl font-display font-bold text-white mb-6">Thông tin học viên</h3>
+            <h3 class="text-2xl font-display font-bold text-white mb-6">Thông tin giáo viên</h3>
 
             <div th:if="${error}" class="mb-4 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-red-300" th:text="${error}"></div>
             <div th:if="${success}" class="mb-4 rounded-lg border border-green-500/30 bg-green-500/10 px-4 py-3 text-green-300" th:text="${success}"></div>
 
-            <form action="/student/profile/update" method="post" class="space-y-4">
+            <form action="/teacher/profile/update" method="post" class="space-y-4">
                 <div>
                     <label class="block text-sm text-slate-300">Username</label>
                     <input type="text" class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-500" th:value="${user.username}" disabled />
                 </div>
                 <div>
                     <label class="block text-sm text-slate-300">Họ và tên</label>
-                    <input type="text" class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-500" th:value="${profile.fullName}" disabled />
+                    <input type="text" class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-500" th:value="${teacher.fullName}" disabled />
                 </div>
                 <div>
-                    <label class="block text-sm text-slate-300">Trình độ</label>
-                    <input type="text" class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-500" th:value="${profile.level}" disabled />
-                </div>
-                <div>
-                    <label class="block text-sm text-slate-300">Ngày tháng năm sinh</label>
-                    <input type="text" class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-500" th:value="${profile.dateOfBirth}" disabled />
+                    <label class="block text-sm text-slate-300">Chuyên môn</label>
+                    <input type="text" class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-500" th:value="${teacher.specialization}" disabled />
                 </div>
                 <div>
                     <label class="block text-sm text-slate-300">Email</label>
-                    <input type="email" name="email" class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" th:value="${profile.email}" required />
+                    <input type="email" name="email" class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" th:value="${teacher.email}" required />
                 </div>
                 <div>
                     <label class="block text-sm text-slate-300">Số điện thoại</label>
-                    <input type="text" name="phone" class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" th:value="${profile.phone}" required />
-                </div>
-                <div>
-                    <label class="block text-sm text-slate-300">Địa chỉ</label>
-                    <textarea name="address" rows="3" class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" th:text="${profile.address}" required></textarea>
+                    <input type="text" name="phone" class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" th:value="${teacher.phone}" required />
                 </div>
                 <button type="submit" class="px-6 py-3 rounded-lg bg-primary text-background-dark font-bold hover:bg-white transition-all">
                     Lưu thông tin
@@ -45,7 +37,7 @@
 
         <div class="glass-card rounded-2xl p-6">
             <h3 class="text-2xl font-display font-bold text-white mb-6">Đổi mật khẩu</h3>
-            <form action="/student/profile/password" method="post" class="space-y-4">
+            <form action="/teacher/profile/password" method="post" class="space-y-4">
                 <div>
                     <label class="block text-sm text-slate-300">Mật khẩu hiện tại</label>
                     <input type="password" name="currentPassword" class="mt-2 w-full rounded-lg bg-white/5 border border-white/10 text-slate-100" required />

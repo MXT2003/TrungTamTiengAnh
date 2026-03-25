@@ -7,14 +7,16 @@
         <table class="min-w-full divide-y divide-white/10">
             <thead class="bg-white/5 text-slate-300">
                 <tr>
-                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Username</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Họ tên học viên</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Ngày sinh</th>
                     <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Trạng thái</th>
                     <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Ngày đăng ký</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-white/5">
                 <tr class="hover:bg-white/5" th:each="dk : ${list}">
-                    <td class="px-4 py-3" th:text="${dk.student.username}"></td>
+                    <td class="px-4 py-3" th:text="${profileMap[dk.student.id] != null && profileMap[dk.student.id].fullName != null ? profileMap[dk.student.id].fullName : dk.student.username}"></td>
+                    <td class="px-4 py-3" th:text="${profileMap[dk.student.id] != null ? profileMap[dk.student.id].dateOfBirth : ''}"></td>
                     <td class="px-4 py-3" th:text="${dk.trangThai}"></td>
                     <td class="px-4 py-3" th:text="${dk.ngayDangKy}"></td>
                 </tr>

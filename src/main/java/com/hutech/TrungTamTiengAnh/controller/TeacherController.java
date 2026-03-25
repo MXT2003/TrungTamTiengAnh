@@ -5,8 +5,10 @@ import com.hutech.TrungTamTiengAnh.repository.AttendanceRepository;
 import com.hutech.TrungTamTiengAnh.repository.DangKyRepository;
 import com.hutech.TrungTamTiengAnh.repository.LopHocRepository;
 import com.hutech.TrungTamTiengAnh.repository.ScoreRepository;
+import com.hutech.TrungTamTiengAnh.repository.StudentProfileRepository;
 import com.hutech.TrungTamTiengAnh.repository.TeacherRepository;
 import com.hutech.TrungTamTiengAnh.repository.UserRepository;
+import com.hutech.TrungTamTiengAnh.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,19 +28,25 @@ public class TeacherController {
     private final AttendanceRepository attendanceRepository;
     private final ScoreRepository scoreRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
+    private final StudentProfileRepository studentProfileRepository;
 
     public TeacherController(TeacherRepository teacherRepository,
                              LopHocRepository lopHocRepository,
                              DangKyRepository dangKyRepository,
                              AttendanceRepository attendanceRepository,
                              ScoreRepository scoreRepository,
-                             UserRepository userRepository) {
+                             UserRepository userRepository,
+                             UserService userService,
+                             StudentProfileRepository studentProfileRepository) {
         this.teacherRepository = teacherRepository;
         this.lopHocRepository = lopHocRepository;
         this.dangKyRepository = dangKyRepository;
         this.attendanceRepository = attendanceRepository;
         this.scoreRepository = scoreRepository;
         this.userRepository = userRepository;
+        this.userService = userService;
+        this.studentProfileRepository = studentProfileRepository;
     }
 
     @GetMapping("/home")
@@ -95,6 +103,14 @@ public class TeacherController {
         }
         List<String> activeStatuses = List.of("DA_DUYET");
         List<DangKy> list = dangKyRepository.findByLopHocIdAndTrangThaiIn(id, activeStatuses);
+        java.util.Map<Long, StudentProfile> profileMap = new java.util.HashMap<>();
+        for (DangKy dk : list) {
+            if (dk.getStudent() != null) {
+                profileMap.put(dk.getStudent().getId(),
+                        studentProfileRepository.findByUserId(dk.getStudent().getId()));
+            }
+        }
+        model.addAttribute("profileMap", profileMap);
         model.addAttribute("lopHoc", lopHoc);
         model.addAttribute("list", list);
         return "teacher/students";
@@ -213,5 +229,99 @@ public class TeacherController {
             }
         }
         return "redirect:/teacher/class/" + id + "/scores";
+    }
+
+    @GetMapping("/profile")
+    public String profile(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+        Teacher teacher = teacherRepository.findByUserId(user.getId());
+        if (teacher == null) {
+            teacher = new Teacher();
+            teacher.setUser(user);
+            teacher.setFullName(user.getUsername());
+        }
+        model.addAttribute("user", user);
+        model.addAttribute("teacher", teacher);
+        return "teacher/profile";
+    }
+
+    @PostMapping("/profile/update")
+    public String updateProfile(HttpSession session,
+                                @RequestParam(value = "phone", required = false) String phone,
+                                @RequestParam(value = "email", required = false) String email,
+                                Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+        Teacher teacher = teacherRepository.findByUserId(user.getId());
+        if (teacher == null) {
+            teacher = new Teacher();
+            teacher.setUser(user);
+            teacher.setFullName(user.getUsername());
+        }
+        if (phone == null || phone.isBlank() || email == null || email.isBlank()) {
+            model.addAttribute("user", user);
+            model.addAttribute("teacher", teacher);
+            model.addAttribute("error", "Vui long dien day du thong tin bat buoc.");
+            return "teacher/profile";
+        }
+        teacher.setPhone(phone);
+        teacher.setEmail(email);
+        teacherRepository.save(teacher);
+
+        model.addAttribute("user", user);
+        model.addAttribute("teacher", teacher);
+        model.addAttribute("success", "Cap nhat thong tin thanh cong.");
+        return "teacher/profile";
+    }
+
+    @PostMapping("/profile/password")
+    public String changePassword(HttpSession session,
+                                 @RequestParam("currentPassword") String currentPassword,
+                                 @RequestParam("newPassword") String newPassword,
+                                 @RequestParam("confirmPassword") String confirmPassword,
+                                 Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        Teacher teacher = teacherRepository.findByUserId(user.getId());
+        if (teacher == null) {
+            teacher = new Teacher();
+            teacher.setUser(user);
+            teacher.setFullName(user.getUsername());
+        }
+
+        if (newPassword == null || !newPassword.equals(confirmPassword)) {
+            model.addAttribute("user", user);
+            model.addAttribute("teacher", teacher);
+            model.addAttribute("error", "Mat khau moi khong khop.");
+            return "teacher/profile";
+        }
+
+        String result = userService.changePassword(user, currentPassword, newPassword);
+        if (!"SUCCESS".equals(result)) {
+            model.addAttribute("user", user);
+            model.addAttribute("teacher", teacher);
+            String message = switch (result) {
+                case "CURRENT_REQUIRED" -> "Vui long nhap mat khau hien tai.";
+                case "NEW_INVALID" -> "Mat khau moi toi thieu 6 ky tu.";
+                case "CURRENT_WRONG" -> "Mat khau hien tai khong dung.";
+                default -> "Khong the doi mat khau.";
+            };
+            model.addAttribute("error", message);
+            return "teacher/profile";
+        }
+
+        session.setAttribute("user", user);
+        model.addAttribute("user", user);
+        model.addAttribute("teacher", teacher);
+        model.addAttribute("success", "Doi mat khau thanh cong.");
+        return "teacher/profile";
     }
 }

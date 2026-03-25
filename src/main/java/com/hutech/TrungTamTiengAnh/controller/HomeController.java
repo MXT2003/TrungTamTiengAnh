@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -29,7 +31,17 @@ public class HomeController {
     @GetMapping("/")
     public String index(Model model) {
         Page<Course> featured = courseRepository.findAll(PageRequest.of(0, 3));
+        List<Course> footerCourses = new ArrayList<>(
+                courseRepository.findAll().stream()
+                        .filter(Course::isActive)
+                        .toList()
+        );
+        Collections.shuffle(footerCourses);
+        if (footerCourses.size() > 4) {
+            footerCourses = new ArrayList<>(footerCourses.subList(0, 4));
+        }
         model.addAttribute("featuredCourses", featured.getContent());
+        model.addAttribute("footerCourses", footerCourses);
         return "index";
     }
 

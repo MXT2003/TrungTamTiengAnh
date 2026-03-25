@@ -1,7 +1,12 @@
 ﻿<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout :: layout(~{::section}, 'Báo cáo tổng hợp')}">
 <section>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+    <div class="mb-8 rounded-xl border border-primary/10 glass-card p-5">
+        <h1 class="text-2xl font-bold text-white font-display">Báo cáo doanh thu năm <span th:text="${currentYear}">2026</span></h1>
+        <p class="mt-2 text-sm text-slate-400">Dữ liệu được lấy trực tiếp từ học phí đã xác nhận, công nợ chưa thu và các hóa đơn quá hạn.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-10">
         <div class="p-6 rounded-xl border border-primary/10 glass-card">
             <p class="text-slate-500 text-sm">Tổng học viên</p>
             <h3 class="text-3xl font-bold text-slate-100" th:text="${tongHocVien}">0</h3>
@@ -18,26 +23,59 @@
             <p class="text-slate-500 text-sm">Công nợ</p>
             <h3 class="text-3xl font-bold text-red-300" th:text="|${#numbers.formatDecimal(tongNo, 0, 'POINT', 0, 'COMMA')} VND|">0</h3>
         </div>
+        <div class="p-6 rounded-xl border border-primary/10 glass-card">
+            <p class="text-slate-500 text-sm">Quá hạn</p>
+            <h3 class="text-3xl font-bold text-amber-300" th:text="|${#numbers.formatDecimal(tongQuaHan, 0, 'POINT', 0, 'COMMA')} VND|">0</h3>
+        </div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div class="p-6 rounded-xl border border-primary/10 glass-card">
-            <h3 class="text-xl font-bold text-white mb-4">Đăng ký theo tháng</h3>
+            <h3 class="text-xl font-bold text-white mb-2">Doanh thu đã thu theo tháng</h3>
+            <p class="text-sm text-slate-500 mb-4">Tổng tiền của các hóa đơn đã được admin xác nhận là đã nộp.</p>
             <div class="flex items-end gap-3 h-48">
-                <div class="bg-primary/40 w-full rounded-t" th:each="v : ${soLuongList}" th:style="'height:' + (v * 10 + 20) + 'px'"></div>
+                <div class="bg-primary/40 w-full rounded-t"
+                     th:each="h : ${doanhThuChieuCao}"
+                     th:style="'height:' + ${h} + 'px'"></div>
             </div>
             <div class="flex justify-between mt-2 text-xs text-slate-500">
                 <span th:each="m : ${thangList}" th:text="'Th ' + ${m}"></span>
             </div>
         </div>
         <div class="p-6 rounded-xl border border-primary/10 glass-card">
-            <h3 class="text-xl font-bold text-white mb-4">Trạng thái đăng ký</h3>
+            <h3 class="text-xl font-bold text-white mb-2">Công nợ theo tháng</h3>
+            <p class="text-sm text-slate-500 mb-4">Tổng tiền học phí chưa nộp theo hạn thanh toán của từng tháng.</p>
+            <div class="flex items-end gap-3 h-48">
+                <div class="bg-red-400/50 w-full rounded-t"
+                     th:each="h : ${congNoChieuCao}"
+                     th:style="'height:' + ${h} + 'px'"></div>
+            </div>
+            <div class="flex justify-between mt-2 text-xs text-slate-500">
+                <span th:each="m : ${thangList}" th:text="'Th ' + ${m}"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+        <div class="p-6 rounded-xl border border-primary/10 glass-card">
+            <h3 class="text-xl font-bold text-white mb-4">Trạng thái thanh toán</h3>
             <div class="space-y-3">
-                <div class="flex items-center justify-between" th:each="t, i : ${trangThaiList}">
+                <div class="flex items-center justify-between" th:each="t, i : ${trangThaiThanhToan}">
                     <span class="text-slate-300" th:text="${t}"></span>
-                    <span class="text-primary font-bold" th:text="${soLuongTrangThai[i.index]}"></span>
+                    <span class="text-primary font-bold" th:text="${soLuongThanhToan[i.index]}"></span>
                 </div>
             </div>
+        </div>
+        <div class="p-6 rounded-xl border border-primary/10 glass-card">
+            <h3 class="text-xl font-bold text-white mb-4">Doanh thu theo lớp</h3>
+            <div class="space-y-3" th:if="${#lists.size(doanhThuTheoLopList) > 0}">
+                <div class="flex items-center justify-between gap-4" th:each="row : ${doanhThuTheoLopList}">
+                    <span class="text-slate-300 truncate" th:text="${row.tenLop}"></span>
+                    <span class="text-primary font-bold whitespace-nowrap"
+                          th:text="|${#numbers.formatDecimal(row.doanhThu, 0, 'POINT', 0, 'COMMA')} VND|">0 VND</span>
+                </div>
+            </div>
+            <p class="text-slate-500" th:if="${#lists.size(doanhThuTheoLopList) == 0}">Chưa có lớp nào phát sinh doanh thu đã thu.</p>
         </div>
     </div>
 </section>

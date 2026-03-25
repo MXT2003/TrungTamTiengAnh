@@ -1,5 +1,6 @@
 package com.hutech.TrungTamTiengAnh.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -11,12 +12,16 @@ public class TeacherForm {
     @Size(max = 100, message = "Ten giao vien toi da 100 ky tu")
     private String fullName;
 
+    @NotBlank(message = "So dien thoai khong duoc de trong")
     @Size(max = 20, message = "So dien thoai toi da 20 ky tu")
     private String phone;
 
+    @NotBlank(message = "Email khong duoc de trong")
+    @Email(message = "Email khong hop le")
     @Size(max = 100, message = "Email toi da 100 ky tu")
     private String email;
 
+    @NotBlank(message = "Chuyen mon khong duoc de trong")
     @Size(max = 100, message = "Chuyen mon toi da 100 ky tu")
     private String specialization;
 
