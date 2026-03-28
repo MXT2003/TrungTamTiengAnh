@@ -81,13 +81,22 @@
     </div>
 
     <div class="mt-20 py-10 border-t border-primary/10 flex flex-col md:flex-row items-center justify-between gap-6" th:if="${page != null}">
-        <p class="text-primary/40 text-sm" th:text="'Hiển thị ' + ${page.numberOfElements} + ' trên tổng số ' + ${page.totalElements} + ' khóa học'">Hiển thị 3 trên tổng số 12 khóa học</p>
+        <p class="text-primary/40 text-sm" th:text="'Trang ' + ${page.totalPages == 0 ? 1 : page.number + 1} + ' / ' + ${page.totalPages == 0 ? 1 : page.totalPages} + ' • Hiển thị ' + ${page.numberOfElements} + ' trên tổng số ' + ${page.totalElements} + ' khóa học'">Trang 1 / 1 • Hiển thị 3 trên tổng số 12 khóa học</p>
         <div class="flex items-center gap-4">
-            <a class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary/30" th:classappend="${page.first} ? ' cursor-not-allowed' : ''" th:href="@{/admin/course(page=${page.number-1}, size=${page.size}, q=${q})}">
+            <span class="size-10 flex items-center justify-center rounded border border-primary/20 text-primary/20 cursor-not-allowed" th:if="${page.first}">
+                <span class="material-symbols-outlined">chevron_left</span>
+            </span>
+            <a class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary hover:border-primary transition-all" th:unless="${page.first}" th:href="@{/admin/course(page=${page.number-1}, size=${page.size}, q=${q})}">
                 <span class="material-symbols-outlined">chevron_left</span>
             </a>
-            <a class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary font-bold" th:each="i : ${#numbers.sequence(0, page.totalPages-1)}" th:classappend="${i==page.number} ? ' bg-primary text-background-dark border-primary' : ''" th:href="@{/admin/course(page=${i}, size=${page.size}, q=${q})}" th:text="${i+1}">1</a>
-            <a class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary/30" th:classappend="${page.last} ? ' cursor-not-allowed' : ''" th:href="@{/admin/course(page=${page.number+1}, size=${page.size}, q=${q})}">
+            <th:block th:if="${page.totalPages > 0}">
+                <a class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary font-bold" th:each="i : ${#numbers.sequence(0, page.totalPages-1)}" th:classappend="${i==page.number} ? ' bg-primary text-background-dark border-primary' : ''" th:href="@{/admin/course(page=${i}, size=${page.size}, q=${q})}" th:text="${i+1}">1</a>
+            </th:block>
+            <span class="size-10 flex items-center justify-center rounded border border-primary/30 bg-primary text-background-dark font-bold" th:if="${page.totalPages == 0}">1</span>
+            <span class="size-10 flex items-center justify-center rounded border border-primary/20 text-primary/20 cursor-not-allowed" th:if="${page.last or page.totalPages == 0}">
+                <span class="material-symbols-outlined">chevron_right</span>
+            </span>
+            <a class="size-10 flex items-center justify-center rounded border border-primary/30 text-primary hover:border-primary transition-all" th:unless="${page.last or page.totalPages == 0}" th:href="@{/admin/course(page=${page.number+1}, size=${page.size}, q=${q})}">
                 <span class="material-symbols-outlined">chevron_right</span>
             </a>
         </div>

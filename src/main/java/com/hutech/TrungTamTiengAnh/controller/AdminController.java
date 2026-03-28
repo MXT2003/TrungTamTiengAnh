@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -45,6 +46,7 @@ public class AdminController {
 
     @GetMapping("/home")
     public String home(Model model) {
+        LocalDate today = LocalDate.now();
 
         model.addAttribute("tongLop", lopHocRepository.count());
         model.addAttribute("tongHocVien", userRepository.countByRole("STUDENT"));
@@ -76,6 +78,34 @@ public class AdminController {
 
         model.addAttribute("trangThaiList", trangThaiList);
         model.addAttribute("soLuongTrangThai", soLuongTrangThai);
+
+        Map<YearMonth, Double> revenueByMonthMap = new LinkedHashMap<>();
+        for (Object[] row : paymentRepository.revenueByMonth(today.getYear())) {
+            Integer month = (Integer) row[0];
+            Number amount = (Number) row[1];
+            revenueByMonthMap.put(YearMonth.of(today.getYear(), month), amount.doubleValue());
+        }
+
+        int previousYear = today.minusMonths(5).getYear();
+        if (previousYear != today.getYear()) {
+            for (Object[] row : paymentRepository.revenueByMonth(previousYear)) {
+                Integer month = (Integer) row[0];
+                Number amount = (Number) row[1];
+                revenueByMonthMap.put(YearMonth.of(previousYear, month), amount.doubleValue());
+            }
+        }
+
+        List<String> revenueMonthLabels = new ArrayList<>();
+        List<Double> revenueLast6Months = new ArrayList<>();
+        for (int i = 5; i >= 0; i--) {
+            YearMonth month = YearMonth.from(today.minusMonths(i));
+            revenueMonthLabels.add("Th " + month.getMonthValue());
+            revenueLast6Months.add(revenueByMonthMap.getOrDefault(month, 0.0));
+        }
+
+        model.addAttribute("revenueMonthLabels", revenueMonthLabels);
+        model.addAttribute("revenueLast6Months", revenueLast6Months);
+        model.addAttribute("revenueLast6MonthHeights", buildBarHeights(revenueLast6Months));
 
         return "admin/home";
     }
@@ -266,6 +296,26 @@ public class AdminController {
                 heights.add(20);
             } else {
                 heights.add((int) Math.round((value / safeTotal) * 180 + 20));
+            }
+        }
+        return heights;
+    }
+
+    private List<Integer> buildBarHeights(List<Double> values) {
+        List<Integer> heights = new ArrayList<>();
+        double max = 0;
+        for (Double value : values) {
+            if (value != null && value > max) {
+                max = value;
+            }
+        }
+
+        double safeMax = max > 0 ? max : 1;
+        for (Double value : values) {
+            if (value == null || value <= 0) {
+                heights.add(20);
+            } else {
+                heights.add((int) Math.round((value / safeMax) * 180 + 20));
             }
         }
         return heights;

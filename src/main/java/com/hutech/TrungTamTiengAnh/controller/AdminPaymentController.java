@@ -36,11 +36,21 @@ public class AdminPaymentController {
                        @RequestParam(value = "status", required = false) String status,
                        @RequestParam(value = "page", defaultValue = "0") int page,
                        @RequestParam(value = "size", defaultValue = "10") int size) {
+        int safePage = Math.max(page, 0);
+        int safeSize = Math.max(size, 1);
         Page<Payment> pageData;
         if (status != null && !status.isBlank()) {
-            pageData = paymentRepository.findByStatus(status, PageRequest.of(page, size));
+            pageData = paymentRepository.findByStatus(status, PageRequest.of(safePage, safeSize));
         } else {
-            pageData = paymentRepository.findAll(PageRequest.of(page, size));
+            pageData = paymentRepository.findAll(PageRequest.of(safePage, safeSize));
+        }
+        if (pageData.getTotalPages() > 0 && safePage >= pageData.getTotalPages()) {
+            safePage = pageData.getTotalPages() - 1;
+            if (status != null && !status.isBlank()) {
+                pageData = paymentRepository.findByStatus(status, PageRequest.of(safePage, safeSize));
+            } else {
+                pageData = paymentRepository.findAll(PageRequest.of(safePage, safeSize));
+            }
         }
         model.addAttribute("page", pageData);
         model.addAttribute("status", status);

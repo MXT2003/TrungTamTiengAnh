@@ -74,20 +74,15 @@
                     </a>
                 </div>
                 <div class="w-full h-64 bg-slate-800/20 rounded-lg flex items-end justify-between p-4 gap-4 border border-slate-800/40">
-                    <div class="bg-primary/20 w-full rounded-t-lg h-[40%]"></div>
-                    <div class="bg-primary/30 w-full rounded-t-lg h-[60%]"></div>
-                    <div class="bg-primary/40 w-full rounded-t-lg h-[45%]"></div>
-                    <div class="bg-primary/50 w-full rounded-t-lg h-[80%]"></div>
-                    <div class="bg-primary/70 w-full rounded-t-lg h-[70%]"></div>
-                    <div class="bg-primary w-full rounded-t-lg h-[95%]"></div>
+                    <div class="w-full flex flex-col justify-end" th:each="item, stat : ${revenueLast6MonthHeights}">
+                        <div class="w-full rounded-t-lg transition-all"
+                             th:classappend="${stat.index == #lists.size(revenueLast6MonthHeights) - 1} ? ' bg-primary' : (${stat.index >= #lists.size(revenueLast6MonthHeights) - 2} ? ' bg-primary/70' : (${stat.index >= #lists.size(revenueLast6MonthHeights) - 3} ? ' bg-primary/50' : ' bg-primary/30'))"
+                             th:style="'height:' + ${item} + 'px'"
+                             th:title="|${revenueMonthLabels[stat.index]}: ${#numbers.formatDecimal(revenueLast6Months[stat.index], 0, 'POINT', 0, 'COMMA')} VND|"></div>
+                    </div>
                 </div>
                 <div class="flex justify-between mt-4 px-2">
-                    <span class="text-xs text-slate-600 font-bold uppercase">Th 1</span>
-                    <span class="text-xs text-slate-600 font-bold uppercase">Th 2</span>
-                    <span class="text-xs text-slate-600 font-bold uppercase">Th 3</span>
-                    <span class="text-xs text-slate-600 font-bold uppercase">Th 4</span>
-                    <span class="text-xs text-slate-600 font-bold uppercase">Th 5</span>
-                    <span class="text-xs text-slate-600 font-bold uppercase">Th 6</span>
+                    <span class="text-xs text-slate-600 font-bold uppercase" th:each="label : ${revenueMonthLabels}" th:text="${label}">Th 1</span>
                 </div>
             </div>
             <div class="rounded-xl border border-primary/10 p-8">

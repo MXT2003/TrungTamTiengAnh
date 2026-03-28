@@ -32,11 +32,21 @@ public class LopHocController {
                        @RequestParam(value = "q", required = false) String q,
                        @RequestParam(value = "page", defaultValue = "0") int page,
                        @RequestParam(value = "size", defaultValue = "10") int size) {
+        int safePage = Math.max(page, 0);
+        int safeSize = Math.max(size, 1);
         Page<LopHoc> pageData;
         if (q != null && !q.isBlank()) {
-            pageData = lopHocRepository.findByTenLopContainingIgnoreCase(q, PageRequest.of(page, size));
+            pageData = lopHocRepository.findByTenLopContainingIgnoreCase(q, PageRequest.of(safePage, safeSize));
         } else {
-            pageData = lopHocRepository.findAll(PageRequest.of(page, size));
+            pageData = lopHocRepository.findAll(PageRequest.of(safePage, safeSize));
+        }
+        if (pageData.getTotalPages() > 0 && safePage >= pageData.getTotalPages()) {
+            safePage = pageData.getTotalPages() - 1;
+            if (q != null && !q.isBlank()) {
+                pageData = lopHocRepository.findByTenLopContainingIgnoreCase(q, PageRequest.of(safePage, safeSize));
+            } else {
+                pageData = lopHocRepository.findAll(PageRequest.of(safePage, safeSize));
+            }
         }
         model.addAttribute("page", pageData);
         model.addAttribute("q", q);
